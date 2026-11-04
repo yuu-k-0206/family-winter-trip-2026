@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 検索結果に載せないよう検索エンジンに依頼します。アクセス制限ではありません。 -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="家族冬旅行2026。日程や宿泊先を相談しながら決める旅のしおり。">
+  <meta name="theme-color" content="#192a37">
+  <title>家族冬旅行 2026｜旅のしおり</title>
+  <!-- CSSは見た目を担当 -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
+  <script defer src="trip-data.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#about">本文へ移動</a>
+  <header>
+    <div class="wrap header-inner">
+      <a href="#top" class="brand" aria-label="ページの先頭へ">
+        <span class="brand-symbol">旅</span>
+        <span class="brand-title">FAMILY WINTER TRIP<small>DECEMBER · 2026</small></span>
+      </a>
+      <nav class="nav" aria-label="ページ内メニュー">
+        <a href="#about">概要</a>
+        <a href="#dates">日程</a>
+        <a href="#discuss">宿候補</a>
+        <a href="#schedule">予定</a>
+        <a href="#packing">持ち物</a>
+      </nav>
+    </div>
+  </header>
+  <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">旅行先・宿泊先は家族で相談中</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
+  <div class="hero" id="top">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">A LITTLE JOURNEY, A BIG MEMORY.</span>
+        <h1>冬の、<br>家族旅行。</h1>
+        <p class="hero-lead">行き先はこれから。でも、楽しみはもう始まってる。<br>みんなで決める、ちょっと特別な1泊2日。</p>
+        <span class="pill" id="hero-pill">2026年12月 · 旅先・宿泊先を相談中</span>
+      </div>
+      <figure class="art" style="margin-block:0;">
+        <img src="winter-illustration.svg" alt="雪山と架空の旅館をモチーフにした冬のイラスト" width="520" height="355" style="width:100%;height:auto;display:block">
+        <figcaption class="art-note">冬のイメージイラスト</figcaption>
+      </figure>
+    </div>
+  </div>
+  <main class="wrap">
+    <div class="summary" aria-label="旅行の要約">
+      <div class="sum"><span>DURATION</span><strong id="summary-duration">1泊2日</strong></div>
+      <div class="sum"><span>MEMBERS</span><strong>7人</strong></div>
+      <div class="sum"><span>DESTINATION</span><strong class="long" id="summary-destination">検討中</strong></div>
+    </div>
+
+    <section class="section" id="about">
+      <div class="section-head"><span class="en">ABOUT OUR TRIP</span><h2>旅の概要</h2><p>決まっていることと、これから決めること。</p></div>
+      <div class="boxgrid">
+        <article class="info-card"><span class="cap">01 / WHEN</span><h3>2026年12月の1泊2日</h3><p>日程は調整中。候補日は次の欄で確認できます。</p></article>
+        <article class="info-card"><span class="cap">02 / WHO</span><h3 id="overview-members">大人5人 ＋ 子供2人</h3><p id="overview-members-detail">家族7人で行く予定です。</p></article>
+        <article class="info-card"><span class="cap">03 / TRANSPORT</span><h3 id="overview-transport">アルファード1台（予定）</h3><p>集合時刻やルートは、日程が決まってから相談します。</p></article>
+        <article class="info-card"><span class="cap">04 / DESTINATION</span><h3 id="overview-destination">行き先：検討中</h3><p id="overview-stay">宿泊先：未定</p></article>
+      </div>
+      <p class="attention">旅行先・宿泊先が決まっていなくても大丈夫。候補が決まったら情報だけ更新できる構造にしてあります。</p>
+    </section>
+
+    <section class="section" id="dates">
+      <div class="section-head"><span class="en">DATE OPTIONS</span><h2>日程の候補</h2><p>2つの候補日から家族で相談中。</p></div>
+      <div class="choicegrid" id="date-options" aria-live="polite"></div>
+    </section>
+
+    <section class="section" id="discuss">
+      <div class="section-head"><span class="en">LET'S PLAN TOGETHER</span><h2>家族で相談すること</h2><p>日程と宿が決まったら、具体的な旅程を考えよう。</p></div>
+      <div class="decision-panel">
+        <h3>宿選びで大切にしたいこと</h3>
+        <p>予約できることはもちろん、子供たちが過ごしやすく、移動の負担が大きすぎない宿を選びたいね。</p>
+        <div class="criteria">
+          <div class="criterion"><span class="num">01</span>空室・予約可否</div>
+          <div class="criterion"><span class="num">02</span>予算・食事</div>
+          <div class="criterion"><span class="num">03</span>移動距離</div>
+          <div class="criterion"><span class="num">04</span>子供の過ごしやすさ</div>
+        </div>
+      </div>
+      <div id="lodging-list"></div>
+      <div class="empty" id="lodging-empty"><strong>宿泊候補はこれから掲載</strong><p>候補が見つかったら、宿の名前・場所・特徴・公式サイトへのリンクを比較できます。</p></div>
+      <div class="progress-track" aria-label="旅行準備の進め方">
+        <div class="progress-step current"><b>STEP 1</b>日程・宿を相談</div>
+        <div class="progress-step"><b>STEP 2</b>予約と移動を決定</div>
+        <div class="progress-step"><b>STEP 3</b>旅程を完成</div>
+      </div>
+    </section>
+
+    <section class="section" id="schedule">
+      <div class="section-head"><span class="en">TRAVEL ITINERARY</span><h2>旅のスケジュール</h2><p>行き先が決まるまでは仮の流れ。時刻は未設定です。</p></div>
+      <div class="day-tabs" role="tablist" aria-label="日程の選択">
+        <button type="button" class="active" id="tab1" role="tab" aria-selected="true" aria-controls="panel1">DAY 1</button>
+        <button type="button" id="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="-1">DAY 2</button>
+      </div>
+      <div class="day-panel" id="panel1" role="tabpanel" aria-labelledby="tab1"></div>
+      <div class="day-panel" id="panel2" role="tabpanel" aria-labelledby="tab2" hidden></div>
+    </section>
+
+    <section class="section" id="packing">
+      <div class="section-head"><span class="en">PACKING LIST</span><h2>持ち物チェック</h2><p>出発前に、忘れ物がないか確認しよう。</p></div>
+      <div class="checks" id="checklist"></div>
+      <button type="button" id="packing-reset">チェックをすべて外す</button>
+      <p class="note">※ チェックの保存は操作した端末・ブラウザ内だけです。家族間では共有されません。<br>※ 冬装備は旅行先の道路・天候状況に応じて確認してください。</p>
+    </section>
+
+    <section class="section" id="updates">
+      <div class="section-head"><span class="en">TRIP UPDATES</span><h2>お知らせ</h2><p>旅行計画の変更や決定事項を掲載します。</p></div>
+      <div class="updates-list" id="updates-list"></div>
+      <p class="privacy"><strong>公開に関する注意：</strong>このサイトはURLを知る人以外からも閲覧される可能性があります。氏名・住所・電話番号・リアルタイムの居場所などは掲載しない方針です。<code>noindex</code> は検索エンジンへの依頼であり、アクセス制限ではありません。</p>
+    </section>
+  </main>
+  <footer>FAMILY WINTER TRIP 2026 · PROTOTYPE v0.4</footer>
+</body>
+</html>
