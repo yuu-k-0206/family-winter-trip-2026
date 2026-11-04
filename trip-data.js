@@ -6,7 +6,7 @@
   編集後に Ctrl + S で保存 → index.html を開いて F5 で更新。
 */
 window.TRIP_DATA = {
-  updatedAt: "2026.11.04",
+  updatedAt: "2026.11.05",
   status: "旅行先・宿泊先は家族で相談中",
   destination: "検討中",
   stayName: "未定",
@@ -60,6 +60,10 @@ window.TRIP_DATA = {
     { id: "car", label: "車の冬装備の確認" }
   ],
   updates: [
+    {
+      date: "2026.11.05",
+      text: "Webサイトの更新テストを実施しました。旅行先・宿泊先・日程は引き続き相談中です。"
+    },
     {
       date: "2026.11.04",
       text: "当初の宿泊候補は希望日程が満室だったため、家族で行き先・宿泊先を再検討しています。日程も現在調整中です。"
