@@ -63,7 +63,7 @@
       <div class="boxgrid">
         <article class="info-card"><span class="cap">01 / WHEN</span><h3 id="overview-date">2026年12月9日(水)〜10日(木)</h3><p id="overview-date-note">一旦決定。業務都合によっては延期の可能性があります。</p></article>
         <article class="info-card"><span class="cap">02 / WHO</span><h3 id="overview-members">大人5人 ＋ 子供2人</h3><p id="overview-members-detail">家族7人で行く予定です。</p></article>
-        <article class="info-card"><span class="cap">03 / TRANSPORT</span><h3 id="overview-transport">アルファード1台（予定）</h3><p>集合時刻やルートは、後日相談します。</p></article>
+        <article class="info-card"><span class="cap">03 / TRANSPORT</span><h3 id="overview-transport">アルファード1台（予定）</h3><p>行き・帰りそれぞれ2ルートの仮工程を比較中。花園IC付近を起終点の目安にしています。</p></article>
         <article class="info-card"><span class="cap">04 / DESTINATION</span><h3 id="overview-destination">行き先：検討中</h3><p id="overview-stay">宿泊先：未定</p></article>
       </div>
       <p class="attention" id="decision-note">旅行日程と華鳳への宿泊予約が決まりました。ただし業務都合で延期の可能性があります。</p>
@@ -166,25 +166,41 @@
     </section>
 
     <section class="section" id="travel-budget" aria-labelledby="budget-heading">
-      <div class="section-head"><span class="en">TRAVEL &amp; BUDGET</span><h2 id="budget-heading">移動と予算の目安</h2><p>宿泊料金と過去の交通費試算を合わせた参考額です。最終的な費用ではありません。</p></div>
+      <div class="section-head"><span class="en">TRAVEL &amp; BUDGET</span><h2 id="budget-heading">移動と予算の目安</h2><p>最新の仮ルートを基にした試算。出発地の詳細は公開しません。</p></div>
       <div class="booking-extra">
         <article class="info-card">
-          <span class="cap">TRANSPORT</span><h3>アルファード1台・往復交通費</h3>
+          <span class="cap">TRANSPORT</span><h3>行き魚沼・帰り高速の往復概算</h3>
           <p class="budget-figure" id="budget-transport">算定中</p>
           <p class="field-note" id="budget-source-date"></p>
           <p id="budget-condition"></p>
         </article>
         <article class="info-card">
-          <span class="cap">TOTAL ESTIMATE</span><h3>宿泊通常料金＋入湯税＋交通費</h3>
+          <span class="cap">TOTAL ESTIMATE</span><h3>宿泊実費を含む旅行総額</h3>
           <p class="budget-figure" id="budget-combined">算定中</p>
-          <p class="field-note">予備費・昼食・観光費などは含まれていません。</p>
+          <p class="field-note">予約済みプランの実額未照合につき、総額は未確定です。</p>
         </article>
       </div>
       <p class="note" id="budget-note"></p>
     </section>
 
+    <section class="section" id="route-compare" aria-labelledby="route-compare-heading">
+      <div class="section-head">
+        <span class="en">DRIVE ROUTE COMPARISON</span>
+        <h2 id="route-compare-heading">往復ルート・交通費を比較</h2>
+        <p>魚沼IC経由と豊栄新潟東港IC経由。行きと帰りの組み合わせを比べられます。</p>
+      </div>
+      <p class="route-lead">おすすめの仮案は<strong>行き：魚沼IC経由／帰り：高速優先</strong>。行きはご当地の道の駅、帰りは長岡観光を楽しむ計画です。雪や道路規制がある場合は高速優先・寄り道短縮などへ切り替えます。</p>
+      <div class="route-cost-grid" id="route-cost-comparisons">
+        <p class="note">比較データを読み込んでいます。</p>
+      </div>
+      <p class="note" id="route-assumptions"></p>
+      <p class="note" id="route-reserve-note"></p>
+      <p class="note" id="route-previous-note"></p>
+      <a class="updates-link" href="#schedule">日別の寄り道・休憩工程を見る <span aria-hidden="true">↓</span></a>
+    </section>
+
     <section class="section" id="schedule">
-      <div class="section-head"><span class="en">TRAVEL ITINERARY</span><h2>旅のスケジュール</h2><p>12月9日〜10日の仮の行程です。集合時刻や立ち寄り先はこれから調整します。</p></div>
+      <div class="section-head"><span class="en">TRAVEL ITINERARY</span><h2>旅のスケジュール</h2><p>12/9は15:00チェックイン、12/10は10:00チェックアウト・17:00花園IC付近着が目標。各日2ルートの仮工程を掲載しています。</p></div>
       <div class="day-tabs" role="tablist" aria-label="日程の選択">
         <button type="button" class="active" id="tab1" role="tab" aria-selected="true" aria-controls="panel1">DAY 1</button>
         <button type="button" id="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="-1">DAY 2</button>
@@ -206,6 +222,6 @@
       <p class="privacy"><strong>公開に関する注意：</strong>このサイトはURLを知る人以外からも閲覧される可能性があります。氏名・住所・電話番号・リアルタイムの居場所などは掲載しない方針です。<code>noindex</code> は検索エンジンへの依頼であり、アクセス制限ではありません。</p>
     </section>
   </main>
-  <footer>FAMILY WINTER TRIP 2026 · v0.9.1</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v1.0</footer>
 </body>
 </html>
