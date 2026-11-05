@@ -25,7 +25,7 @@
 
   setText('trip-status', data.status);
   setText('last-update', `更新：${data.updatedAt}`);
-  setText('hero-pill', `2026年12月 · ${data.status}`);
+  setText('hero-pill', `2026年12月〜2027年1月 · ${data.status}`);
   setText('summary-duration', data.duration);
   setText('summary-destination', data.destination);
   setText('overview-members', data.members);
@@ -39,7 +39,7 @@
     const card = textElement('article', 'choice', '');
     const cap = textElement('span', 'cap', date.label);
     const tag = textElement('span', 'corner-tag', date.badge);
-    if (date.badge !== '有力候補') tag.classList.add('muted');
+    if (date.badge !== '有力候補' && date.badge !== '第1希望') tag.classList.add('muted');
     card.append(cap, tag, textElement('h3', '', date.range), textElement('p', '', date.detail));
     dateList.append(card);
   });
@@ -66,6 +66,46 @@
     row.append(info, textElement('span', 'list-status', candidate.status || '検討中'));
     lodgingList.append(row);
   });
+
+  // 華鳳の調査結果：調査日のスナップショットとして表示（リアルタイム空室ではない）。
+  const bookingData = data.booking || {};
+  const bookingPrices = get('booking-prices');
+  if (bookingPrices) {
+    const yen = amount => Number.isFinite(amount) ? `${amount.toLocaleString('ja-JP')}円` : '—';
+    const intro = get('booking-intro');
+    intro.append(
+      textElement('strong', '', '調査日：' + (bookingData.surveyedAt || '未確認')),
+      textElement('p', '', bookingData.condition || '条件確認中')
+    );
+    list(bookingData.offers).forEach(offer => {
+      const card = document.createElement('article');
+      card.className = 'rate-card' + (offer.available ? '' : ' rate-card--closed');
+      const head = document.createElement('div');
+      head.className = 'rate-card-head';
+      const heading = document.createElement('div');
+      heading.append(textElement('small', '', offer.period), textElement('h3', '', offer.range));
+      const status = textElement('span', 'rate-status' + (offer.available ? ' rate-status--open' : ' rate-status--closed'), offer.available ? '予約可能表示あり' : '満室');
+      head.append(heading, status);
+      const prices = document.createElement('div');
+      prices.className = 'rate-prices';
+      [['通常料金', 'standard'], ['会員料金', 'member']].forEach(([label, field]) => {
+        const row = document.createElement('div');
+        row.append(textElement('span', '', label), textElement('strong', '', yen(offer[field])));
+        prices.append(row);
+      });
+      const note = textElement('p', 'rate-note', offer.note || '');
+      card.append(head, prices, note);
+      bookingPrices.append(card);
+    });
+    setText('booking-note', bookingData.note || '');
+    const other = get('booking-other-dates');
+    list(bookingData.otherDates).forEach(item => other.append(textElement('li', '', item)));
+    setText('booking-other-note', bookingData.otherDatesNote || '');
+    setText('booking-children', bookingData.childrenNote || '');
+    const pending = get('booking-pending');
+    list(bookingData.pending).forEach(item => pending.append(textElement('li', '', item)));
+    setText('booking-luxury', bookingData.luxuryReference || '');
+  }
 
   // 1日目・2日目のタイムライン
   const panels = [get('panel1'), get('panel2')];
