@@ -75,7 +75,8 @@
     const intro = get('booking-intro');
     intro.append(
       textElement('strong', '', '調査日：' + (bookingData.surveyedAt || '未確認')),
-      textElement('p', '', bookingData.condition || '条件確認中')
+      textElement('p', '', bookingData.condition || '条件確認中'),
+      textElement('p', '', '以下は調査時点の記録で、リアルタイムの空室・料金ではありません。掲載料金は上記の仮検索条件での1室・1泊の合計です。')
     );
     list(bookingData.offers).forEach(offer => {
       const card = document.createElement('article');
@@ -84,7 +85,7 @@
       head.className = 'rate-card-head';
       const heading = document.createElement('div');
       heading.append(textElement('small', '', offer.period), textElement('h3', '', offer.range));
-      const status = textElement('span', 'rate-status' + (offer.available ? ' rate-status--open' : ' rate-status--closed'), offer.available ? '予約可能表示あり' : '満室');
+      const status = textElement('span', 'rate-status' + (offer.available ? ' rate-status--open' : ' rate-status--closed'), offer.available ? '調査時：空室表示あり' : '調査時：満室');
       head.append(heading, status);
       const prices = document.createElement('div');
       prices.className = 'rate-prices';
