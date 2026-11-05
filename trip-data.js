@@ -14,6 +14,8 @@ window.TRIP_DATA = {
   members: "大人5人 ＋ 子供2人",
   membersDetail: "大人5人と子供2人（6歳・3歳）、計7人。1部屋・1泊2日を希望。",
   duration: "1泊2日",
+  // 出発日が確定したら "YYYY-MM-DD" 形式で設定。候補日は設定しない。
+  departureDate: null,
   dates: [
     {
       label: "FIRST CHOICE",
