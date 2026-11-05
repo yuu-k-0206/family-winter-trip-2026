@@ -67,8 +67,15 @@
 
   setText('trip-status', data.status);
   setText('last-update', `更新：${data.updatedAt}`);
-  setText('hero-pill', `2026年12月〜2027年1月 · ${data.status}`);
+  setText('hero-pill', `${data.dateSummary || '旅行日程を確認中'} · ${data.status}`);
   setText('summary-duration', data.duration);
+  setText('overview-date', data.dateSummary);
+  setText('overview-date-note', data.dateNote);
+  setText('decision-note', data.decisionNote);
+  setText('work-schedule-note', data.workScheduleNote);
+  setText('cancel-free-until', data.cancellation?.freeUntil);
+  setText('cancel-fee-from', data.cancellation?.feeFrom);
+  setText('cancel-caution', data.cancellation?.caution);
   setText('summary-destination', data.destination);
   setText('overview-members', data.members);
   setText('overview-members-detail', data.membersDetail);
@@ -81,7 +88,7 @@
     const card = textElement('article', 'choice', '');
     const cap = textElement('span', 'cap', date.label);
     const tag = textElement('span', 'corner-tag', date.badge);
-    if (date.badge !== '有力候補' && date.badge !== '第1希望') tag.classList.add('muted');
+    if (date.badge !== '有力候補' && date.badge !== '第1希望' && date.badge !== '一旦決定') tag.classList.add('muted');
     card.append(cap, tag, textElement('h3', '', date.range), textElement('p', '', date.detail));
     dateList.append(card);
   });
@@ -120,7 +127,8 @@
       textElement('p', '', bookingData.condition || '条件確認中'),
       textElement('p', '', '以下は調査時点の記録で、リアルタイムの空室・料金ではありません。掲載料金は上記の仮検索条件での1室・1泊の合計です。')
     );
-    list(bookingData.offers).forEach(offer => {
+    const archivedCards = [];
+    list(bookingData.offers).forEach((offer, offerIndex) => {
       const card = document.createElement('article');
       card.className = 'rate-card' + (offer.available ? '' : ' rate-card--closed');
       const head = document.createElement('div');
@@ -138,8 +146,20 @@
       });
       const note = textElement('p', 'rate-note', offer.note || '');
       card.append(head, prices, note);
-      bookingPrices.append(card);
+      if (offerIndex === 0) bookingPrices.append(card);
+      else archivedCards.push(card);
     });
+    if (archivedCards.length) {
+      const past = document.createElement('details');
+      past.className = 'booking-details';
+      const summary = textElement('summary', '', '過去の候補日と参考料金を表示');
+      const archiveGrid = document.createElement('div');
+      archiveGrid.className = 'booking-offers';
+      archiveGrid.style.marginTop = '15px';
+      archiveGrid.append(...archivedCards);
+      past.append(summary, archiveGrid);
+      bookingPrices.after(past);
+    }
     setText('booking-note', bookingData.note || '');
     const other = get('booking-other-dates');
     list(bookingData.otherDates).forEach(item => other.append(textElement('li', '', item)));
