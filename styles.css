@@ -152,3 +152,35 @@
   .lodging-row{grid-template-columns:1fr;}
   .list-status{justify-self:start;}
 }
+
+/* v0.6: 華鳳の空室・料金調査（2026/11/5のスナップショット） */
+.booking-intro{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:15px 18px;margin-bottom:16px;font-size:13px;}
+.booking-intro strong{display:block;font-size:13px;color:#806946;}
+.booking-intro p{margin:5px 0 0;color:#56676e;line-height:1.85;}
+.booking-offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.rate-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0;}
+.rate-card--closed{background:#f9f8f4;}
+.rate-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.rate-card-head small{color:#a08458;font-size:11px;font-weight:700;}
+.rate-card h3{font-size:17px;line-height:1.5;margin:1px 0 0;}
+.rate-status{display:inline-block;border-radius:30px;padding:4px 10px;font-size:11px;font-weight:650;white-space:nowrap;}
+.rate-status--open{background:#e8f3ed;color:#2d6650;}
+.rate-status--closed{background:#f1e8e3;color:#915d4b;}
+.rate-prices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+.rate-prices div{border-top:1px solid #eae8e2;padding-top:9px;min-width:0;}
+.rate-prices span{display:block;color:#768188;font-size:11px;}
+.rate-prices strong{display:block;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.rate-note{color:#68767b;font-size:12px;margin:12px 0 0;line-height:1.75;}
+.booking-extra{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px;}
+.booking-extra .info-card{min-height:0;}
+.booking-extra p{font-size:13px;line-height:1.9;}
+.booking-text-list{padding-left:19px;margin:10px 0 0;font-size:13px;color:#53666b;line-height:1.95;overflow-wrap:anywhere;}
+.booking-text-list li+li{margin-top:6px;}
+.booking-details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 19px;margin-top:18px;}
+.booking-details summary{cursor:pointer;font-weight:650;font-size:13px;}
+.booking-details p{font-size:13px;color:#68777c;margin:12px 0 0;}
+@media(max-width:720px){
+  .booking-offers,.booking-extra{grid-template-columns:1fr;}
+  .rate-card{padding:18px;}
+  .rate-prices strong{font-size:16px;}
+}

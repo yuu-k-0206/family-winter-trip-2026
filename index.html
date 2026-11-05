@@ -37,7 +37,7 @@
       <div class="hero-copy">
         <span class="eyebrow">A LITTLE JOURNEY, A BIG MEMORY.</span>
         <h1>冬の、<br>家族旅行。</h1>
-        <p class="hero-lead">行き先はこれから。でも、楽しみはもう始まってる。<br>みんなで決める、ちょっと特別な1泊2日。</p>
+        <p class="hero-lead">月岡温泉「白玉の湯 華鳳」を第一候補に検討中。<br>空室や料金を見比べながら、みんなで決める1泊2日。</p>
         <span class="pill" id="hero-pill">2026年12月 · 旅先・宿泊先を相談中</span>
       </div>
       <figure class="art" style="margin-block:0;">
@@ -56,12 +56,12 @@
     <section class="section" id="about">
       <div class="section-head"><span class="en">ABOUT OUR TRIP</span><h2>旅の概要</h2><p>決まっていることと、これから決めること。</p></div>
       <div class="boxgrid">
-        <article class="info-card"><span class="cap">01 / WHEN</span><h3>2026年12月の1泊2日</h3><p>日程は調整中。候補日は次の欄で確認できます。</p></article>
+        <article class="info-card"><span class="cap">01 / WHEN</span><h3>2026年12月〜2027年1月の1泊2日</h3><p>12月11日を第一希望に調整中。候補日は下の欄で確認できます。</p></article>
         <article class="info-card"><span class="cap">02 / WHO</span><h3 id="overview-members">大人5人 ＋ 子供2人</h3><p id="overview-members-detail">家族7人で行く予定です。</p></article>
         <article class="info-card"><span class="cap">03 / TRANSPORT</span><h3 id="overview-transport">アルファード1台（予定）</h3><p>集合時刻やルートは、日程が決まってから相談します。</p></article>
         <article class="info-card"><span class="cap">04 / DESTINATION</span><h3 id="overview-destination">行き先：検討中</h3><p id="overview-stay">宿泊先：未定</p></article>
       </div>
-      <p class="attention">旅行先・宿泊先が決まっていなくても大丈夫。候補が決まったら情報だけ更新できる構造にしてあります。</p>
+      <p class="attention">華鳳は現在の第一候補で、日程・宿泊先とも未確定です。11月5日に調べた空室・料金を参考に、家族の予定を調整しています。</p>
     </section>
 
     <section class="section" id="latest-updates" aria-labelledby="latest-updates-heading">
@@ -71,15 +71,16 @@
     </section>
 
     <section class="section" id="dates">
-      <div class="section-head"><span class="en">DATE OPTIONS</span><h2>日程の候補</h2><p>2つの候補日から家族で相談中。</p></div>
+      <div class="section-head"><span class="en">DATE OPTIONS</span><h2>日程の候補</h2><p>12月11日が第一希望。空室状況は11月5日の調査時点のものです。</p></div>
       <div class="choicegrid" id="date-options" aria-live="polite"></div>
+      <a class="updates-link" href="#booking-info">華鳳の空室・料金を詳しく見る <span aria-hidden="true">↓</span></a>
     </section>
 
     <section class="section" id="discuss">
-      <div class="section-head"><span class="en">LET'S PLAN TOGETHER</span><h2>家族で相談すること</h2><p>日程と宿が決まったら、具体的な旅程を考えよう。</p></div>
+      <div class="section-head"><span class="en">LET'S PLAN TOGETHER</span><h2>宿泊先・客室の候補</h2><p>現在は白玉の湯 華鳳を第一候補として検討中です。</p></div>
       <div class="decision-panel">
         <h3>宿選びで大切にしたいこと</h3>
-        <p>予約できることはもちろん、子供たちが過ごしやすく、移動の負担が大きすぎない宿を選びたいね。</p>
+        <p>希望はデラックス和室16畳・7名1室・夕朝食付き。子供の食事と布団は確認中で、予約はまだ確定していません。</p>
         <div class="criteria">
           <div class="criterion"><span class="num">01</span>空室・予約可否</div>
           <div class="criterion"><span class="num">02</span>予算・食事</div>
@@ -94,6 +95,30 @@
         <div class="progress-step"><b>STEP 2</b>予約と移動を決定</div>
         <div class="progress-step"><b>STEP 3</b>旅程を完成</div>
       </div>
+    </section>
+
+    <section class="section" id="booking-info" aria-labelledby="booking-heading">
+      <div class="section-head"><span class="en">ROOM &amp; AVAILABILITY</span><h2 id="booking-heading">華鳳の空室・宿泊料金</h2><p>希望客室：デラックス和室16畳・禁煙｜大人5名＋子供2名、1室・1泊2食付き</p></div>
+      <div class="booking-intro" id="booking-intro"></div>
+      <div class="booking-offers" id="booking-prices"></div>
+      <p class="note" id="booking-note"></p>
+      <div class="booking-extra">
+        <article class="info-card">
+          <span class="cap">OTHER DATES</span><h3>その他の空室確認日</h3>
+          <ul class="booking-text-list" id="booking-other-dates"></ul>
+          <p class="field-note" id="booking-other-note"></p>
+        </article>
+        <article class="info-card">
+          <span class="cap">TO BE CONFIRMED</span><h3>子供料金・これから確認すること</h3>
+          <p id="booking-children"></p>
+          <ul class="booking-text-list" id="booking-pending"></ul>
+        </article>
+      </div>
+      <details class="booking-details">
+        <summary>参考記録：特別客室「離れ」の概算料金（今回の候補外）</summary>
+        <p id="booking-luxury"></p>
+      </details>
+      <p class="note">情報源：<a href="https://www.kahou.com/" target="_blank" rel="noopener noreferrer">白玉の湯 華鳳 公式サイト</a>の予約画面。予約状況と料金は変動するため、決定前に最新情報を再確認してください。</p>
     </section>
 
     <section class="section" id="schedule">
@@ -119,6 +144,6 @@
       <p class="privacy"><strong>公開に関する注意：</strong>このサイトはURLを知る人以外からも閲覧される可能性があります。氏名・住所・電話番号・リアルタイムの居場所などは掲載しない方針です。<code>noindex</code> は検索エンジンへの依頼であり、アクセス制限ではありません。</p>
     </section>
   </main>
-  <footer>FAMILY WINTER TRIP 2026 · PROTOTYPE v0.4</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v0.6</footer>
 </body>
 </html>
