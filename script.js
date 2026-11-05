@@ -202,6 +202,41 @@
     setText('booking-luxury', bookingData.luxuryReference || '');
   }
 
+  // ドライブ比較：金額・工程は trip-data.js を正本とし、表示用に整形します。
+  const drivePlan = data.drivePlan || {};
+  const driveRoads = list(drivePlan.roads);
+  const roadById = id => driveRoads.find(road => road.id === id);
+  const money = amount => Number.isFinite(amount) ? amount.toLocaleString('ja-JP') + '円' : '確認中';
+  const driveMinutesText = minutes => Number.isFinite(minutes) ? Math.floor(minutes / 60) + '時間' + (minutes % 60) + '分' : '確認中';
+  const costGrid = get('route-cost-comparisons');
+  if (costGrid && driveRoads.length === 2) {
+    costGrid.replaceChildren();
+    // 行きA/帰りA、行きA/帰りB、行きB/帰りA、行きB/帰りB。
+    for (const outward of driveRoads) {
+      for (const homeward of driveRoads) {
+        const recommended = outward.id === 'uonuma' && homeward.id === 'express';
+        const sumToll = outward.tollYen + homeward.tollYen;
+        const sumFuel = outward.fuelYen + homeward.fuelYen;
+        const total = sumToll + sumFuel + Number(drivePlan.reserveYen || 0);
+        const rounded = Math.round(total / 100) * 100;
+        const article = document.createElement('article');
+        article.className = 'route-cost-card' + (recommended ? ' route-cost-card--featured' : '');
+        const name = textElement('h3', '', '行き ' + (outward.id === 'uonuma' ? '魚沼' : '高速') + ' ／ 帰り ' + (homeward.id === 'uonuma' ? '魚沼' : '高速'));
+        article.append(name);
+        if (recommended) article.append(textElement('span', 'route-recommend', 'おすすめ仮案'));
+        article.append(textElement('strong', 'route-cost-total', '約' + money(rounded)));
+        article.append(textElement('p', 'route-cost-breakdown', '高速料金 ' + money(sumToll) + ' ＋ 燃料代 約' + money(sumFuel) + ' ＋ 予備費 ' + money(Number(drivePlan.reserveYen || 0))));
+        article.append(textElement('p', 'route-cost-details', '行き：' + outward.distanceKm + 'km・' + driveMinutesText(outward.driveMinutes) + '・料金' + money(outward.tollYen)));
+        article.append(textElement('p', 'route-cost-details', '帰り：' + homeward.distanceKm + 'km・' + driveMinutesText(homeward.driveMinutes) + '・料金' + money(homeward.tollYen)));
+        costGrid.append(article);
+      }
+    }
+  }
+  setText('route-assumptions', drivePlan.assumptions || '');
+  setText('route-reserve-note', drivePlan.reserveNote || '');
+  setText('route-previous-note', drivePlan.previousBudgetNote || '');
+
+  // 日別の2ルート工程。文字列はすべて textContent で表示します。
   // 1日目・2日目のタイムライン
   const panels = [get('panel1'), get('panel2')];
   list(data.itinerary).slice(0,2).forEach((day, dayIndex) => {
@@ -218,6 +253,41 @@
       timeline.append(step);
     });
     panel.append(textElement('h3', '', day.name), timeline);
+    const routeDay = list(drivePlan.schedules).find(plan => plan.day === dayIndex + 1);
+    if (routeDay) {
+      panel.append(textElement('h4', 'drive-subheading', '寄り道・休憩を含む2つのルート案'));
+      const cards = document.createElement('div');
+      cards.className = 'drive-option-list';
+      list(routeDay.options).forEach(option => {
+        const road = roadById(option.roadId);
+        if (!road) return;
+        const card = document.createElement('article');
+        card.className = 'drive-option';
+        card.append(textElement('h5', 'drive-option-heading', option.title));
+        card.append(textElement('p', 'drive-option-caption', option.recommendation));
+        const specs = textElement('p', 'drive-option-specs',
+          '基準距離 ' + road.distanceKm + 'km ／ 純走行 ' + driveMinutesText(road.driveMinutes) +
+          ' ／ 片道高速料金 ' + money(road.tollYen) +
+          ' ／ 燃料代 約' + money(road.fuelYen));
+        card.append(specs);
+        const stopList = document.createElement('div');
+        stopList.className = 'drive-stop-list';
+        list(option.stops).forEach(stop => {
+          const stopRow = document.createElement('div');
+          stopRow.className = 'drive-stop';
+          const info = document.createElement('div');
+          info.append(textElement('strong', '', stop.name));
+          if (stop.detail) info.append(textElement('p', '', stop.detail));
+          stopRow.append(textElement('span', 'drive-stop-time', stop.time), info);
+          stopList.append(stopRow);
+        });
+        card.append(stopList);
+        if (option.caution) card.append(textElement('p', 'drive-option-warning', option.caution));
+        cards.append(card);
+      });
+      panel.append(cards);
+      panel.append(textElement('p', 'note', '時刻は通常時のナビ所要時間を基にした仮工程です。冬の雪道・渋滞・立ち寄り先への迂回で変わります。時間が押した場合は観光を短縮します。'));
+    }
   });
   const tabs = [get('tab1'), get('tab2')];
   function selectDay(index) {
