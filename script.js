@@ -23,6 +23,48 @@
   };
   const list = (item) => Array.isArray(item) ? item : [];
 
+  // 日本時間（UTC+9、夏時間なし）の暦日を整数で比較。端末の現地時刻は使いません。
+  const dayMs = 24 * 60 * 60 * 1000;
+  const japanOffsetMs = 9 * 60 * 60 * 1000;
+  const departureDay = (value) => {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith('0000-')) return null;
+    const timestamp = Date.parse(`${value}T00:00:00Z`);
+    // 2月30日など、自動補正される日付も拒否します。
+    if (!Number.isFinite(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== value) return null;
+    return timestamp / dayMs;
+  };
+  let countdownTimer;
+  function updateCountdown() {
+    const el = get('trip-countdown');
+    if (!el) return;
+    const now = Date.now();
+    const departure = departureDay(data.departureDate);
+    let message;
+    if (data.departureDate == null) {
+      message = '日程が決まり次第、出発までの日数をお知らせします。';
+    } else if (departure === null) {
+      message = '出発日を確認中です。日程が決まり次第、出発までの日数をお知らせします。';
+    } else {
+      const remaining = departure - Math.floor((now + japanOffsetMs) / dayMs);
+      if (remaining > 0) message = `出発まであと${remaining}日`;
+      else if (remaining === 0) message = 'いよいよ出発当日です！';
+      // 現在の旅行は1泊2日。翌日を2日目、その翌日以降を旅行終了後として扱います。
+      else if (remaining === -1) message = '今日は旅行2日目です。';
+      else message = '今回の旅行は終了しました。';
+    }
+    // 同じ文章での繰り返し通知を避けます。
+    if (el.textContent !== message) el.textContent = message;
+    clearTimeout(countdownTimer);
+    // 日本時間の午前0時に更新。端末の時計変更も最長1分で反映します。
+    const untilMidnight = dayMs - ((now + japanOffsetMs) % dayMs);
+    countdownTimer = setTimeout(updateCountdown, Math.min(60 * 1000, untilMidnight));
+  }
+  updateCountdown();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) updateCountdown();
+  });
+  window.addEventListener('pageshow', updateCountdown);
+
   setText('trip-status', data.status);
   setText('last-update', `更新：${data.updatedAt}`);
   setText('hero-pill', `2026年12月〜2027年1月 · ${data.status}`);
