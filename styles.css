@@ -221,3 +221,40 @@
   .rate-prices--three div{padding-top:8px;}
   .reference-rate-row{gap:8px;}
 }
+
+/* v1.0: 往復ドライブルート比較・冬季の仮工程 */
+.route-lead{
+  background:#fff;border:1px solid #d9d1bf;border-left:4px solid var(--gold);
+  border-radius:10px;padding:16px 20px;font-size:13px;line-height:1.9;margin-bottom:16px;
+}
+.route-cost-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.route-cost-card{position:relative;min-width:0;background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;}
+.route-cost-card--featured{border:2px solid #a58b5f;background:#fcfbf6;}
+.route-cost-card h3{font-size:15px;margin:0 0 12px;line-height:1.6;}
+.route-recommend{display:inline-block;color:#76572f;background:#f1e4cb;border-radius:20px;font-size:11px;font-weight:700;padding:3px 10px;margin:0 0 8px;}
+.route-cost-total{display:block;color:var(--night);font-size:26px;font-variant-numeric:tabular-nums;line-height:1.4;overflow-wrap:anywhere;}
+.route-cost-breakdown{font-size:12px;color:#53636b;line-height:1.85;margin:10px 0 8px;}
+.route-cost-details{font-size:11px;color:#67787d;margin:4px 0;line-height:1.65;}
+#route-compare .note{font-size:12px;line-height:1.85;overflow-wrap:anywhere;}
+#panel1,#panel2{max-width:930px;}
+.drive-subheading{font-size:17px;margin:30px 0 16px;padding-top:18px;border-top:1px solid var(--line);}
+.drive-option-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;}
+.drive-option{min-width:0;border:1px solid #e1e2dc;border-radius:13px;background:#fafaf7;padding:20px;}
+.drive-option-heading{font-size:15px;margin:0 0 8px;line-height:1.55;}
+.drive-option-caption{font-size:12px;color:#58676d;line-height:1.75;margin:0 0 10px;}
+.drive-option-specs{font-size:11px;line-height:1.8;color:#49606b;background:#f0f3f1;padding:9px 11px;border-radius:7px;margin:0 0 12px;}
+.drive-stop-list{display:grid;gap:0;}
+.drive-stop{display:grid;grid-template-columns:90px minmax(0,1fr);gap:10px;padding:11px 0;border-top:1px solid #e5e6e1;}
+.drive-stop-time{font-size:11px;font-weight:750;color:#8a6d46;font-variant-numeric:tabular-nums;line-height:1.6;overflow-wrap:anywhere;}
+.drive-stop strong{display:block;font-size:12px;line-height:1.6;overflow-wrap:anywhere;}
+.drive-stop p{font-size:11px;line-height:1.7;color:#647479;margin:3px 0 0;overflow-wrap:anywhere;}
+.drive-option-warning{background:#fff6e7;border:1px solid #e5c996;color:#71552e;border-radius:7px;padding:9px 11px;font-size:11px;line-height:1.75;}
+@media(max-width:720px){
+  .route-cost-grid,.drive-option-list{grid-template-columns:1fr;}
+  .route-cost-card,.drive-option{padding:17px;}
+  .route-cost-total{font-size:23px;}
+  .route-lead{padding:14px 16px;}
+  .drive-subheading{font-size:15px;}
+  .drive-stop{grid-template-columns:83px minmax(0,1fr);gap:8px;}
+  #panel1,#panel2{padding:22px 16px;}
+}
