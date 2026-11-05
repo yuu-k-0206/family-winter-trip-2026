@@ -88,7 +88,7 @@
     const card = textElement('article', 'choice', '');
     const cap = textElement('span', 'cap', date.label);
     const tag = textElement('span', 'corner-tag', date.badge);
-    if (date.badge !== '有力候補' && date.badge !== '第1希望') tag.classList.add('muted');
+    if (date.badge !== '有力候補' && date.badge !== '第1希望' && date.badge !== '一旦決定') tag.classList.add('muted');
     card.append(cap, tag, textElement('h3', '', date.range), textElement('p', '', date.detail));
     dateList.append(card);
   });
