@@ -69,6 +69,15 @@
       <p class="attention" id="decision-note">旅行日程は12月9日〜10日に一旦決定。ただし業務都合で延期の可能性があり、宿泊予約は未確認です。</p>
     </section>
 
+    <section class="section section-compact" id="trip-style" aria-labelledby="trip-style-heading">
+      <div class="trip-concept">
+        <span class="cap">OUR TRIP STYLE</span>
+        <h2 id="trip-style-heading">移動は少なく、満足は濃く。</h2>
+        <p id="concept-description">宿での温泉や食事を中心に、ゆったり過ごす旅行を目指します。</p>
+        <small id="concept-note">観光や立ち寄り先は未決定です。</small>
+      </div>
+    </section>
+
     <section class="section" id="latest-updates" aria-labelledby="latest-updates-heading">
       <div class="section-head"><span class="en">LATEST UPDATE</span><h2 id="latest-updates-heading">最新のお知らせ</h2></div>
       <div id="latest-update"><p class="note">現在、お知らせはありません。</p></div>
@@ -88,7 +97,11 @@
           <p><strong id="cancel-free-until">2026年11月28日(土) 23:59まで</strong></p>
           <p id="cancel-fee-from">11月29日(日)から通常20%のキャンセル料が発生します。</p>
           <p class="field-note" id="cancel-caution">予約サイト・プランごとの規定を確認してください。</p>
-          <p class="field-note"><a href="https://travel.rakuten.co.jp/hotel/32388/32388_std.html" target="_blank" rel="noopener noreferrer">楽天トラベル掲載のキャンセル規定を確認する</a></p>
+          <p class="field-note"><a href="https://travel.rakuten.co.jp/HOTEL/32388/32388_std.html" target="_blank" rel="noopener noreferrer">楽天トラベル掲載のキャンセル規定を確認する</a></p>
+          <details class="inline-details">
+            <summary>日付別のキャンセル料率を表示</summary>
+            <div class="fee-list" id="cancel-period-list"></div>
+          </details>
         </article>
       </div>
       <a class="updates-link" href="#booking-info">華鳳の空室・料金を詳しく見る <span aria-hidden="true">↓</span></a>
@@ -109,34 +122,65 @@
       <div id="lodging-list"></div>
       <div class="empty" id="lodging-empty"><strong>宿泊候補はこれから掲載</strong><p>候補が見つかったら、宿の名前・場所・特徴・公式サイトへのリンクを比較できます。</p></div>
       <div class="progress-track" aria-label="旅行準備の進め方">
-        <div class="progress-step current"><b>STEP 1</b>日程・宿を相談</div>
-        <div class="progress-step"><b>STEP 2</b>予約と移動を決定</div>
+        <div class="progress-step done"><b>STEP 1</b>日程を一旦決定</div>
+        <div class="progress-step current"><b>STEP 2</b>宿泊予約・移動を検討</div>
         <div class="progress-step"><b>STEP 3</b>旅程を完成</div>
       </div>
     </section>
 
     <section class="section" id="booking-info" aria-labelledby="booking-heading">
-      <div class="section-head"><span class="en">ROOM &amp; AVAILABILITY</span><h2 id="booking-heading">華鳳の空室・宿泊料金</h2><p>希望客室：デラックス和室16畳・禁煙｜大人5名＋子供2名、1室・1泊2食付き</p></div>
+      <div class="section-head"><span class="en">ROOM &amp; AVAILABILITY</span><h2 id="booking-heading">華鳳の宿泊料金・調査記録</h2><p>希望客室：デラックス和室16畳・禁煙｜大人5名＋子供2名、1室・1泊2食付き</p></div>
       <div class="booking-intro" id="booking-intro"></div>
       <div class="booking-offers" id="booking-prices"></div>
       <p class="note" id="booking-note"></p>
       <div class="booking-extra">
         <article class="info-card">
-          <span class="cap">OTHER DATES</span><h3>その他の空室確認日</h3>
-          <ul class="booking-text-list" id="booking-other-dates"></ul>
-          <p class="field-note" id="booking-other-note"></p>
-        </article>
-        <article class="info-card">
-          <span class="cap">TO BE CONFIRMED</span><h3>子供料金・これから確認すること</h3>
+          <span class="cap">TO BE CONFIRMED</span><h3>予約前に確認すること</h3>
           <p id="booking-children"></p>
           <ul class="booking-text-list" id="booking-pending"></ul>
         </article>
+        <article class="info-card">
+          <span class="cap">STAY GUIDE</span><h3>到着・出発時刻の目安</h3>
+          <p>チェックイン：<strong id="booking-checkin">要確認</strong></p>
+          <p>チェックアウト：<strong id="booking-checkout">要確認</strong></p>
+          <p class="field-note" id="booking-stay-note">実際の予約プランによって異なる場合があります。</p>
+          <p class="field-note">駐車場の利用や食事時間も予約時に確認します。</p>
+        </article>
       </div>
+      <details class="booking-details">
+        <summary>子供の料金区分・仮検索条件の詳細</summary>
+        <div class="reference-rate-list" id="booking-child-rates"></div>
+        <p>食事・寝具の選択可否は年齢・予約プランにより異なります。6歳のお子様についても実際の就学区分を確認します。</p>
+        <p><a href="https://www.kahou.com/family/" target="_blank" rel="noopener noreferrer">華鳳公式・お子様連れの案内</a></p>
+      </details>
+      <details class="booking-details">
+        <summary>以前の候補日・他の日程の調査履歴</summary>
+        <ul class="booking-text-list" id="booking-other-dates"></ul>
+        <p class="field-note" id="booking-other-note"></p>
+      </details>
       <details class="booking-details">
         <summary>参考記録：特別客室「離れ」の概算料金（今回の候補外）</summary>
         <p id="booking-luxury"></p>
       </details>
       <p class="note">情報源：<a href="https://www.kahou.com/" target="_blank" rel="noopener noreferrer">白玉の湯 華鳳 公式サイト</a>の予約画面。予約状況と料金は変動するため、決定前に最新情報を再確認してください。</p>
+    </section>
+
+    <section class="section" id="travel-budget" aria-labelledby="budget-heading">
+      <div class="section-head"><span class="en">TRAVEL &amp; BUDGET</span><h2 id="budget-heading">移動と予算の目安</h2><p>宿泊料金と過去の交通費試算を合わせた参考額です。最終的な費用ではありません。</p></div>
+      <div class="booking-extra">
+        <article class="info-card">
+          <span class="cap">TRANSPORT</span><h3>アルファード1台・往復交通費</h3>
+          <p class="budget-figure" id="budget-transport">算定中</p>
+          <p class="field-note" id="budget-source-date"></p>
+          <p id="budget-condition"></p>
+        </article>
+        <article class="info-card">
+          <span class="cap">TOTAL ESTIMATE</span><h3>宿泊通常料金＋入湯税＋交通費</h3>
+          <p class="budget-figure" id="budget-combined">算定中</p>
+          <p class="field-note">予備費・昼食・観光費などは含まれていません。</p>
+        </article>
+      </div>
+      <p class="note" id="budget-note"></p>
     </section>
 
     <section class="section" id="schedule">
@@ -162,6 +206,6 @@
       <p class="privacy"><strong>公開に関する注意：</strong>このサイトはURLを知る人以外からも閲覧される可能性があります。氏名・住所・電話番号・リアルタイムの居場所などは掲載しない方針です。<code>noindex</code> は検索エンジンへの依頼であり、アクセス制限ではありません。</p>
     </section>
   </main>
-  <footer>FAMILY WINTER TRIP 2026 · v0.8</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v0.9</footer>
 </body>
 </html>

@@ -188,3 +188,36 @@
   .rate-card{padding:18px;}
   .rate-prices strong{font-size:16px;}
 }
+
+
+/* v0.9: 旅行情報の統合表示（既存のスマホ対応・端末内保存は維持） */
+.section-compact{margin-top:38px;}
+.trip-concept{
+  padding:28px 32px;border:1px solid #d0bc93;border-radius:16px;
+  background:linear-gradient(135deg,#223944,#2e4a55);color:#f5f5f0;
+}
+.trip-concept .cap{color:#e7cfa5;font:700 11px Georgia,serif;letter-spacing:.17em;}
+.trip-concept h2{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:clamp(22px,3.2vw,29px);font-weight:500;margin:8px 0;}
+.trip-concept p{font-size:14px;line-height:1.95;color:#e4edeb;max-width:850px;margin:0 0 8px;}
+.trip-concept small{display:block;color:#c2d4d5;font-size:11px;line-height:1.8;}
+.progress-step.done{border-color:#cdd9d3;background:#f2f6f2;}
+.inline-details{margin-top:14px;border-top:1px solid #e8e5dd;padding-top:11px;}
+.inline-details summary{font-size:12px;color:#375e6a;cursor:pointer;font-weight:650;}
+.fee-list{margin-top:12px;}
+.fee-row,.reference-rate-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px;padding:9px 0;border-bottom:1px solid #ecebe6;font-size:12px;line-height:1.65;}
+.fee-row:last-child,.reference-rate-row:last-child{border-bottom:0;}
+.fee-row strong,.reference-rate-row>strong{white-space:nowrap;font-variant-numeric:tabular-nums;color:#344b54;}
+.reference-rate-list{margin-top:12px;}
+.reference-rate-row small{display:block;color:#78858a;font-size:11px;margin-top:3px;}
+#booking-prices{grid-template-columns:1fr;}
+.rate-prices--three{grid-template-columns:repeat(3,minmax(0,1fr));}
+.rate-prices small{display:block;color:#6c797d;font-size:11px;line-height:1.7;margin-top:5px;}
+.budget-figure{font-size:clamp(22px,3.5vw,27px)!important;font-weight:700;color:#253b47!important;font-variant-numeric:tabular-nums;margin:4px 0 8px!important;}
+@media(max-width:720px){
+  .section-compact{margin-top:26px;}
+  .trip-concept{padding:23px 20px;}
+  .trip-concept p{font-size:13px;}
+  .rate-prices--three{grid-template-columns:1fr;}
+  .rate-prices--three div{padding-top:8px;}
+  .reference-rate-row{gap:8px;}
+}
