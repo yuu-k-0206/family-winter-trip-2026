@@ -129,12 +129,24 @@
     });
   });
 
-  const updatesList = get('updates-list');
-  list(data.updates).forEach((item) => {
+  // 日付（YYYY.MM.DD）の新しい順にコピーし、元の旅行データは変更しません。
+  const updates = list(data.updates)
+    .filter(item => item && typeof item.text === 'string' && item.text.trim())
+    .sort((a, b) => String(b.date ?? '').localeCompare(String(a.date ?? '')));
+  const updateArticle = (item) => {
     const article = document.createElement('article');
     article.className = 'updates';
     const time = textElement('time', '', item.date);
     article.append(time, textElement('p', '', item.text));
-    updatesList.append(article);
-  });
+    return article;
+  };
+  const latestUpdate = get('latest-update');
+  if (latestUpdate && updates.length) {
+    latestUpdate.replaceChildren(updateArticle(updates[0]));
+  }
+  const updatesList = get('updates-list');
+  updates.forEach(item => updatesList.append(updateArticle(item)));
+  if (!updates.length) {
+    updatesList.append(textElement('p', 'note', '現在、お知らせはありません。'));
+  }
 })();

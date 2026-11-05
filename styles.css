@@ -135,6 +135,9 @@
 .lodging-row a{display:inline-block;margin-top:9px;color:#174f73;text-underline-offset:4px;font-size:13px;}
 .list-status{font-size:11px;background:#f5f1e7;border-radius:30px;padding:6px 12px;color:#745d40;white-space:nowrap;}
 .updates-list{display:grid;gap:10px;}
+.updates-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;width:fit-content;max-width:100%;margin:14px auto 0;padding:8px 16px;border:1px solid var(--line);border-radius:7px;background:var(--paper);font-size:13px;text-underline-offset:4px;}
+.updates-link:hover{background:#f3eee4;}
+#latest-update .updates p{overflow-wrap:anywhere;}
 #packing-reset{margin-top:14px;background:transparent;border:1px solid #b0b8b7;border-radius:7px;color:#435b65;padding:8px 14px;font-size:12px;cursor:pointer;}
 #packing-reset:hover{background:#fff;}
 #packing-reset:focus-visible,.day-tabs button:focus-visible,a:focus-visible{outline:3px solid #b7935f;outline-offset:3px;}
