@@ -76,6 +76,21 @@
   setText('cancel-free-until', data.cancellation?.freeUntil);
   setText('cancel-fee-from', data.cancellation?.feeFrom);
   setText('cancel-caution', data.cancellation?.caution);
+  setText('concept-description', data.concept?.description);
+  setText('concept-note', data.concept?.note);
+  setText('budget-transport', Number.isFinite(data.travelBudget?.total) ? data.travelBudget.total.toLocaleString('ja-JP') + '円' : '確認中');
+  setText('budget-combined', Number.isFinite(data.travelBudget?.combined) ? '約' + data.travelBudget.combined.toLocaleString('ja-JP') + '円' : '確認中');
+  setText('budget-source-date', data.travelBudget?.surveyedAt);
+  setText('budget-condition', data.travelBudget?.condition);
+  setText('budget-note', data.travelBudget?.note);
+  const cancelPeriods = get('cancel-period-list');
+  if (cancelPeriods) {
+    list(data.cancellation?.periods).forEach((item) => {
+      const row = textElement('div', 'fee-row', '');
+      row.append(textElement('span', '', item.when), textElement('strong', '', item.percent));
+      cancelPeriods.append(row);
+    });
+  }
   setText('summary-destination', data.destination);
   setText('overview-members', data.members);
   setText('overview-members-detail', data.membersDetail);
@@ -128,6 +143,17 @@
       textElement('p', '', '以下は調査時点の記録で、リアルタイムの空室・料金ではありません。掲載料金は上記の仮検索条件での1室・1泊の合計です。')
     );
     const archivedCards = [];
+    setText('booking-checkin', bookingData.checkIn || '要確認');
+    setText('booking-checkout', bookingData.checkOut || '要確認');
+    setText('booking-stay-note', bookingData.checkInNote || '予約プランを確認してください。');
+    const childRatesEl = get('booking-child-rates');
+    if (childRatesEl) list(bookingData.childrenRates).forEach((item) => {
+      const row = textElement('div', 'reference-rate-row', '');
+      const label = textElement('div', '', '');
+      label.append(textElement('strong', '', item.label), textElement('small', '', item.note || ''));
+      row.append(label, textElement('strong', '', yen(item.price)));
+      childRatesEl.append(row);
+    });
     list(bookingData.offers).forEach((offer, offerIndex) => {
       const card = document.createElement('article');
       card.className = 'rate-card' + (offer.available ? '' : ' rate-card--closed');
@@ -138,10 +164,16 @@
       const status = textElement('span', 'rate-status' + (offer.available ? ' rate-status--open' : ' rate-status--closed'), offer.available ? '調査時：空室表示あり' : '調査時：満室');
       head.append(heading, status);
       const prices = document.createElement('div');
-      prices.className = 'rate-prices';
-      [['通常料金', 'standard'], ['会員料金', 'member']].forEach(([label, field]) => {
+      prices.className = 'rate-prices' + (offerIndex === 0 ? ' rate-prices--three' : '');
+      const priceKinds = offerIndex === 0
+        ? [['通常料金', 'standard'], ['事前カード決済', 'prepaid'], ['会員料金', 'member']]
+        : [['通常料金', 'standard'], ['会員料金', 'member']];
+      priceKinds.forEach(([label, field]) => {
         const row = document.createElement('div');
         row.append(textElement('span', '', label), textElement('strong', '', yen(offer[field])));
+        if (offerIndex === 0 && Number.isFinite(offer[field]) && Number.isFinite(bookingData.bathTax)) {
+          row.append(textElement('small', '', '入湯税込の参考合計 ' + yen(offer[field] + bookingData.bathTax)));
+        }
         prices.append(row);
       });
       const note = textElement('p', 'rate-note', offer.note || '');
