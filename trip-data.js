@@ -6,7 +6,7 @@
   編集後に Ctrl + S で保存 → index.html を開いて F5 で更新。
 */
 window.TRIP_DATA = {
-  updatedAt: "2026.11.05",
+  updatedAt: "2026.11.06",
   status: "12月9日(水)〜10日(木)・華鳳の宿泊予約完了",
   destination: "新潟・月岡温泉",
   stayName: "白玉の湯 華鳳",
