@@ -258,3 +258,42 @@
   .drive-stop{grid-template-columns:83px minmax(0,1fr);gap:8px;}
   #panel1,#panel2{padding:22px 16px;}
 }
+
+/* v1.1候補：華鳳の食事・館内案内（写真転載なし、公式ギャラリーリンク） */
+.kahou-experience .section-head p{max-width:730px;}
+.kahou-meals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch;}
+.kahou-meal{display:flex;flex-direction:column;min-width:0;padding:29px 29px 26px;background:#fff;border:1px solid #dfd8c9;border-top:4px solid var(--gold);border-radius:15px;box-shadow:0 10px 24px #192a3709;}
+.kahou-meal--breakfast{border-top-color:#7897a1;}
+.kahou-card-top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.kahou-card-kicker{color:#9c7d52;letter-spacing:.15em;font:700 11px Georgia,serif;}
+.kahou-meal--breakfast .kahou-card-kicker{color:#527481;}
+.kahou-highlight{font-size:11px;font-weight:700;color:#795e3b;background:#f4eddf;border-radius:20px;padding:5px 12px;}
+.kahou-meal--breakfast .kahou-highlight{color:#426873;background:#eaf2f4;}
+.kahou-meal h3{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:clamp(25px,3.2vw,32px);font-weight:500;line-height:1.55;margin:18px 0 14px;color:var(--night);}
+.kahou-meal h3 span{display:block;font-size:15px;font-family:inherit;margin-top:3px;letter-spacing:.03em;}
+.kahou-meal>p{font-size:13px;line-height:1.95;color:#52656c;margin:0 0 17px;}
+.kahou-facts{margin:0 0 14px;padding:12px 0;border-block:1px solid #eeeae3;}
+.kahou-facts>div{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:12px;padding:6px 0;font-size:12px;line-height:1.7;}
+.kahou-facts dt{font-weight:700;color:#806a4c;}
+.kahou-facts dd{margin:0;color:#455961;overflow-wrap:anywhere;}
+.kahou-meal .kahou-small-note{font-size:11px;color:#748087;line-height:1.8;margin:0 0 20px;}
+.kahou-gallery-link{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;width:100%;margin-top:auto;padding:11px 16px;border-radius:8px;background:var(--night2);color:#fff;text-decoration:none;font-size:13px;font-weight:650;line-height:1.6;}
+.kahou-gallery-link:hover{background:#365462;}
+.kahou-gallery-link span{font-size:18px;line-height:1;}
+.kahou-stay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px;}
+.kahou-stay-card{min-width:0;display:flex;flex-direction:column;padding:23px 24px;background:#faf9f6;border:1px solid var(--line);border-radius:13px;}
+.kahou-stay-card h3{font-size:17px;line-height:1.55;color:#30434b;margin:8px 0 7px;}
+.kahou-stay-card p{font-size:12px;color:#66777d;line-height:1.85;margin:0 0 18px;}
+.kahou-gallery-link--sub{min-height:44px;background:#fff;color:#274454;border:1px solid #b6c2c4;font-size:12px;}
+.kahou-gallery-link--sub:hover{background:#edf3f2;}
+.kahou-source-note{margin:14px 2px 0;color:#778489;font-size:11px;line-height:1.85;}
+@media(max-width:720px){
+  .kahou-meals,.kahou-stay-grid{grid-template-columns:1fr;}
+  .kahou-meals{gap:13px;}
+  .kahou-meal{padding:22px 19px 20px;}
+  .kahou-meal h3{font-size:27px;}
+  .kahou-facts>div{grid-template-columns:83px minmax(0,1fr);column-gap:8px;}
+  .kahou-stay-grid{gap:11px;margin-top:13px;}
+  .kahou-stay-card{padding:20px;}
+  .kahou-gallery-link{font-size:12px;}
+}
