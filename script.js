@@ -131,6 +131,9 @@
     lodgingList.append(row);
   });
 
+  // 客室の希望は「確約」ではなく、trip-data.js の案内文をそのまま表示。
+  setText('kahou-room-request', data.roomRequestNote || '客室の眺望・階層は未確定です。');
+
   // 華鳳の調査結果：調査日のスナップショットとして表示（リアルタイム空室ではない）。
   const bookingData = data.booking || {};
   const bookingPrices = get('booking-prices');
