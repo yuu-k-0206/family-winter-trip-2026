@@ -5,7 +5,8 @@
 - 公開URL: https://yuu-k-0206.github.io/family-winter-trip-2026/
 - GitHub Pages は `main` ブランチのリポジトリ直下から公開する。
 - HTML / CSS / vanilla JavaScript / SVG。特段の理由がなければ依存パッケージ・ビルド工程を追加しない。
-- `index.html`: 画面構造、`styles.css`: 見た目、`script.js`: 動作、`trip-data.js`: 旅行情報、`winter-illustration.svg`: イラスト。
+- `index.html`: ホーム、`hotel.html`: 旅館・食事、`schedule.html`: 予定、`budget.html`: 費用・ルート、`packing.html`: 持ち物。
+- `styles.css`: 共通の見た目、`script.js`: 各ページ共通の動作（表示先がないときは安全にスキップ）、`trip-data.js`: 旅行情報の唯一の正本、`winter-illustration.svg`: イラスト。
 
 ## 作業ルール
 1. 作業開始時に `main` の最新内容を取得・確認し、古いローカルコピーで上書きしない。

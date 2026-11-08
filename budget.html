@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 検索結果に載せないよう検索エンジンに依頼します。アクセス制限ではありません。 -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="行き・帰りのルートと交通費の比較。掲載金額は調査時点の暫定試算です。">
+  <meta name="theme-color" content="#192a37">
+  <title>費用・ルート｜家族冬旅行 2026</title>
+  <!-- CSSは見た目を担当 -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
+  <script defer src="trip-data.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body data-page="budget">
+  <a class="skip-link" href="#travel-budget">本文へ移動</a>
+  <header><div class="wrap header-inner"><a href="index.html#top" class="brand" aria-label="ホームへ戻る"><span class="brand-symbol">旅</span><span class="brand-title">FAMILY WINTER TRIP<small>DECEMBER · 2026</small></span></a><nav class="nav" aria-label="メインメニュー">
+        <a href="index.html">ホーム</a>
+        <a href="hotel.html">旅館</a>
+        <a href="schedule.html">予定</a>
+        <a href="budget.html" aria-current="page">費用</a>
+        <a href="packing.html">持ち物</a>
+</nav></div></header>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">12月9日〜10日・華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
+  <div class="subpage-hero" id="top"><div class="wrap"><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>費用・ルート</h1><p>行き・帰りのルートと交通費の比較。掲載金額は調査時点の暫定試算です。</p></div></div>
+  <main class="wrap subpage-main">
+<section class="section" id="travel-budget" aria-labelledby="budget-heading">
+      <div class="section-head"><span class="en">TRAVEL &amp; BUDGET</span><h2 id="budget-heading">移動と予算の目安</h2><p>最新の仮ルートを基にした試算。出発地の詳細は公開しません。</p></div>
+      <div class="booking-extra">
+        <article class="info-card">
+          <span class="cap">TRANSPORT</span><h3>行き魚沼・帰り高速の往復概算</h3>
+          <p class="budget-figure" id="budget-transport">算定中</p>
+          <p class="field-note" id="budget-source-date"></p>
+          <p id="budget-condition"></p>
+        </article>
+        <article class="info-card">
+          <span class="cap">TOTAL ESTIMATE</span><h3>宿泊実費を含む旅行総額</h3>
+          <p class="budget-figure" id="budget-combined">算定中</p>
+          <p class="field-note">予約済みプランの実額未照合につき、総額は未確定です。</p>
+        </article>
+      </div>
+      <p class="note" id="budget-note"></p>
+    </section>
+
+<section class="section" id="route-compare" aria-labelledby="route-compare-heading">
+      <div class="section-head">
+        <span class="en">DRIVE ROUTE COMPARISON</span>
+        <h2 id="route-compare-heading">往復ルート・交通費を比較</h2>
+        <p>魚沼IC経由と豊栄新潟東港IC経由。行きと帰りの組み合わせを比べられます。</p>
+      </div>
+      <p class="route-lead">おすすめの仮案は<strong>行き：魚沼IC経由／帰り：高速優先</strong>。行きはご当地の道の駅、帰りは長岡観光を楽しむ計画です。雪や道路規制がある場合は高速優先・寄り道短縮などへ切り替えます。</p>
+      <div class="route-cost-grid" id="route-cost-comparisons">
+        <p class="note">比較データを読み込んでいます。</p>
+      </div>
+      <p class="note" id="route-assumptions"></p>
+      <p class="note" id="route-reserve-note"></p>
+      <p class="note" id="route-previous-note"></p>
+      <a class="updates-link" href="schedule.html#schedule">日別の寄り道・休憩工程を見る <span aria-hidden="true">↓</span></a>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="スマートフォン用メニュー">
+    <a href="index.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>ホーム</span></a>
+    <a href="hotel.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2M14 7h2M8 11h2M14 11h2M9 21v-6h6v6"/></svg><span>旅館</span></a>
+    <a href="schedule.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span>予定</span></a>
+    <a href="budget.html" aria-current="page"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
+    <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
+  </nav>
+  <footer>FAMILY WINTER TRIP 2026 · v1.3</footer>
+</body>
+</html>
