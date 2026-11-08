@@ -87,6 +87,7 @@
   setText('cancel-free-until', data.cancellation?.freeUntil);
   setText('cancel-fee-from', data.cancellation?.feeFrom);
   setText('cancel-caution', data.cancellation?.caution);
+  setText('insurance-note', data.cancellation?.insuranceNote);
   setText('concept-description', data.concept?.description);
   setText('concept-note', data.concept?.note);
   setText('budget-transport', Number.isFinite(data.travelBudget?.total) ? data.travelBudget.total.toLocaleString('ja-JP') + '円' : '確認中');
@@ -153,6 +154,8 @@
 
   // 華鳳の調査結果：調査日のスナップショットとして表示（リアルタイム空室ではない）。
   const bookingData = data.booking || {};
+  setText('booking-plan-name', bookingData.planName);
+  setText('booking-summary', bookingData.checkSummary);
   const bookingPrices = get('booking-prices');
   if (bookingPrices) {
     const yen = amount => Number.isFinite(amount) ? `${amount.toLocaleString('ja-JP')}円` : '—';
@@ -254,7 +257,13 @@
   }
   setText('route-assumptions', drivePlan.assumptions || '');
   setText('route-reserve-note', drivePlan.reserveNote || '');
-  setText('route-previous-note', drivePlan.previousBudgetNote || '');
+  setText('winter-route-note', drivePlan.winterNote);
+  setText('winter-timing-note', drivePlan.timingNote);
+  const transportBudget = data.travelBudget;
+  if (transportBudget) {
+    setText('budget-breakdown', '高速料金 ' + money(transportBudget.toll) +
+      ' ＋ 燃料代 約' + money(transportBudget.fuel) + ' ＋ 予備費 ' + money(drivePlan.reserveYen));
+  }
 
   // 日別の2ルート工程。文字列はすべて textContent で表示します。
   // 1日目・2日目のタイムライン
