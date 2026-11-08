@@ -297,3 +297,41 @@
   .kahou-stay-card{padding:20px;}
   .kahou-gallery-link{font-size:12px;}
 }
+/* v1.3：独立ページと固定ナビゲーション */
+@media(min-width:721px) {header {position:sticky;top:0;z-index:50;}}
+.nav a[aria-current="page"] {color:#8d6e40;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px;}
+.bottom-nav {display:none;}
+.subpage-hero {background:linear-gradient(135deg,var(--night),#304e5b);color:#fff;padding:48px 0 44px;}
+.subpage-hero h1 {font-size:clamp(31px,5vw,46px);white-space:normal;margin:14px 0 11px;letter-spacing:.06em;}
+.subpage-hero p {margin:0;max-width:770px;font-size:14px;color:#dce7e7;line-height:1.95;}
+.subpage-main {min-height:48vh;}
+.subpage-main>.section:first-child {margin-top:50px;}
+.quick-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;}
+.quick-card {display:flex;flex-direction:column;gap:5px;padding:24px 26px;border:1px solid #dcd9d0;border-radius:14px;background:#fff;text-decoration:none;min-width:0;}
+.quick-card:hover {background:#fbf8f0;border-color:var(--gold);}
+.quick-card:focus-visible {outline:3px solid var(--gold);outline-offset:3px;}
+.quick-card span {font:700 11px Georgia,serif;color:#a78d65;letter-spacing:.15em;}
+.quick-card strong {font-size:19px;color:#293f4a;}
+.quick-card small {font-size:12px;color:#67777a;}
+@media(max-width:720px) {
+  header .nav {display:none;}
+  .bottom-nav {position:fixed;bottom:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:5px max(3px,env(safe-area-inset-right)) calc(5px + env(safe-area-inset-bottom)) max(3px,env(safe-area-inset-left));background:#1b303d;border-top:1px solid #71818a;box-shadow:0 -5px 25px #13252e35;}
+  .bottom-nav a {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:59px;color:#d9e2e3;text-decoration:none;font-size:11px;font-weight:650;line-height:1.35;white-space:nowrap;border-radius:7px;}
+  .bottom-nav a[aria-current="page"] {color:#f5d8a1;background:#ffffff14;}
+  .bottom-nav a:focus-visible {outline:2px solid #f5d8a1;outline-offset:-2px;}
+  .bottom-nav svg {flex-shrink:0;}
+  footer {padding-bottom:calc(91px + env(safe-area-inset-bottom));}
+  .subpage-hero {padding:33px 0 29px;}
+  .subpage-hero h1 {font-size:clamp(29px,8vw,38px);margin:11px 0 9px;}
+  .subpage-hero p {font-size:12px;line-height:1.85;}
+  .subpage-main>.section:first-child {margin-top:39px;}
+  .quick-grid {gap:10px;}
+  .quick-card {padding:17px 15px;}
+  .quick-card strong {font-size:15px;}
+  .quick-card small {font-size:11px;line-height:1.6;}
+}
+@media(max-width:355px) {
+  .bottom-nav a {font-size:10px;gap:2px;}
+  .bottom-nav svg {width:21px;height:21px;}
+  .quick-grid {grid-template-columns:1fr;}
+}

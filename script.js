@@ -13,6 +13,17 @@
     return;
   }
 
+  // 旧版で共有済みのホーム内リンクも、新しい独立ページに移動させる。
+  const legacyLinks = {'kahou-experience':'hotel.html','discuss':'hotel.html','booking-info':'hotel.html','travel-budget':'budget.html','route-compare':'budget.html','schedule':'schedule.html','packing':'packing.html'};
+  const currentFile = window.location.pathname.split('/').pop();
+  if ((!currentFile || currentFile === 'index.html') && window.location.hash) {
+    const anchor = window.location.hash.slice(1);
+    if (Object.prototype.hasOwnProperty.call(legacyLinks,anchor)) {
+      window.location.replace(legacyLinks[anchor] + window.location.hash);
+      return;
+    }
+  }
+
   const get = id => document.getElementById(id);
   const setText = (id, value) => { const el=get(id); if(el) el.textContent = String(value ?? ''); };
   const textElement = (tag, cls, content) => {
@@ -99,6 +110,7 @@
   setText('overview-stay', `宿泊先：${data.stayName}`);
 
   const dateList = get('date-options');
+  if (dateList) {
   list(data.dates).forEach((date) => {
     const card = textElement('article', 'choice', '');
     const cap = textElement('span', 'cap', date.label);
@@ -111,8 +123,11 @@
     dateList.append(textElement('p', 'note', '日程候補は調整中です。'));
   }
 
+  }
+
   // 宿泊候補：追加した分だけカードが増えます
   const lodgingList = get('lodging-list');
+  if (lodgingList) {
   const lodgingCandidates = list(data.lodgingCandidates);
   get('lodging-empty').hidden = lodgingCandidates.length > 0;
   lodgingCandidates.forEach((candidate) => {
@@ -130,6 +145,8 @@
     row.append(info, textElement('span', 'list-status', candidate.status || '検討中'));
     lodgingList.append(row);
   });
+
+  }
 
   // 客室の希望は「確約」ではなく、trip-data.js の案内文をそのまま表示。
   setText('kahou-room-request', data.roomRequestNote || '客室の眺望・階層は未確定です。');
@@ -242,6 +259,7 @@
   // 日別の2ルート工程。文字列はすべて textContent で表示します。
   // 1日目・2日目のタイムライン
   const panels = [get('panel1'), get('panel2')];
+  if (panels.every(Boolean)) {
   list(data.itinerary).slice(0,2).forEach((day, dayIndex) => {
     const panel = panels[dayIndex];
     const timeline = document.createElement('div');
@@ -314,8 +332,11 @@
     });
   });
 
+  }
+
   // チェックリスト：localStorageは閲覧している端末の中だけに保存
   const checks = get('checklist');
+  if (checks) {
   const prefix = 'family-trip-2026-v04-';
   list(data.packing).forEach((item) => {
     const row = document.createElement('label');
@@ -337,6 +358,8 @@
     });
   });
 
+  }
+
   // 日付（YYYY.MM.DD）の新しい順にコピーし、元の旅行データは変更しません。
   const updates = list(data.updates)
     .filter(item => item && typeof item.text === 'string' && item.text.trim())
@@ -353,8 +376,8 @@
     latestUpdate.replaceChildren(updateArticle(updates[0]));
   }
   const updatesList = get('updates-list');
-  updates.forEach(item => updatesList.append(updateArticle(item)));
-  if (!updates.length) {
-    updatesList.append(textElement('p', 'note', '現在、お知らせはありません。'));
+  if (updatesList) {
+    updates.forEach(item => updatesList.append(updateArticle(item)));
+    if (!updates.length) updatesList.append(textElement('p', 'note', '現在、お知らせはありません。'));
   }
 })();
