@@ -298,7 +298,7 @@
   .kahou-gallery-link{font-size:12px;}
 }
 /* v1.3：独立ページと固定ナビゲーション */
-@media(min-width:721px) {header {position:sticky;top:0;z-index:50;}}
+@media(min-width:721px) {header {position:sticky;top:0;z-index:50;} .section {scroll-margin-top:100px;}}
 .nav a[aria-current="page"] {color:#8d6e40;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px;}
 .bottom-nav {display:none;}
 .subpage-hero {background:linear-gradient(135deg,var(--night),#304e5b);color:#fff;padding:48px 0 44px;}
