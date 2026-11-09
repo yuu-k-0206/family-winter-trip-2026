@@ -6,6 +6,8 @@ const pages = ['index.html', 'hotel.html', 'schedule.html', 'budget.html', 'pack
 for (const page of pages) {
   const html = readFileSync(new URL('../' + page, import.meta.url), 'utf8');
   assert.equal(html.split('src="mascot.js"').length - 1, 1, page);
+  assert.ok(html.indexOf('src="mascot-dialogues.js"') < html.indexOf('src="mascot-conversation.js"'));
+  assert.ok(html.indexOf('src="mascot-conversation.js"') < html.indexOf('src="mascot.js"'));
   assert.equal(html.split('href="mascot.css"').length - 1, 1, page);
 }
 
@@ -41,9 +43,10 @@ function initialize({ observer = true, navPresent = true, hidden = false } = {})
   const context = { document: doc, window, ResizeObserver: Observer };
   runInNewContext(source, context);
   const mascot = appended[0];
-  assert.equal(mascot.attributes['aria-hidden'], 'true');
-  assert.equal(mascot.children[0].alt, '');
-  assert.equal(mascot.children[0].draggable, false);
+  assert.equal(mascot.attributes['aria-hidden'], undefined);
+  assert.equal(mascot.children[0].attributes['aria-hidden'], 'true');
+  assert.equal(mascot.children[0].children[0].alt, '');
+  assert.equal(mascot.children[0].children[0].draggable, false);
   assert.equal(mascot.properties['--trip-mascot-nav-height'], navPresent ? '104px' : '0px');
   if (observer && navPresent) {
     assert.equal(observed, nav);
