@@ -189,6 +189,12 @@
   const bookingData = data.booking || {};
   setText('booking-plan-name', bookingData.planName);
   setText('booking-summary', bookingData.checkSummary);
+  // 予約時に選んだ夕食開始時刻。一般の提供時間・変更可能な時間帯とは分けて表示。
+  const bookedDinner = bookingData.dinner;
+  const validDinnerTime = typeof bookedDinner?.startTime === 'string' &&
+    /^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(bookedDinner.startTime);
+  setText('booking-dinner-start', validDinnerTime ? bookedDinner.startTime + '（予約時指定）' : '確認中');
+  setText('booking-dinner-note', validDinnerTime ? bookedDinner.note : '予約時の夕食開始時刻は確認中です。');
   const bookingPrices = get('booking-prices');
   if (bookingPrices) {
     const yen = amount => Number.isFinite(amount) ? `${amount.toLocaleString('ja-JP')}円` : '—';
@@ -311,7 +317,11 @@
       step.className = 'step';
       const dot = textElement('span', 'dot', String(i+1).padStart(2,'0'));
       const detail = document.createElement('div');
-      detail.append(textElement('strong', '', item.title), textElement('p', '', item.detail));
+      // 1日目の夕食は booking.dinner の1か所から表示し、別ページと情報を重複管理しない。
+      const dinner = item.bookingEvent === 'dinner' && validDinnerTime ? bookedDinner : null;
+      const stepTitle = dinner ? dinner.startTime + ' 夕食（予約時指定）' : item.title;
+      const stepDetail = dinner ? dinner.note : item.detail;
+      detail.append(textElement('strong', '', stepTitle), textElement('p', '', stepDetail));
       step.append(dot, detail);
       timeline.append(step);
     });
