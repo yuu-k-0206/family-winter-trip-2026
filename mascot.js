@@ -23,8 +23,8 @@
       <path fill="#f5c49a" d="M7 25h29v27H7z"/>
       <path fill="#ffe0b6" d="M9 26h25v5H9z"/>
       <path fill="#4b3630" d="M7 24h29v7H25v4h-6v-5h-6v7H7z"/>
-      <path fill="#30333e" d="M13 38h5v6h-5zM27 38h5v6h-5z"/>
-      <path fill="#fff7df" d="M13 38h2v2h-2zM27 38h2v2h-2z"/>
+      
+      
       <path fill="#db8e79" d="M9 44h6v3H9zM30 44h5v3h-5z"/>
       <path fill="#955b4a" d="M20 47h6v2h-6z"/>
       <path fill="#286b78" d="M5 14h34v14H5z"/>
@@ -47,8 +47,8 @@
       <path fill="#f7c9a5" d="M8 25h27v28H8z"/>
       <path fill="#ffe0bb" d="M10 27h22v4H10z"/>
       <path fill="#603f36" d="M6 21h31v12h-8v-4h-9v5h-8v5H6z"/>
-      <path fill="#36313b" d="M13 39h5v6h-5zM26 39h5v6h-5z"/>
-      <path fill="#fff7e8" d="M13 39h2v2h-2zM26 39h2v2h-2z"/>
+      
+      
       <path fill="#df8f87" d="M9 45h7v3H9zM29 45h5v3h-5z"/>
       <path fill="#a56a59" d="M20 48h6v2h-6z"/>
       <path fill="#85445f" d="M6 15h31v10H6z"/>
@@ -65,27 +65,65 @@
   </defs>
 <g class="mascot-character mascot-character--boy" transform="translate(12 0) scale(1)">
 <path fill="#263a47" opacity=".12" d="M9 103h31v4H9z"/>
+<g class="mascot-actor mascot-actor--boy">
 <g transform="translate(14 81)"><g class="mascot-limb mascot-leg--left"><use href="#boy-leg"/></g></g>
 <g transform="translate(27 81)"><g class="mascot-limb mascot-leg--right"><use href="#boy-leg"/></g></g>
 <g transform="translate(0 0)"><g class="mascot-body mascot-body--boy">
 <g transform="translate(5 55)"><g class="mascot-limb mascot-arm--left"><use href="#boy-arm"/></g></g>
 <g transform="translate(37 55)"><g class="mascot-limb mascot-arm--right"><use href="#boy-arm"/></g></g>
 <use href="#boy-upper"/>
+<g class="mascot-eyes mascot-eyes--boy">
+<path fill="#30333e" d="M13 38h5v6h-5zM27 38h5v6h-5z"/>
+<path fill="#fff7df" d="M13 38h2v2h-2zM27 38h2v2h-2z"/>
+</g>
 </g></g>
+</g>
 </g>
 <g class="mascot-character mascot-character--girl" transform="translate(73 6) scale(0.94)">
 <path fill="#263a47" opacity=".12" d="M9 103h31v4H9z"/>
+<g class="mascot-actor mascot-actor--girl">
 <g transform="translate(14 81)"><g class="mascot-limb mascot-leg--left"><use href="#girl-leg"/></g></g>
 <g transform="translate(27 81)"><g class="mascot-limb mascot-leg--right"><use href="#girl-leg"/></g></g>
 <g transform="translate(0 -1)"><g class="mascot-body mascot-body--girl">
 <g transform="translate(5 58)"><g class="mascot-limb mascot-arm--left"><use href="#girl-arm"/></g></g>
 <g transform="translate(37 55)"><g class="mascot-limb mascot-arm--right"><use href="#girl-arm"/></g></g>
 <use href="#girl-upper"/>
+<g class="mascot-eyes mascot-eyes--girl">
+<path fill="#36313b" d="M13 39h5v6h-5zM26 39h5v6h-5z"/>
+<path fill="#fff7e8" d="M13 39h2v2h-2zM26 39h2v2h-2z"/>
+</g>
 </g></g>
+</g>
 </g>
 </svg>`;
   mascot.append(sprite);
   document.body.append(mascot);
+
+  // 15〜30秒の間隔で2人の掛け合いを再生。タップ・非表示・動きを減らす設定を優先。
+  const prefersReducedMotion = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
+  const sceneController = window.MASCOT_SCENES?.create({
+    onScene(scene) {
+      if (scene) mascot.dataset.mascotScene = scene;
+      else delete mascot.dataset.mascotScene;
+    }
+  });
+  const updateScenes = () => {
+    if (document.hidden || prefersReducedMotion?.matches) sceneController?.stop();
+    else sceneController?.start();
+  };
+  updateScenes();
+  window.addEventListener('pagehide', () => sceneController?.stop());
+  window.addEventListener('pageshow', updateScenes);
+  document.addEventListener('visibilitychange', updateScenes);
+  if (prefersReducedMotion) {
+    if (typeof prefersReducedMotion.addEventListener === 'function') {
+      prefersReducedMotion.addEventListener('change', updateScenes);
+    } else if (typeof prefersReducedMotion.addListener === 'function') {
+      prefersReducedMotion.addListener(updateScenes);
+    }
+  }
 
   // ナビの実測値にはiPhoneの安全領域も含まれる。文字拡大や画面回転にも追従。
   const nav = document.querySelector('.bottom-nav');
@@ -128,6 +166,7 @@
     // clickだけを使うことで、タッチ後の合成clickとの二重集計を防ぐ。
     // ネイティブbuttonによりEnter/Spaceの操作も同じ経路になる。
     button.addEventListener('click', () => {
+      sceneController?.interrupt();
       const line = conversation.tap(performance.now(), Date.now());
       if (!line) return;
       clearTimeout(hideTimer);

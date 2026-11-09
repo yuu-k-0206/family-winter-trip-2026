@@ -7,7 +7,8 @@ for (const page of pages) {
   const html = readFileSync(new URL('../' + page, import.meta.url), 'utf8');
   assert.equal(html.split('src="mascot.js"').length - 1, 1, page);
   assert.ok(html.indexOf('src="mascot-dialogues.js"') < html.indexOf('src="mascot-conversation.js"'));
-  assert.ok(html.indexOf('src="mascot-conversation.js"') < html.indexOf('src="mascot.js"'));
+  assert.ok(html.indexOf('src="mascot-conversation.js"') < html.indexOf('src="mascot-scenes.js"'));
+  assert.ok(html.indexOf('src="mascot-scenes.js"') < html.indexOf('src="mascot.js"'));
   assert.equal(html.split('href="mascot.css"').length - 1, 1, page);
 }
 
@@ -15,7 +16,10 @@ const source = readFileSync(new URL('../mascot.js', import.meta.url), 'utf8');
 const mascotCss = readFileSync(new URL('../mascot.css', import.meta.url), 'utf8');
 assert.match(mascotCss, /trip-mascot-swing-a/);
 assert.match(mascotCss, /trip-mascot-swing-b/);
-assert.doesNotMatch(mascotCss, /translateX\\(/, 'horizontal slide must not return');
+assert.match(mascotCss, /trip-scene-glance-boy/);
+assert.match(mascotCss, /trip-scene-poke-arm/);
+assert.match(mascotCss, /trip-scene-cheer-girl/);
+assert.doesNotMatch(mascotCss, /trip-mascot-walk|--trip-mascot-frames/, 'sliding sprite must not return');
 function initialize({ observer = true, navPresent = true, hidden = false } = {}) {
   let navHeight = 104;
   const appended = [];
@@ -51,6 +55,8 @@ function initialize({ observer = true, navPresent = true, hidden = false } = {})
   assert.equal(mascot.children[0].attributes['aria-hidden'], 'true');
   assert.match(mascot.children[0].innerHTML, /mascot-character--boy/);
   assert.match(mascot.children[0].innerHTML, /mascot-character--girl/);
+  assert.match(mascot.children[0].innerHTML, /mascot-actor--girl/);
+  assert.match(mascot.children[0].innerHTML, /mascot-eyes--boy/);
   assert.ok(!mascot.children[0].innerHTML.includes('translate(128'), 'no sprite-sheet traverse');
   assert.equal(mascot.properties['--trip-mascot-nav-height'], navPresent ? '104px' : '0px');
   if (observer && navPresent) {
