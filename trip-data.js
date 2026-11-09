@@ -67,6 +67,16 @@ window.TRIP_DATA = {
       url: "https://www.kahou.com/"
     }
   ],
+
+  // 華鳳公式の一般料金。子供料金と7名での利用可否は未確認。
+  karaoke: {
+    surveyedAt: "2026-11-09",
+    officialUrl: "https://www.kahou.com/facilities/pleasant/",
+    hourlyYenBeforeTax: 1500,
+    taxRate: 0.10,
+    adults: 5,
+    children: 2
+  },
   booking: {
     planName: "慶びと寛ぎに満ちた華鳳の基準 上質スタンダードプラン【4.1～】",
     // 2026/11/09のYahoo!トラベル予約明細画像で確認。画像・予約番号は公開しない。

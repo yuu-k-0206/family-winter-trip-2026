@@ -185,6 +185,48 @@
   // 客室の希望は「確約」ではなく、trip-data.js の案内文をそのまま表示。
   setText('kahou-room-request', data.roomRequestNote || '客室の眺望・階層は未確定です。');
 
+
+  // 華鳳カラオケ：公式の税別一般料金だけを基準にした、未確定の参考試算。
+  const karaokeDuration = get('karaoke-duration');
+  if (karaokeDuration) {
+    const karaoke = data.karaoke || {};
+    const hourlyBeforeTax = karaoke.hourlyYenBeforeTax;
+    const taxRate = karaoke.taxRate;
+    const adults = karaoke.adults;
+    const children = karaoke.children;
+    const buttons = Array.from(karaokeDuration.querySelectorAll('button[data-karaoke-hours]'));
+    const valid = Number.isSafeInteger(hourlyBeforeTax) && hourlyBeforeTax >= 0 &&
+      Number.isFinite(taxRate) && taxRate >= 0 && taxRate < 1 &&
+      Number.isSafeInteger(adults) && adults >= 0 &&
+      Number.isSafeInteger(children) && children >= 0;
+    if (!valid) {
+      ['karaoke-unit-price', 'karaoke-total-price', 'karaoke-adult-price', 'karaoke-child-price']
+        .forEach(id => setText(id, '料金確認中'));
+      buttons.forEach(button => { button.disabled = true; });
+    } else {
+      const hourlyWithTax = Math.round(hourlyBeforeTax * (1 + taxRate));
+      setText('karaoke-unit-price', formatYen(hourlyWithTax));
+      setText('karaoke-adult-label', '大人' + adults + '名');
+      setText('karaoke-child-label', '子供' + children + '名（一般料金を仮適用）');
+      const showKaraokePrice = hours => {
+        if (hours !== 1 && hours !== 2) return;
+        setText('karaoke-summary-label', (adults + children) + '名全員が一般料金の場合・' + hours + '時間');
+        setText('karaoke-total-price', formatYen((adults + children) * hourlyWithTax * hours));
+        setText('karaoke-adult-price', formatYen(adults * hourlyWithTax * hours));
+        setText('karaoke-child-price', formatYen(children * hourlyWithTax * hours));
+        buttons.forEach(button => {
+          const selected = Number(button.dataset.karaokeHours) === hours;
+          button.classList.toggle('is-active', selected);
+          button.setAttribute('aria-pressed', String(selected));
+        });
+      };
+      buttons.forEach(button => {
+        button.addEventListener('click', () => showKaraokePrice(Number(button.dataset.karaokeHours)));
+      });
+      showKaraokePrice(1);
+    }
+  }
+
   // 華鳳の調査結果：調査日のスナップショットとして表示（リアルタイム空室ではない）。
   const bookingData = data.booking || {};
   setText('booking-plan-name', bookingData.planName);

@@ -297,6 +297,50 @@
   .kahou-stay-card{padding:20px;}
   .kahou-gallery-link{font-size:12px;}
 }
+
+/* 華鳳エグゼクティブラウンジ：利用未確定のまま参考料金を比較 */
+.kahou-karaoke{margin-top:18px;padding:28px 30px 26px;background:#fff;border:1px solid #dfd8c9;border-top:4px solid #a88a61;border-radius:15px;box-shadow:0 10px 24px #192a3709;}
+.kahou-karaoke-status{padding:5px 12px;border-radius:99px;background:#f4eee5;color:#715b39;font-size:11px;font-weight:700;}
+.kahou-karaoke-heading{margin:14px 0 8px;font-size:clamp(21px,3vw,28px);font-weight:500;line-height:1.55;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;color:var(--night);}
+.kahou-karaoke-lead{font-size:13px;line-height:1.9;color:#52656c;margin:0 0 18px;}
+.kahou-karaoke-unit{padding:16px 20px;border-radius:12px;background:#f5f5f1;}
+.kahou-karaoke-unit-caption{display:block;color:#617178;font-size:12px;font-weight:650;}
+.kahou-karaoke-unit-value{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;color:#253c46;}
+.kahou-karaoke-unit-value strong{font-size:clamp(27px,4vw,34px);font-variant-numeric:tabular-nums;line-height:1.45;}
+.kahou-karaoke-unit-value span{font-size:13px;color:#67777d;}
+.kahou-karaoke-unit small{display:block;color:#758187;font-size:11px;line-height:1.7;}
+.kahou-karaoke-calculator{margin-top:24px;}
+.kahou-karaoke-calculator h4{margin:0 0 5px;font-size:18px;color:#30434b;}
+.kahou-karaoke-calculator>p{margin:0 0 15px;font-size:12px;color:#66777d;}
+.kahou-karaoke-duration{display:grid;grid-template-columns:1fr 1fr;max-width:440px;gap:8px;margin-bottom:16px;}
+.kahou-karaoke-duration button{min-height:44px;border:1px solid #b8c3c5;border-radius:9px;padding:8px 14px;background:#fff;color:#36535f;cursor:pointer;font-weight:700;font-size:13px;}
+.kahou-karaoke-duration button.is-active{background:#263e49;border-color:#263e49;color:#fff;}
+.kahou-karaoke-duration button:not(.is-active):hover{background:#f0f4f4;}
+.kahou-karaoke-duration button:focus-visible{outline:3px solid #b7935f;outline-offset:3px;}
+.kahou-karaoke-duration button:disabled{opacity:.55;cursor:not-allowed;}
+.kahou-karaoke-total{text-align:center;border:1px solid #e3e6e1;border-radius:12px;background:#f9faf8;padding:18px 14px 15px;color:#2b434e;}
+.kahou-karaoke-total span,.kahou-karaoke-total small{display:block;font-size:12px;color:#687980;line-height:1.7;}
+.kahou-karaoke-total strong{display:block;font-size:clamp(31px,5vw,40px);line-height:1.45;font-variant-numeric:tabular-nums;}
+.kahou-karaoke-breakdown{margin:8px 0 12px;}
+.kahou-karaoke-breakdown>div{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:5px 15px;padding:10px 2px;border-bottom:1px solid #ebece8;font-size:12px;line-height:1.65;}
+.kahou-karaoke-breakdown dt{color:#5c6c72;}
+.kahou-karaoke-breakdown dd{margin:0;color:#304b55;font-weight:700;font-variant-numeric:tabular-nums;}
+.kahou-karaoke-estimate-note{font-size:11px!important;line-height:1.85!important;color:#687980!important;margin:0!important;}
+.kahou-karaoke-pending{margin-top:19px;padding:14px 16px;border-left:4px solid #ad9168;border-radius:8px;background:#f8f5ee;color:#524838;}
+.kahou-karaoke-pending strong{font-size:13px;}
+.kahou-karaoke-pending p{margin:5px 0 0;font-size:12px;line-height:1.9;color:#625b50;}
+.kahou-karaoke-link{max-width:440px;margin-top:20px;}
+.kahou-karaoke-source{font-size:11px;color:#758187;margin:13px 0 0;line-height:1.75;}
+@media(max-width:720px){
+  .kahou-karaoke{margin-top:13px;padding:22px 19px 20px;}
+  .kahou-karaoke-heading{font-size:23px;}
+  .kahou-karaoke-unit{padding:14px 15px;}
+  .kahou-karaoke-calculator h4{font-size:16px;}
+  .kahou-karaoke-duration{max-width:none;}
+  .kahou-karaoke-total{padding:15px 10px 13px;}
+  .kahou-karaoke-pending{padding:13px 14px;}
+}
+
 /* v1.3：独立ページと固定ナビゲーション */
 @media(min-width:721px) {header {position:sticky;top:0;z-index:50;} .section {scroll-margin-top:100px;}}
 .nav a[aria-current="page"] {color:#8d6e40;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px;}
