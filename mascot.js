@@ -52,11 +52,9 @@
     bubble.setAttribute('role', 'status');
     bubble.setAttribute('aria-live', 'polite');
     bubble.setAttribute('aria-atomic', 'true');
-    const speaker = document.createElement('span');
-    speaker.className = 'trip-mascot-speaker';
     const text = document.createElement('span');
     text.className = 'trip-mascot-line';
-    bubble.append(speaker, text);
+    bubble.append(text);
     mascot.append(button, bubble);
     // clickだけを使うことで、タッチ後の合成clickとの二重集計を防ぐ。
     // ネイティブbuttonによりEnter/Spaceの操作も同じ経路になる。
@@ -64,7 +62,6 @@
       const line = conversation.tap(performance.now(), Date.now());
       if (!line) return;
       clearTimeout(hideTimer);
-      speaker.textContent = line.speaker === 'boy' ? '男の子' : '女の子';
       text.textContent = line.text;
       bubble.dataset.speaker = line.speaker;
       bubble.dataset.kind = line.kind;
