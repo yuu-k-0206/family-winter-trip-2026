@@ -2,8 +2,9 @@
 (() => {
   'use strict';
   const SCENES = Object.freeze(['glance', 'poke', 'cheer']);
+  // 最短・最長を同値にして待機を5秒に固定。演出の種類だけはランダム抽選。
   const MIN_DELAY_MS = 5000;
-  const MAX_DELAY_MS = 10000;
+  const MAX_DELAY_MS = 5000;
   const DURATION_MS = 2200;
 
   function create({ onScene, random = Math.random, setTimer = setTimeout, clearTimer = clearTimeout }) {
