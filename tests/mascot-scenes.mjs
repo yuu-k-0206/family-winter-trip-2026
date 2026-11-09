@@ -7,7 +7,7 @@ runInNewContext(readFileSync(new URL('../mascot-scenes.js', import.meta.url), 'u
 const { create, SCENES, MIN_DELAY_MS, MAX_DELAY_MS, DURATION_MS } = context.window.MASCOT_SCENES;
 assert.equal(SCENES.join(','), 'glance,poke,cheer');
 assert.equal(MIN_DELAY_MS, 5000);
-assert.equal(MAX_DELAY_MS, 10000);
+assert.equal(MAX_DELAY_MS, 5000);
 assert.equal(DURATION_MS, 2200);
 
 function clock(random = () => 0) {
@@ -49,6 +49,7 @@ c.advance(4999);
 assert.equal(c.events.length, 0);
 c.advance(1);
 assert.deepEqual(c.events.map(e => e.scene), ['glance']);
+assert.equal(c.events[0].at, 5000, 'min random value must also wait exactly 5s');
 c.advance(2199);
 assert.equal(c.events.length, 1);
 c.advance(1);
@@ -71,19 +72,28 @@ c.controller.stop();
 
 const high = clock(() => 0.99999999);
 high.controller.start();
-high.advance(9999);
+high.advance(4999);
 assert.equal(high.events.length, 0);
 high.advance(1);
 assert.equal(high.events[0].scene, 'cheer');
+assert.equal(high.events[0].at, 5000, 'max random value must still wait exactly 5s');
 high.controller.stop();
 assert.equal(high.timers, 0);
 
+const mid = clock(() => 0.5);
+mid.controller.start();
+mid.advance(4999);
+assert.equal(mid.events.length, 0);
+mid.advance(1);
+assert.equal(mid.events[0].at, 5000, 'middle random value must wait exactly 5s');
+mid.controller.stop();
+
 const variety = clock(() => 0.5);
 variety.controller.start();
-for (let i = 0; i < 8; i++) variety.advance(7500 + 2200);
+for (let i = 0; i < 8; i++) variety.advance(5000 + 2200);
 const names = variety.events.filter(e => e.scene).map(e => e.scene);
 assert.equal(names.length, 8);
 assert.ok(names.every((name, i) => i === 0 || name !== names[i - 1]), 'no consecutive repeats');
 assert.ok(names.every(name => SCENES.includes(name)));
 variety.controller.stop();
-console.log('PASS: 5-10s interval, 2.2s duration, variety, tap interruption, restart, stop, timer cleanup');
+console.log('PASS: fixed 5s interval, 2.2s duration, variety, tap interruption, restart, stop, timer cleanup');
