@@ -1,0 +1,50 @@
+/* 8コマ横並びの透過スプライト。画像を差し替える場合も1コマ128×112に揃える。 */
+.trip-mascot {
+  --trip-mascot-frames: 8;
+  position: fixed;
+  right: max(22px, env(safe-area-inset-right, 0px));
+  bottom: max(28px, env(safe-area-inset-bottom, 0px));
+  width: 104px;
+  aspect-ratio: 8 / 7;
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  contain: layout paint;
+}
+
+.trip-mascot img {
+  display: block;
+  width: calc(100% * var(--trip-mascot-frames));
+  max-width: none;
+  height: 100%;
+  pointer-events: none;
+  animation: trip-mascot-walk 1.6s steps(var(--trip-mascot-frames)) infinite;
+}
+
+@keyframes trip-mascot-walk {
+  to { transform: translateX(-100%); }
+}
+
+.trip-mascot.is-paused img { animation-play-state: paused; }
+
+@media (max-width: 720px) {
+  .trip-mascot {
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: calc(var(--trip-mascot-nav-height, calc(70px + env(safe-area-inset-bottom, 0px))) + 12px);
+    width: 84px;
+  }
+}
+
+@media (max-width: 355px) {
+  .trip-mascot { width: 76px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trip-mascot img { animation: none; }
+}
+
+@media print {
+  .trip-mascot { display: none; }
+}
