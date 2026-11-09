@@ -2,8 +2,8 @@
 (() => {
   'use strict';
   const SCENES = Object.freeze(['glance', 'poke', 'cheer']);
-  const MIN_DELAY_MS = 15000;
-  const MAX_DELAY_MS = 30000;
+  const MIN_DELAY_MS = 5000;
+  const MAX_DELAY_MS = 10000;
   const DURATION_MS = 2200;
 
   function create({ onScene, random = Math.random, setTimer = setTimeout, clearTimer = clearTimeout }) {
