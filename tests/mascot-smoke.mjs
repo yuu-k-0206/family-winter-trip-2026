@@ -12,6 +12,10 @@ for (const page of pages) {
 }
 
 const source = readFileSync(new URL('../mascot.js', import.meta.url), 'utf8');
+const mascotCss = readFileSync(new URL('../mascot.css', import.meta.url), 'utf8');
+assert.match(mascotCss, /trip-mascot-swing-a/);
+assert.match(mascotCss, /trip-mascot-swing-b/);
+assert.doesNotMatch(mascotCss, /translateX\\(/, 'horizontal slide must not return');
 function initialize({ observer = true, navPresent = true, hidden = false } = {}) {
   let navHeight = 104;
   const appended = [];
@@ -45,8 +49,9 @@ function initialize({ observer = true, navPresent = true, hidden = false } = {})
   const mascot = appended[0];
   assert.equal(mascot.attributes['aria-hidden'], undefined);
   assert.equal(mascot.children[0].attributes['aria-hidden'], 'true');
-  assert.equal(mascot.children[0].children[0].alt, '');
-  assert.equal(mascot.children[0].children[0].draggable, false);
+  assert.match(mascot.children[0].innerHTML, /mascot-character--boy/);
+  assert.match(mascot.children[0].innerHTML, /mascot-character--girl/);
+  assert.ok(!mascot.children[0].innerHTML.includes('translate(128'), 'no sprite-sheet traverse');
   assert.equal(mascot.properties['--trip-mascot-nav-height'], navPresent ? '104px' : '0px');
   if (observer && navPresent) {
     assert.equal(observed, nav);
