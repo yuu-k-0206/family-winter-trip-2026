@@ -19,7 +19,7 @@ assert.match(mascotCss, /trip-mascot-swing-b/);
 assert.match(mascotCss, /trip-scene-glance-boy/);
 assert.match(mascotCss, /trip-scene-poke-arm/);
 assert.match(mascotCss, /trip-scene-cheer-girl/);
-assert.doesNotMatch(mascotCss, /translateX\\(/, 'horizontal slide must not return');
+assert.doesNotMatch(mascotCss, /trip-mascot-walk|--trip-mascot-frames/, 'sliding sprite must not return');
 function initialize({ observer = true, navPresent = true, hidden = false } = {}) {
   let navHeight = 104;
   const appended = [];
