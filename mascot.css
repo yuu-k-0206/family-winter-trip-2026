@@ -57,6 +57,85 @@
 .trip-mascot.is-paused .mascot-limb,
 .trip-mascot.is-paused .mascot-body { animation-play-state: paused; }
 
+/* 自動掛け合い。既存の手足の四角い輪郭・位置を変えず、短い動きだけ追加。 */
+.mascot-actor {
+  transform-box: fill-box;
+  transform-origin: center 86%;
+}
+.mascot-eyes { transform-box: fill-box; transform-origin: center; }
+
+.trip-mascot[data-mascot-scene="glance"] .mascot-actor--boy {
+  animation: trip-scene-glance-boy 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="glance"] .mascot-actor--girl {
+  animation: trip-scene-glance-girl 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="glance"] .mascot-eyes--boy {
+  animation: trip-scene-eyes-boy 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="glance"] .mascot-eyes--girl {
+  animation: trip-scene-eyes-girl 2.2s ease-in-out both;
+}
+@keyframes trip-scene-glance-boy {
+  0%, 8%, 92%, 100% { transform: rotate(0); }
+  22%, 60% { transform: rotate(3deg); }
+}
+@keyframes trip-scene-glance-girl {
+  0%, 38%, 92%, 100% { transform: rotate(0); }
+  52%, 78% { transform: rotate(-3deg); }
+}
+@keyframes trip-scene-eyes-boy {
+  0%, 8%, 92%, 100% { transform: translateX(0); }
+  22%, 60% { transform: translateX(1.5px); }
+}
+@keyframes trip-scene-eyes-girl {
+  0%, 38%, 92%, 100% { transform: translateX(0); }
+  52%, 78% { transform: translateX(-1.5px); }
+}
+
+.trip-mascot[data-mascot-scene="poke"] .mascot-actor--boy {
+  animation: trip-scene-poke-boy 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="poke"] .mascot-character--boy .mascot-arm--right {
+  animation: trip-scene-poke-arm 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="poke"] .mascot-actor--girl {
+  animation: trip-scene-startle-girl 2.2s ease-in-out both;
+}
+@keyframes trip-scene-poke-boy {
+  0%, 12%, 90%, 100% { transform: rotate(0); }
+  30%, 60% { transform: rotate(3deg); }
+}
+@keyframes trip-scene-poke-arm {
+  0%, 12%, 90%, 100% { transform: rotate(-11deg); }
+  35%, 57% { transform: rotate(-66deg); }
+}
+@keyframes trip-scene-startle-girl {
+  0%, 44%, 90%, 100% { transform: translateY(0) rotate(0); }
+  56% { transform: translateY(-5px) rotate(5deg); }
+  70% { transform: translateY(0) rotate(-2deg); }
+}
+
+.trip-mascot[data-mascot-scene="cheer"] .mascot-actor--boy {
+  animation: trip-scene-cheer-boy 2.2s ease-in-out both;
+}
+.trip-mascot[data-mascot-scene="cheer"] .mascot-actor--girl {
+  animation: trip-scene-cheer-girl 2.2s ease-in-out both;
+}
+@keyframes trip-scene-cheer-boy {
+  0%, 6%, 29%, 59%, 86%, 100% { transform: translateY(0); }
+  16% { transform: translateY(-9px); }
+  72% { transform: translateY(-8px); }
+}
+@keyframes trip-scene-cheer-girl {
+  0%, 30%, 56%, 59%, 86%, 100% { transform: translateY(0); }
+  43% { transform: translateY(-9px); }
+  72% { transform: translateY(-8px); }
+}
+.trip-mascot.is-paused .mascot-actor,
+.trip-mascot.is-paused .mascot-eyes { animation-play-state: paused; }
+
+
 @media (max-width: 720px) {
   .trip-mascot {
     right: max(12px, env(safe-area-inset-right, 0px));
@@ -70,7 +149,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascot-limb, .mascot-body { animation: none; }
+  .mascot-limb, .mascot-body, .mascot-actor, .mascot-eyes { animation: none !important; }
 }
 
 @media print {
