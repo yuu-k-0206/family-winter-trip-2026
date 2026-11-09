@@ -111,8 +111,7 @@
       ['大人 ' + formatYen(payment.adultUnitYen) + ' × ' + payment.adultCount + '名', payment.adultUnitYen * payment.adultCount],
       [payment.childCategory + ' ' + formatYen(payment.childUnitYen) + ' × ' + payment.childCount + '名', payment.childUnitYen * payment.childCount],
       ['宿泊料金小計', payment.subtotalYen],
-      ['即時利用', -payment.instantUseYen],
-      ['オンラインカード決済額', payment.cardChargeYen]
+      ['即時利用', -payment.instantUseYen]
     ];
     rows.forEach(([label, amount]) => {
       const row = textElement('div', 'reference-rate-row', '');
