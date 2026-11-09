@@ -91,7 +91,40 @@
   setText('concept-description', data.concept?.description);
   setText('concept-note', data.concept?.note);
   setText('budget-transport', Number.isFinite(data.travelBudget?.total) ? data.travelBudget.total.toLocaleString('ja-JP') + '円' : '確認中');
-  setText('budget-combined', Number.isFinite(data.travelBudget?.combined) ? '約' + data.travelBudget.combined.toLocaleString('ja-JP') + '円' : '確認中');
+  // 宿泊カード決済額は予約明細の確定値。旅行全体の総額とは区別する。
+  const payment = data.booking?.payment;
+  const paymentValid = payment &&
+    [payment.adultUnitYen, payment.adultCount, payment.childUnitYen, payment.childCount,
+     payment.subtotalYen, payment.instantUseYen, payment.cardChargeYen]
+      .every(value => Number.isSafeInteger(value) && value >= 0) &&
+    payment.adultUnitYen * payment.adultCount + payment.childUnitYen * payment.childCount === payment.subtotalYen &&
+    payment.subtotalYen - payment.instantUseYen === payment.cardChargeYen;
+  const formatYen = value => value.toLocaleString('ja-JP') + '円';
+  const confirmedCharge = paymentValid ? formatYen(payment.cardChargeYen) : '確認中';
+  setText('budget-combined', confirmedCharge);
+  setText('booking-card-charge', confirmedCharge);
+  setText('booking-payment-confirmed', paymentValid ? payment.confirmedAt : '決済額は確認中です。');
+  setText('booking-payment-caution', paymentValid ? payment.note : '');
+  const breakdown = get('booking-payment-breakdown');
+  if (breakdown && paymentValid) {
+    const rows = [
+      ['大人 ' + formatYen(payment.adultUnitYen) + ' × ' + payment.adultCount + '名', payment.adultUnitYen * payment.adultCount],
+      [payment.childCategory + ' ' + formatYen(payment.childUnitYen) + ' × ' + payment.childCount + '名', payment.childUnitYen * payment.childCount],
+      ['宿泊料金小計', payment.subtotalYen],
+      ['即時利用', -payment.instantUseYen]
+    ];
+    rows.forEach(([label, amount]) => {
+      const row = textElement('div', 'reference-rate-row', '');
+      row.append(textElement('span', '', label), textElement('strong', '', formatYen(amount)));
+      breakdown.append(row);
+    });
+  }
+  // 交通費は計画予算。単純合算は最終的な旅行総額ではない。
+  const withTransport = paymentValid && Number.isFinite(data.travelBudget?.total)
+    ? payment.cardChargeYen + data.travelBudget.total : null;
+  setText('budget-with-transport', withTransport === null ? '宿泊費と交通費の合計目安は確認中です。'
+    : '宿泊カード決済額＋往復交通費の計画予算：計算上 約' + formatYen(withTransport) +
+      '（交通費は概算。入湯税・現地食事・施設料金・保険料等は未計上）');
   setText('budget-source-date', data.travelBudget?.surveyedAt);
   setText('budget-condition', data.travelBudget?.condition);
   setText('budget-note', data.travelBudget?.note);
