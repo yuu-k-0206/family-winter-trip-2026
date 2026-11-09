@@ -97,13 +97,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  await page.evaluate(()=>window.MASCOT_DIALOGUES.settings.seasonalProbability=1);
  await button.tap();assert.equal(await page.locator('.trip-mascot-line').textContent(),'あと30日で旅行だよ！');
  await page.evaluate(()=>window.TRIP_DATA.departureDate='2026-11-10');await button.tap();assert.equal(await page.locator('.trip-mascot-line').textContent(),'あした旅行だー！！');
- // Automated pair scenes: first poke, then cheer (Math.random fixed to 0.5).
+ // Automated pair scenes: first poke, then cheer at 7.5s wait (Math.random fixed to 0.5).
  await page.goto(base+'index.html');
- await page.clock.runFor(22500);
+ await page.clock.runFor(7500);
  assert.equal(await page.locator('.trip-mascot').getAttribute('data-mascot-scene'),'poke');
  await page.clock.runFor(2200);
  assert.equal(await page.locator('.trip-mascot').getAttribute('data-mascot-scene'),null);
- await page.clock.runFor(22500);
+ await page.clock.runFor(7500);
  assert.equal(await page.locator('.trip-mascot').getAttribute('data-mascot-scene'),'cheer');
  await page.getByRole('button',{name:'男の子と女の子に話しかける'}).tap();
  assert.equal(await page.locator('.trip-mascot').getAttribute('data-mascot-scene'),null);
