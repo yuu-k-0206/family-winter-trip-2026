@@ -68,14 +68,19 @@ window.TRIP_DATA = {
     }
   ],
 
-  // 華鳳公式の一般料金。子供料金と7名での利用可否は未確認。
+  // 2026年11月10日に受領した旅館への電話確認結果。大人一般料金は公式の税抜価格とも照合済み。
   karaoke: {
     surveyedAt: "2026-11-09",
     officialUrl: "https://www.kahou.com/facilities/pleasant/",
     hourlyYenBeforeTax: 1500,
     taxRate: 0.10,
     adults: 5,
-    children: 2
+    children: 2,
+    childRateFactor: 0.5,
+    openingHours: "20:30〜23:30",
+    reservationMethod: "電話で事前予約、または空いていれば当日予約も可能",
+    sevenPeoplePossibleWhenVacant: true,
+    reportedAt: "2026-11-10"
   },
   booking: {
     planName: "慶びと寛ぎに満ちた華鳳の基準 上質スタンダードプラン【4.1～】",
