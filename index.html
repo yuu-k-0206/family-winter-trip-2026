@@ -9,18 +9,18 @@
   <meta name="theme-color" content="#192a37">
   <title>家族冬旅行 2026｜旅のしおり</title>
   <!-- CSSは見た目を担当 -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mascot.css">
+  <link rel="stylesheet" href="styles.css?v=1.4">
+  <link rel="stylesheet" href="mascot.css?v=1.4">
   <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
-  <script defer src="trip-data.js"></script>
-  <script defer src="script.js"></script>
-  <script defer src="mascot-dialogues.js"></script>
-  <script defer src="mascot-conversation.js"></script>
-  <script defer src="mascot-scenes.js"></script>
-  <script defer src="mascot.js"></script>
+  <script defer src="trip-data.js?v=1.4"></script>
+  <script defer src="script.js?v=1.4"></script>
+  <script defer src="mascot-dialogues.js?v=1.4"></script>
+  <script defer src="mascot-conversation.js?v=1.4"></script>
+  <script defer src="mascot-scenes.js?v=1.4"></script>
+  <script defer src="mascot.js?v=1.4"></script>
 </head>
 <body data-page="home">
-  <a class="skip-link" href="#about">本文へ移動</a>
+  <a class="skip-link" href="#quick-access">本文へ移動</a>
   <header><div class="wrap header-inner"><a href="index.html#top" class="brand" aria-label="ホームへ戻る"><span class="brand-symbol">旅</span><span class="brand-title">FAMILY WINTER TRIP<small>DECEMBER · 2026</small></span></a><nav class="nav" aria-label="メインメニュー">
         <a href="index.html" aria-current="page">ホーム</a>
         <a href="hotel.html">旅館</a>
@@ -28,85 +28,92 @@
         <a href="budget.html">費用</a>
         <a href="packing.html">持ち物</a>
 </nav></div></header>
-    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">12月9日〜10日・華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.10</span></div></div>
     <div class="hero" id="top">
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <span class="eyebrow">A LITTLE JOURNEY, A BIG MEMORY.</span>
         <h1>冬の、<br>家族旅行。</h1>
-        <p class="hero-lead">12月9日(水)〜10日(木)の1泊2日で決定。<br>月岡温泉「白玉の湯 華鳳」をYahoo!トラベルで予約済みです。</p>
-        <span class="pill" id="hero-pill">2026年12月9日〜10日 · 一旦決定</span>
+        <p class="hero-lead" id="hero-lead">温泉と、おいしいごはん。<br>華鳳で、家族みんなのゆったりした時間を。</p>
+        <p class="hero-date" id="hero-pill">2026年12月9日(水)〜10日(木) · 1泊2日</p>
         <div class="trip-countdown">
           <span class="countdown-label">出発までのご案内</span>
           <p id="trip-countdown" role="status" aria-atomic="true">出発までの日数を計算しています。</p>
-          <small>日本時間の日付を基準に表示</small>
+          <small>月岡温泉 · 白玉の湯 華鳳</small>
         </div>
+
+        <section class="hero-shortcuts" id="quick-access" aria-labelledby="quick-access-heading">
+          <h2 id="quick-access-heading">旅のしおりを開く</h2>
+          <div class="quick-grid">
+            <a class="quick-card" href="schedule.html"><svg class="travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#car"/></svg><span class="quick-copy"><strong>旅行の予定</strong><small>2日間のタイムライン</small></span><span class="quick-arrow" aria-hidden="true">↗</span></a>
+            <a class="quick-card" href="hotel.html"><svg class="travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#onsen"/></svg><span class="quick-copy"><strong>旅館・お料理</strong><small>温泉と、ごちそう</small></span><span class="quick-arrow" aria-hidden="true">↗</span></a>
+            <a class="quick-card" href="budget.html"><svg class="travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#wallet"/></svg><span class="quick-copy"><strong>費用・ルート</strong><small>予算と往復の比較</small></span><span class="quick-arrow" aria-hidden="true">↗</span></a>
+            <a class="quick-card" href="packing.html"><svg class="travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#bag"/></svg><span class="quick-copy"><strong>持ち物チェック</strong><small>出発前の準備に</small></span><span class="quick-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </section>
       </div>
       <figure class="art" style="margin-block:0;">
         <img src="winter-illustration.svg" alt="雪山と架空の旅館をモチーフにした冬のイラスト" width="520" height="355" style="width:100%;height:auto;display:block">
         <figcaption class="art-note">冬のイメージイラスト</figcaption>
+        <div class="winter-snow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <button type="button" class="snow-toggle" id="snow-toggle" aria-pressed="false" hidden>雪の演出：オフ</button>
       </figure>
     </div>
   </div>
   <main class="wrap">
-<div class="summary" aria-label="旅行の要約">
-      <div class="sum"><span>DURATION</span><strong id="summary-duration">1泊2日</strong></div>
-      <div class="sum"><span>MEMBERS</span><strong>7人</strong></div>
-      <div class="sum"><span>DESTINATION</span><strong class="long" id="summary-destination">検討中</strong></div>
-    </div>
-
-<section class="section" id="about">
-      <div class="section-head"><span class="en">ABOUT OUR TRIP</span><h2>旅の概要</h2><p>決まっていることと、これから決めること。</p></div>
-      <div class="boxgrid">
-        <article class="info-card"><span class="cap">01 / WHEN</span><h3 id="overview-date">2026年12月9日(水)〜10日(木)</h3><p id="overview-date-note">宿泊予約済み。業務予定により延期の可能性があります。</p></article>
-        <article class="info-card"><span class="cap">02 / WHO</span><h3 id="overview-members">大人5人 ＋ 子供2人</h3><p id="overview-members-detail">家族7人で行く予定です。</p></article>
-        <article class="info-card"><span class="cap">03 / TRANSPORT</span><h3 id="overview-transport">アルファード1台（予定）</h3><p>行き・帰りそれぞれ2ルートの仮工程を比較中。花園IC付近を起終点の目安にしています。</p></article>
-        <article class="info-card"><span class="cap">04 / DESTINATION</span><h3 id="overview-destination">新潟・月岡温泉</h3><p id="overview-stay">白玉の湯 華鳳</p></article>
+<section class="section trip-overview" id="about" aria-labelledby="about-heading">
+      <div class="section-head"><span class="en">OUR LITTLE JOURNEY</span><h2 id="about-heading">今回の旅</h2></div>
+      <div class="trip-facts">
+        <article class="info-card"><span class="cap">STAY</span><span data-status="booked"></span><h3 id="overview-stay">白玉の湯 華鳳</h3><p>デラックス和室16畳 · 禁煙<br>1室・夕朝食付き</p><a class="text-link" href="hotel.html#booking-info">予約内容を見る <span aria-hidden="true">→</span></a></article>
+        <article class="info-card"><span class="cap">MEMBERS</span><h3 id="overview-members">大人5人 ＋ 子供2人</h3><p id="overview-members-detail">子供2人とも食事・寝具利用で予約済みです。</p></article>
+        <article class="info-card"><span class="cap">DRIVE</span><span data-status="tentative"></span><h3 id="overview-transport">アルファード1台（予定）</h3><p>花園IC付近から、新潟・月岡温泉へ。<br>雪や道路状況を見てルートを調整します。</p><a class="text-link" href="schedule.html">予定を見る <span aria-hidden="true">→</span></a></article>
       </div>
-      <p class="attention" id="decision-note">旅行日程と華鳳への宿泊予約が決まりました。ただし業務都合で延期の可能性があります。</p>
     </section>
 
 <section class="section section-compact" id="trip-style" aria-labelledby="trip-style-heading">
       <div class="trip-concept">
         <span class="cap">OUR TRIP STYLE</span>
+        <svg class="concept-icon travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#onsen"/></svg>
         <h2 id="trip-style-heading">華鳳でゆっくり過ごす旅</h2>
         <p id="concept-description">宿での温泉や食事を中心に、ゆったり過ごす旅行を目指します。</p>
         <small id="concept-note">観光や立ち寄り先は未決定です。</small>
       </div>
     </section>
 
-<section class="section section-compact" id="quick-access" aria-labelledby="quick-access-heading">
-  <div class="section-head"><span class="en">EXPLORE OUR TRIP</span><h2 id="quick-access-heading">旅のしおりを開く</h2><p>見たい情報を選んで、各ページへ移動できます。</p></div>
-  <div class="quick-grid">
-    <a class="quick-card" href="hotel.html"><span>01 / STAY</span><strong>旅館・お料理</strong><small>夕食・朝食、客室と温泉</small></a>
-    <a class="quick-card" href="schedule.html"><span>02 / ITINERARY</span><strong>旅行の予定</strong><small>12月9日・10日の工程表</small></a>
-    <a class="quick-card" href="budget.html"><span>03 / BUDGET</span><strong>費用・ルート</strong><small>交通費と往復ルートの比較</small></a>
-    <a class="quick-card" href="packing.html"><span>04 / PACKING</span><strong>持ち物チェック</strong><small>チェック状態はこの端末に保存</small></a>
-  </div>
-</section>
 
-<section class="section" id="latest-updates" aria-labelledby="latest-updates-heading">
+
+<section class="section" id="planning-status" aria-labelledby="planning-heading">
+      <div class="section-head"><span class="en">GETTING READY</span><h2 id="planning-heading">準備の現在地</h2><p>決まったことと、これから決めること。</p></div>
+      <div class="planning-grid" id="planning-list"></div>
+      <details class="booking-details pending-summary">
+        <summary><span data-status="pending"></span> これから確認すること</summary>
+        <ul class="booking-text-list" id="home-pending"></ul>
+        <p class="field-note">カラオケを利用する場合は、空室と予約も確認します。</p>
+        <a class="text-link" href="hotel.html#booking-info">予約の詳細・確認事項へ <span aria-hidden="true">→</span></a>
+      </details>
+    </section>
+
+<section class="section latest-compact" id="latest-updates" aria-labelledby="latest-updates-heading">
       <div class="section-head"><span class="en">LATEST UPDATE</span><h2 id="latest-updates-heading">最新のお知らせ</h2></div>
       <div id="latest-update"><p class="note">現在、お知らせはありません。</p></div>
       <a class="updates-link" href="#updates">詳しいお知らせを見る <span aria-hidden="true">↓</span></a>
     </section>
 
 <section class="section" id="dates">
-      <div class="section-head"><span class="en">TRAVEL DATES</span><h2>旅行日程と延期の可能性</h2><p>12月9日〜10日で予約済み。仕事の予定によっては延期する場合があります。</p></div>
-      <div class="choicegrid" id="date-options" aria-live="polite"></div>
+      <div class="section-head"><span class="en">BEFORE WE GO</span><h2>出発前の大切な確認</h2><p>宿泊は予約済み。業務都合による延期の可能性があります。</p></div>
       <div class="booking-extra" aria-label="日程に関する大切なお知らせ">
         <article class="info-card">
-          <span class="cap">WORK SCHEDULE</span><h3>延期する可能性があります</h3>
+          <span class="cap">WORK SCHEDULE</span><span data-status="pending"></span><h3>延期する可能性があります</h3>
           <p id="work-schedule-note">勤務予定を11月末頃に最終確認します。急な会議が入った場合は仕事を優先し、旅行を延期する可能性があります。</p>
         </article>
         <article class="info-card">
-          <span class="cap">CANCELLATION</span><h3>先に確認するキャンセル期限</h3>
+          <span class="cap">CANCELLATION</span><span data-status="pending"></span><h3>先に確認するキャンセル期限</h3>
           <p><strong id="cancel-free-until">予約済みプランの無料期限は明細で確認</strong></p>
-          <p id="cancel-fee-from">公開プランの期限と料率は参考情報です。</p>
-          <p class="field-note" id="cancel-caution">予約サイト・プランごとの規定を確認してください。</p>
+          <p class="field-note">実際の無料期限・料率はYahoo!トラベルの予約詳細で確認します。</p>
           <p class="field-note"><a href="https://travel.yahoo.co.jp/booking/" target="_blank" rel="noopener noreferrer">Yahoo!トラベルの予約確認</a> · <a href="https://www.ikyu.com/00000751/11565492/10030279/" target="_blank" rel="noopener noreferrer">同名プランの公開規定</a></p>
           <details class="inline-details">
             <summary>参考例の日付別キャンセル料率</summary>
+            <p id="cancel-fee-from"></p><p class="field-note" id="cancel-caution"></p>
             <div class="fee-list" id="cancel-period-list"></div>
           </details>
           <details class="inline-details">
@@ -121,7 +128,7 @@
 
 <section class="section" id="updates">
       <div class="section-head"><span class="en">TRIP UPDATES</span><h2>これまでの更新</h2><p>旅行計画の変更や決定事項の記録です。</p></div>
-      <div class="updates-list" id="updates-list"></div>
+      <details class="booking-details" data-expand-on-hash><summary>更新の記録を読む</summary><div class="updates-list" id="updates-list"></div></details>
       <p class="privacy"><strong>公開に関する注意：</strong>このサイトはURLを知る人以外からも閲覧される可能性があります。氏名・住所・電話番号・リアルタイムの居場所などは掲載しない方針です。<code>noindex</code> は検索エンジンへの依頼であり、アクセス制限ではありません。</p>
     </section>
   </main>
@@ -132,6 +139,6 @@
     <a href="budget.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
     <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
   </nav>
-  <footer>FAMILY WINTER TRIP 2026 · v1.3</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v1.4</footer>
 </body>
 </html>

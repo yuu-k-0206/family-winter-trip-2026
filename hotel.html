@@ -9,15 +9,15 @@
   <meta name="theme-color" content="#192a37">
   <title>旅館・お料理｜家族冬旅行 2026</title>
   <!-- CSSは見た目を担当 -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mascot.css">
+  <link rel="stylesheet" href="styles.css?v=1.4">
+  <link rel="stylesheet" href="mascot.css?v=1.4">
   <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
-  <script defer src="trip-data.js"></script>
-  <script defer src="script.js"></script>
-  <script defer src="mascot-dialogues.js"></script>
-  <script defer src="mascot-conversation.js"></script>
-  <script defer src="mascot-scenes.js"></script>
-  <script defer src="mascot.js"></script>
+  <script defer src="trip-data.js?v=1.4"></script>
+  <script defer src="script.js?v=1.4"></script>
+  <script defer src="mascot-dialogues.js?v=1.4"></script>
+  <script defer src="mascot-conversation.js?v=1.4"></script>
+  <script defer src="mascot-scenes.js?v=1.4"></script>
+  <script defer src="mascot.js?v=1.4"></script>
 </head>
 <body data-page="hotel">
   <a class="skip-link" href="#kahou-experience">本文へ移動</a>
@@ -28,8 +28,8 @@
         <a href="budget.html">費用</a>
         <a href="packing.html">持ち物</a>
 </nav></div></header>
-    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">12月9日〜10日・華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
-  <div class="subpage-hero" id="top"><div class="wrap"><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>旅館・お料理</h1><p>白玉の湯 華鳳の夕食・朝食、客室、温泉、宿泊予約の確認事項。</p></div></div>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.10</span></div></div>
+  <div class="subpage-hero" id="top"><div class="wrap"><svg class="subpage-icon travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#onsen"/></svg><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>旅館・お料理</h1><p>白玉の湯 華鳳の夕食・朝食、客室、温泉、宿泊予約の確認事項。</p></div></div>
   <main class="wrap subpage-main">
 <section class="section kahou-experience" id="kahou-experience" aria-labelledby="kahou-experience-heading">
       <div class="section-head">
@@ -39,14 +39,14 @@
       </div>
 
       <div class="kahou-meals" aria-label="夕食と朝食のご案内">
-        <article class="kahou-meal kahou-meal--dinner">
-          <div class="kahou-card-top"><span class="kahou-card-kicker">01 / DINNER</span><span class="kahou-highlight">公開プラン案内</span></div>
+        <article class="kahou-meal kahou-meal--dinner" id="dinner">
+          <div class="kahou-card-top"><span class="kahou-card-kicker">01 / DINNER</span><span data-status="reference"></span></div>
           <h3>夕食<span>新潟の旬を味わう和会席</span></h3>
           <p>海・山・里の旬の食材を使った基本和会席。同名プランの公開案内では、夕食は家族で落ち着いて過ごせる個室です。</p>
           <dl class="kahou-facts">
             <div><dt>お料理</dt><dd>季節の食材を使った基本和会席</dd></div>
             <div><dt>お食事会場</dt><dd>個室（料亭・宴会場など）</dd></div>
-            <div><dt>開始指定</dt><dd id="booking-dinner-start">確認中</dd></div>
+            <div><dt>開始指定</dt><dd><span id="booking-dinner-start">確認中</span> <span data-status="booked"></span></dd></div>
             <div><dt>一般案内</dt><dd>18:00〜21:00（最終開始19:00）</dd></div>
           </dl>
           <p class="kahou-small-note" id="booking-dinner-note"></p>
@@ -55,7 +55,7 @@
         </article>
 
         <article class="kahou-meal kahou-meal--breakfast">
-          <div class="kahou-card-top"><span class="kahou-card-kicker">02 / BREAKFAST</span><span class="kahou-highlight">和・洋・中</span></div>
+          <div class="kahou-card-top"><span class="kahou-card-kicker">02 / BREAKFAST</span><span data-status="reference"></span></div>
           <h3>朝食<span>華鳳自慢のバイキング</span></h3>
           <p>華鳳の公式紹介では、海鮮丼、出汁巻き卵、焼きたてパン、石窯ピザ、ワッフルなどが並びます。</p>
           <dl class="kahou-facts">
@@ -69,11 +69,11 @@
       </div>
 
       <div class="kahou-stay-grid" aria-label="客室と温泉のご案内">
-        <article class="kahou-stay-card">
+        <article class="kahou-stay-card" id="room">
           <span class="kahou-card-kicker">03 / ROOM</span>
           <h3>デラックス和室16畳</h3>
           <p>73㎡・禁煙。16畳の和室と広縁、洗面台2か所、浴室、シャワー、トイレを備えています。庭園側は日本庭園、里山側は越後の自然を眺めるタイプです。浴衣やタオルの案内があり、歯ブラシなど必要な備品は各階のアメニティコーナーをご確認ください。</p>
-          <p class="kahou-small-note" id="kahou-room-request">客室の希望状況を読み込んでいます。</p>
+          <span data-status="requested"></span><p class="kahou-small-note" id="kahou-room-request">客室の希望状況を読み込んでいます。</p>
           <a class="kahou-gallery-link kahou-gallery-link--sub" href="https://www.kahou.com/room/deluxe/" target="_blank" rel="noopener noreferrer">公式の客室写真を見る <span aria-hidden="true">↗</span></a>
         </article>
         <article class="kahou-stay-card">
@@ -87,7 +87,7 @@
       <section class="kahou-karaoke" id="kahou-karaoke" aria-labelledby="kahou-karaoke-heading">
         <div class="kahou-card-top">
           <span class="kahou-card-kicker">05 / ENTERTAINMENT</span>
-          <span class="kahou-karaoke-status">7名利用可（空室時）・未予約</span>
+          <span data-status="unreserved"></span>
         </div>
         <h3 class="kahou-karaoke-heading" id="kahou-karaoke-heading">カラオケ・エグゼクティブラウンジ</h3>
         <p class="kahou-karaoke-lead">館内2階には、カラオケを楽しめる個室ラウンジが6室。アルコール・ソフトドリンクのフリードリンク付きで、夕食後の家族時間にもぴったりです。</p>
@@ -120,7 +120,7 @@
         </div>
 
         <div class="kahou-karaoke-pending" role="note">
-          <strong>7名での利用は可能。ただし、空室がある場合に限ります。</strong>
+          <span data-status="confirmed"></span> <strong>7名での利用は可能。ただし、空室がある場合に限ります。</strong>
           <p><span id="karaoke-opening-hours">営業時間：確認中</span>。<span id="karaoke-reservation-method">予約：確認中</span>。今回はまだ予約しておらず、12月9日の空室状況も未確認です。</p>
         </div>
         <a class="kahou-gallery-link kahou-gallery-link--sub kahou-karaoke-link" href="https://www.kahou.com/facilities/pleasant/" target="_blank" rel="noopener noreferrer">華鳳公式サイトで施設の写真・詳細を見る <span aria-hidden="true">↗</span></a>
@@ -161,7 +161,7 @@
       </article>
       <div class="booking-extra">
         <article class="info-card">
-          <span class="cap">TO BE CONFIRMED</span><h3>まだ確認が必要なこと</h3>
+          <span class="cap">TO BE CONFIRMED</span><span data-status="pending"></span><h3>まだ確認が必要なこと</h3>
           <p id="booking-children"></p>
           <ul class="booking-text-list" id="booking-pending"></ul>
         </article>
@@ -204,6 +204,6 @@
     <a href="budget.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
     <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
   </nav>
-  <footer>FAMILY WINTER TRIP 2026 · v1.3</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v1.4</footer>
 </body>
 </html>

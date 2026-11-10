@@ -9,15 +9,15 @@
   <meta name="theme-color" content="#192a37">
   <title>旅行の予定｜家族冬旅行 2026</title>
   <!-- CSSは見た目を担当 -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mascot.css">
+  <link rel="stylesheet" href="styles.css?v=1.4">
+  <link rel="stylesheet" href="mascot.css?v=1.4">
   <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
-  <script defer src="trip-data.js"></script>
-  <script defer src="script.js"></script>
-  <script defer src="mascot-dialogues.js"></script>
-  <script defer src="mascot-conversation.js"></script>
-  <script defer src="mascot-scenes.js"></script>
-  <script defer src="mascot.js"></script>
+  <script defer src="trip-data.js?v=1.4"></script>
+  <script defer src="script.js?v=1.4"></script>
+  <script defer src="mascot-dialogues.js?v=1.4"></script>
+  <script defer src="mascot-conversation.js?v=1.4"></script>
+  <script defer src="mascot-scenes.js?v=1.4"></script>
+  <script defer src="mascot.js?v=1.4"></script>
 </head>
 <body data-page="schedule">
   <a class="skip-link" href="#schedule">本文へ移動</a>
@@ -28,14 +28,15 @@
         <a href="budget.html">費用</a>
         <a href="packing.html">持ち物</a>
 </nav></div></header>
-    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">12月9日〜10日・華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
-  <div class="subpage-hero" id="top"><div class="wrap"><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>旅行の予定</h1><p>12月9日・10日の出発・到着目標と参考工程を日別に表示。観光と休憩の詳細は別途調整します。</p></div></div>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.10</span></div></div>
+  <div class="subpage-hero" id="top"><div class="wrap"><svg class="subpage-icon travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#car"/></svg><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>旅行の予定</h1><p>温泉へ向かう1日目と、ゆっくり帰る2日目。日付を選んで予定を確認しよう。</p></div></div>
   <main class="wrap subpage-main">
 <section class="section" id="schedule">
-      <div class="section-head"><span class="en">TRAVEL ITINERARY</span><h2>旅のスケジュール</h2><p>12/9は15:00チェックイン、12/10は10:00チェックアウト・17:00頃の花園IC付近着を目標にします。寄り道先と滞在時間は今後決めるため、以下は比較用の参考工程です。</p></div>
+      <div class="section-head"><span class="en">TRAVEL ITINERARY</span><h2>旅のスケジュール</h2><p>予約済みの予定と、移動の目安をまとめました。</p></div>
+      <p class="status-legend"><span data-status="booked"></span> 予約で指定した予定 <span data-status="tentative"></span> 時刻・立ち寄り先の目安</p>
       <div class="day-tabs" role="tablist" aria-label="日程の選択">
-        <button type="button" class="active" id="tab1" role="tab" aria-selected="true" aria-controls="panel1">DAY 1</button>
-        <button type="button" id="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="-1">DAY 2</button>
+        <button type="button" class="active" id="tab1" role="tab" aria-selected="true" aria-controls="panel1">12/9（水）</button>
+        <button type="button" id="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="-1">12/10（木）</button>
       </div>
       <div class="day-panel" id="panel1" role="tabpanel" aria-labelledby="tab1"></div>
       <div class="day-panel" id="panel2" role="tabpanel" aria-labelledby="tab2" hidden></div>
@@ -56,6 +57,6 @@
     <a href="budget.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
     <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
   </nav>
-  <footer>FAMILY WINTER TRIP 2026 · v1.3</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v1.4</footer>
 </body>
 </html>
