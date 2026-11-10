@@ -246,3 +246,22 @@
 .trip-mascot-bubble:not([hidden]) + .trip-mascot-tail { display:block; }
 .trip-mascot-bubble[data-speaker="girl"] + .trip-mascot-tail { right:18px; }
 .trip-mascot-bubble[data-kind="anger"] + .trip-mascot-tail { background:#fff2e9; border-color:#ba8263; }
+
+/* Excursions occupy only explicitly empty playgrounds, never reading areas. */
+.mascot-playground { position:relative; height:112px; margin-block:12px; pointer-events:none; overflow:hidden; }
+.mascot-playground::after { content:''; position:absolute; left:8%; right:8%; bottom:11px; height:12px; border-bottom:1px dashed #c2c6b655; border-radius:50%; }
+.mascot-playground::before { content:'✧'; position:absolute; left:25%; bottom:17px; color:#b7976455; font-size:13px; }
+.mascot-playground + main>.section:first-child { margin-top:12px; }
+.mascot-visitor { position:fixed; left:0; top:0; z-index:19; pointer-events:none; user-select:none; will-change:transform,opacity; }
+.mascot-visitor svg { display:block; width:100%; height:100%; overflow:visible; }
+.mascot-visitor .mascot-limb { animation-duration:.32s; }
+.mascot-visitor .mascot-body { animation-duration:.16s; }
+.trip-mascot-call { display:none; font-size:10px; line-height:1.5; padding:8px 5px; border:1px solid #a8b7af; border-radius:15px; color:#385761; background:#fffdf2; box-shadow:0 2px 8px #21363218; }
+.trip-mascot.is-roaming .trip-mascot-sprite { opacity:0; }
+.trip-mascot.is-roaming .trip-mascot-call { display:block; }
+.roam-controls { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:8px 12px; padding-bottom:18px; }
+.roam-toggle,.roam-preview { min-height:44px; padding:8px 14px; background:#fffdf6; color:#566969; border:1px solid #d5dad0; border-radius:20px; font:inherit; font-size:12px; cursor:pointer; }
+.roam-toggle:disabled,.roam-preview:disabled { opacity:.6; cursor:default; }
+.roam-status { flex-basis:100%; font-size:11px; color:#6e7b7e; text-align:center; min-height:1.8em; }
+@media(prefers-reduced-motion:reduce) { .mascot-visitor { display:none !important; } }
+@media print { .mascot-playground,.mascot-visitor,.roam-controls { display:none !important; } }

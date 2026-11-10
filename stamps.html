@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 検索結果に載せないよう検索エンジンに依頼します。アクセス制限ではありません。 -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="小さな「できた！」を、旅の思い出に。スタンプはこの端末だけに保存されます。">
+  <meta name="theme-color" content="#192a37">
+  <title>旅のスタンプ帳｜家族冬旅行 2026</title>
+  <!-- CSSは見た目を担当 -->
+  <link rel="stylesheet" href="styles.css?v=1.5">
+  <link rel="stylesheet" href="mascot.css?v=1.5">
+  <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
+  <script defer src="trip-data.js?v=1.5"></script>
+  <script defer src="travel-utils.js?v=1.5"></script>
+  <script defer src="script.js?v=1.5"></script>
+  <script defer src="travel-extras.js?v=1.5"></script>
+  <script defer src="mascot-dialogues.js?v=1.5"></script>
+  <script defer src="mascot-conversation.js?v=1.5"></script>
+  <script defer src="mascot-scenes.js?v=1.5"></script>
+  <script defer src="mascot-roam.js?v=1.5"></script>
+  <script defer src="mascot.js?v=1.5"></script>
+</head>
+<body data-page="stamps">
+  <a class="skip-link" href="#stampbook">本文へ移動</a>
+  <header><div class="wrap header-inner"><a href="index.html#top" class="brand" aria-label="ホームへ戻る"><span class="brand-symbol">旅</span><span class="brand-title">FAMILY WINTER TRIP<small>DECEMBER · 2026</small></span></a><nav class="nav" aria-label="メインメニュー">
+        <a href="index.html">ホーム</a>
+        <a href="hotel.html">旅館</a>
+        <a href="schedule.html">予定</a>
+        <a href="budget.html">費用</a>
+        <a href="packing.html">持ち物</a>
+</nav></div></header>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.10</span></div></div>
+  <div class="subpage-hero" id="top"><div class="wrap"><svg class="subpage-icon travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#bag"/></svg><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>旅のスタンプ帳</h1><p>小さな「できた！」を、旅の思い出に。スタンプはこの端末だけに保存されます。</p></div></div>
+  <main class="wrap subpage-main">
+    <section class="section stampbook" id="stampbook" aria-labelledby="stamp-title">
+      <div class="section-head"><span class="en">LITTLE TRAVEL PASSPORT</span><h2 id="stamp-title">旅の「できた！」をあつめよう</h2><p>体験したら、ぽんっとひと押し。もう一度押すと戻せます。</p></div>
+      <div class="stamp-summary"><span>あつめたスタンプ</span><strong id="stamp-count">0 / 6</strong><progress id="stamp-progress" max="6" value="0" aria-label="集めたスタンプの数"></progress></div>
+      <p class="stamp-complete" id="stamp-complete" hidden>ぜんぶ集まったね。家族の思い出、できあがり！ ✧</p>
+      <div class="stamp-grid" id="stamp-grid"></div>
+      <p class="stamp-message" id="stamp-message" role="status" aria-live="polite"></p>
+      <p class="note" id="stamp-save-note"></p>
+      <p class="field-note">スタンプは手動の思い出記録です。位置情報は使いません。旅行前に試して、あとで戻しても大丈夫。</p>
+      <button class="soft-button" type="button" id="stamp-reset">スタンプをすべて戻す</button>
+      <div class="stamp-reset-confirm" id="stamp-reset-confirm" hidden><p>この端末のスタンプを、すべて未達成に戻しますか？</p><button class="soft-button" id="stamp-reset-cancel" type="button">やめる</button><button class="soft-button" id="stamp-reset-yes" type="button">すべて戻す</button></div>
+      <noscript><p>スタンプの記録にはJavaScriptを有効にしてください。</p></noscript>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="スマートフォン用メニュー">
+    <a href="index.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>ホーム</span></a>
+    <a href="hotel.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M2 21h20M8 7h2M14 7h2M8 11h2M14 11h2M9 21v-6h6v6"/></svg><span>旅館</span></a>
+    <a href="schedule.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span>予定</span></a>
+    <a href="budget.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
+    <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
+  </nav>
+  <div class="wrap trip-tools"><a href="guide.html"><span aria-hidden="true">▤</span> 1枚しおり・PDF保存</a><a href="stamps.html"><span aria-hidden="true">✧</span> 旅のスタンプ帳</a></div>
+  <footer>FAMILY WINTER TRIP 2026 · v1.5</footer>
+</body>
+</html>

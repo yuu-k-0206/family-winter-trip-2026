@@ -100,6 +100,7 @@ window.TRIP_DATA = {
     reportedAt: "2026-11-10"
   },
   booking: {
+    roomLabel: "デラックス和室16畳・禁煙／夕朝食付き",
     planName: "慶びと寛ぎに満ちた華鳳の基準 上質スタンダードプラン【4.1～】",
     // 2026/11/09のYahoo!トラベル予約明細画像で確認。画像・予約番号は公開しない。
     payment: {
@@ -202,31 +203,37 @@ window.TRIP_DATA = {
               {
                 "time": "7:30",
                 "name": "花園IC出発",
+                "placeId": "hanazono",
                 "detail": "関越自動車道を新潟方面へ"
               },
               {
                 "time": "8:35〜8:55",
                 "name": "赤城高原SA（下り）",
+                "placeId": "akagi-down",
                 "detail": "トイレ・飲み物・子供の休憩（20分）。道路状況を再確認"
               },
               {
                 "time": "10:15〜10:40",
                 "name": "道の駅ゆのたに「深雪の里」",
+                "placeId": "yunotani",
                 "detail": "魚沼の特産品・休憩（25分）"
               },
               {
                 "time": "11:40〜12:55",
                 "name": "道の駅R290とちお",
+                "placeId": "tochio",
                 "detail": "栃尾あぶらげの昼食・休憩（75分）。営業と混雑を前日に確認"
               },
               {
                 "time": "14:30頃",
                 "name": "華鳳到着目標",
+                "placeId": "kahou",
                 "detail": "チェックインまで約30分の余裕"
               },
               {
                 "time": "15:00",
                 "name": "華鳳チェックイン",
+                "placeId": "kahou",
                 "detail": "宿泊プランの案内に従う"
               }
             ]
@@ -241,31 +248,37 @@ window.TRIP_DATA = {
               {
                 "time": "8:00",
                 "name": "花園IC出発",
+                "placeId": "hanazono",
                 "detail": "関越道から北陸道・日本海東北道方面へ"
               },
               {
                 "time": "9:10〜9:30",
                 "name": "赤城高原SA（下り）",
+                "placeId": "akagi-down",
                 "detail": "トイレ・休憩（20分）"
               },
               {
                 "time": "11:10〜12:15",
                 "name": "越後川口SA（下り）",
+                "placeId": "kawaguchi-down",
                 "detail": "昼食・信濃川の景色（65分）"
               },
               {
                 "time": "13:10〜13:25",
                 "name": "栄PA（下り）",
+                "placeId": "sakae-down",
                 "detail": "トイレ・休憩（15分／時間が押したら省略）"
               },
               {
                 "time": "14:30頃",
                 "name": "華鳳到着目標",
+                "placeId": "kahou",
                 "detail": "チェックインまで約30分の余裕"
               },
               {
                 "time": "15:00",
                 "name": "華鳳チェックイン",
+                "placeId": "kahou",
                 "detail": "宿泊プランの案内に従う"
               }
             ]
@@ -286,26 +299,31 @@ window.TRIP_DATA = {
               {
                 "time": "10:00",
                 "name": "華鳳チェックアウト・出発",
+                "placeId": "kahou",
                 "detail": "道路状況を確認"
               },
               {
                 "time": "11:30〜12:45",
                 "name": "道の駅R290とちお",
+                "placeId": "tochio",
                 "detail": "昼食・栃尾あぶらげ・買物（75分）"
               },
               {
                 "time": "13:45〜14:05",
                 "name": "道の駅ゆのたに「深雪の里」",
+                "placeId": "yunotani",
                 "detail": "お土産・トイレ休憩（20分）"
               },
               {
                 "time": "15:35〜15:55",
                 "name": "赤城高原SA（上り）",
+                "placeId": "akagi-up",
                 "detail": "トイレ・休憩（20分）"
               },
               {
                 "time": "16:50〜17:00",
                 "name": "花園IC付近に到着",
+                "placeId": "hanazono",
                 "detail": "到着時刻は道路状況によって前後"
               },
               {
@@ -325,26 +343,31 @@ window.TRIP_DATA = {
               {
                 "time": "10:00",
                 "name": "華鳳チェックアウト・出発",
+                "placeId": "kahou",
                 "detail": "高速道路の規制情報を確認"
               },
               {
                 "time": "11:30〜12:50",
                 "name": "道の駅ながおか花火館",
+                "placeId": "hanabikan",
                 "detail": "昼食と展示の候補（80分）。木曜は通常営業。臨時休館を前日に確認し、ドームシアターは上映時刻と帰着見込みが合えば"
               },
               {
                 "time": "13:35〜13:55",
                 "name": "越後川口SA（上り）",
+                "placeId": "kawaguchi-up",
                 "detail": "トイレ・休憩（20分）"
               },
               {
                 "time": "15:05〜15:25",
                 "name": "赤城高原SA（上り）",
+                "placeId": "akagi-up",
                 "detail": "トイレ・休憩（20分）"
               },
               {
                 "time": "16:45〜17:00",
                 "name": "花園IC付近に到着",
+                "placeId": "hanazono",
                 "detail": "到着時刻は道路状況によって前後"
               },
               {
@@ -359,6 +382,91 @@ window.TRIP_DATA = {
       }
     ]
   },
+  places: {
+  "hanazono": {
+    "label": "花園IC",
+    "query": "関越自動車道 花園インターチェンジ 埼玉県深谷市"
+  },
+  "kahou": {
+    "label": "白玉の湯 華鳳",
+    "query": "白玉の湯 華鳳 新潟県新発田市月岡温泉"
+  },
+  "akagi-down": {
+    "label": "赤城高原SA（下り）",
+    "query": "赤城高原サービスエリア 下り"
+  },
+  "akagi-up": {
+    "label": "赤城高原SA（上り）",
+    "query": "赤城高原サービスエリア 上り"
+  },
+  "kawaguchi-down": {
+    "label": "越後川口SA（下り）",
+    "query": "越後川口サービスエリア 下り"
+  },
+  "kawaguchi-up": {
+    "label": "越後川口SA（上り）",
+    "query": "越後川口サービスエリア 上り"
+  },
+  "sakae-down": {
+    "label": "栄PA（下り）",
+    "query": "北陸自動車道 栄パーキングエリア 下り"
+  },
+  "tochio": {
+    "label": "道の駅R290とちお",
+    "query": "道の駅 R290とちお 新潟県長岡市"
+  },
+  "yunotani": {
+    "label": "道の駅ゆのたに・深雪の里",
+    "query": "道の駅ゆのたに 深雪の里 新潟県魚沼市"
+  },
+  "hanabikan": {
+    "label": "道の駅ながおか花火館",
+    "query": "道の駅ながおか花火館 新潟県長岡市"
+  }
+},
+  guideNotes: {
+    roomRequest: "庭園側・5〜6階は希望伝達済み（確約なし）。",
+    winter: "雪・道路規制でルートや時刻を変更します。帰りの花火館は時間に余裕がある場合のみ。移動・立ち寄りはすべて仮案です。",
+    pending: "出発前：実際の無料取消期限・現地精算・旅館の到着出発時刻を予約詳細で確認。夕食時刻の変更は旅館へ確認。"
+  },
+  stamps: [
+  {
+    "id": "departure",
+    "symbol": "🚙",
+    "label": "いってきます！",
+    "hint": "みんなそろって出発"
+  },
+  {
+    "id": "snow",
+    "symbol": "❄",
+    "label": "冬をみつけた",
+    "hint": "冬らしい景色を楽しんだ"
+  },
+  {
+    "id": "arrival",
+    "symbol": "♨",
+    "label": "華鳳にとうちゃく",
+    "hint": "旅館に着いて、ひと休み"
+  },
+  {
+    "id": "bath",
+    "symbol": "♨",
+    "label": "ぽかぽか温泉",
+    "hint": "お風呂であったまった"
+  },
+  {
+    "id": "meal",
+    "symbol": "🍚",
+    "label": "おいしいごはん",
+    "hint": "家族でごはんを楽しんだ"
+  },
+  {
+    "id": "home",
+    "symbol": "⌂",
+    "label": "ただいま！",
+    "hint": "無事におうちへ帰った"
+  }
+],
   itinerary: [
     {
       tabLabel: "12/9（水）", subtitle: "1日目 · 華鳳へ", defaultRoadId: "uonuma",
