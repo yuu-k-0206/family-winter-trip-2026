@@ -6,8 +6,8 @@
   編集後に Ctrl + S で保存 → index.html を開いて F5 で更新。
 */
 window.TRIP_DATA = {
-  updatedAt: "2026.11.09",
-  status: "12月9日(水)〜10日(木)・華鳳の宿泊予約完了",
+  updatedAt: "2026.11.10",
+  status: "華鳳の宿泊予約完了",
   destination: "新潟・月岡温泉",
   stayName: "白玉の湯 華鳳",
   roomRequestNote: "11月6日に華鳳へ電話し、庭園側（ガーデンサイドビュー）と5〜6階（中階層）を希望しました。旅館にリクエストとして伝達済みですが、客室の眺望・階層はいずれも確約ではありません。",
@@ -15,6 +15,23 @@ window.TRIP_DATA = {
   members: "大人5人 ＋ 子供2人",
   membersDetail: "大人5人と子供2人（6歳・3歳）の計7人・1室。子供2人とも「乳幼児（食事・寝具利用）」で予約済みです。",
   duration: "1泊2日",
+  heroLead: "温泉と、おいしいごはん。\n華鳳で、家族みんなのゆったりした時間を。",
+  // 状態の呼び名は全ページ共通。希望・仮案を予約済みと混同しない。
+  statusKinds: {
+    booked: { label: "予約済み", mark: "✓" },
+    confirmed: { label: "確認済み", mark: "✓" },
+    requested: { label: "希望伝達済み", mark: "↗" },
+    tentative: { label: "仮案", mark: "◇" },
+    pending: { label: "未確認", mark: "?" },
+    unreserved: { label: "未予約", mark: "○" },
+    reference: { label: "一般案内", mark: "i" }
+  },
+  planning: [
+    { title: "夕食の開始時刻", bookingEvent: "dinner", status: "booked", note: "予約時に指定した開始時刻です。", href: "hotel.html#dinner" },
+    { title: "庭園側・5〜6階の客室", status: "requested", note: "希望は伝達済み。眺望・階層は確約されていません。", href: "hotel.html#room" },
+    { title: "往復の移動ルート", status: "tentative", note: "行きは魚沼、帰りは高速優先が仮案。雪や道路状況で調整します。", href: "schedule.html#schedule" },
+    { title: "夕食後のカラオケ", status: "unreserved", note: "空室時は7人利用可と電話確認済み。当日の空室は未確認です。", href: "hotel.html#kahou-karaoke" }
+  ],
   dateSummary: "2026年12月9日(水)〜10日(木)",
   dateNote: "旅行日程と華鳳の宿泊予約が決まりました。業務会議等が入った場合は延期の可能性があります。",
   decisionNote: "12月9日(水)〜10日(木)、白玉の湯 華鳳の宿泊予約が完了しました。予約窓口はYahoo!トラベルで、宿泊キャンセル保険にも加入済みです。業務上の会議等によって延期となる可能性は残っています。",
@@ -344,21 +361,23 @@ window.TRIP_DATA = {
   },
   itinerary: [
     {
+      tabLabel: "12/9（水）", subtitle: "1日目 · 華鳳へ", defaultRoadId: "uonuma",
       name: "12月9日(水)｜出発して、旅行先へ",
       steps: [
-        { title: "花園IC付近を出発", detail: "魚沼経由は7:30、高速優先は8:00頃。出発地点の詳細は非掲載" },
-        { title: "昼食・休憩は路面を見て決定", detail: "魚沼経由はとちお、高速優先は越後川口SA（下り）が昼食候補。" },
-        { title: "14:30頃到着・15:00チェックイン", detail: "余裕を持って到着する計画。宿泊プランの案内を優先" },
-        { bookingEvent: "dinner", title: "夕食・自由時間", detail: "夕食の開始時刻は予約内容に従う" }
+        { time: "7:30 / 8:00", icon: "car", status: "tentative", title: "花園IC付近を出発", detail: "魚沼経由は7:30、高速優先は8:00頃。選ぶルートにより出発目安が変わります。" },
+        { time: "お昼", icon: "meal", status: "tentative", title: "昼食と、ひと休み", detail: "魚沼経由はとちお、高速優先は越後川口SA（下り）が昼食候補。" },
+        { time: "15:00", icon: "onsen", status: "tentative", title: "華鳳にチェックイン", detail: "14:30頃の到着・15:00チェックインが目標。宿泊プランの案内を優先します。" },
+        { bookingEvent: "dinner", icon: "meal", status: "booked", title: "家族で夕食", detail: "夕食の開始時刻は予約内容に従う" }
       ]
     },
     {
+      tabLabel: "12/10（木）", subtitle: "2日目 · 帰り道", defaultRoadId: "express",
       name: "12月10日(木)｜旅先を楽しんで、帰宅",
       steps: [
-        { title: "朝食・朝の時間", detail: "宿泊先に合わせて調整" },
-        { title: "10:00 チェックアウト", detail: "花園IC付近17:00帰着を目標に出発" },
-        { title: "道の駅・長岡観光・SA休憩", detail: "高速優先を仮採用。花火館は余裕があれば寄り、遅れそうなら越後川口SA（上り）で昼食。" },
-        { title: "17:00頃 花園IC付近に到着目標", detail: "夕食は到着時刻と子供の様子に合わせて調整。" }
+        { time: "朝", icon: "meal", status: "tentative", title: "朝食と、朝の時間", detail: "朝食の利用時刻は当日の旅館案内に合わせて調整します。" },
+        { time: "10:00", icon: "stay", status: "tentative", title: "チェックアウト", detail: "公開プランの案内をもとにした出発目標。予約詳細の時刻を優先します。" },
+        { time: "お昼", icon: "car", status: "tentative", title: "寄り道・昼食・SA休憩", detail: "高速優先を仮採用。花火館は余裕があれば寄り、遅れそうなら越後川口SA（上り）で昼食。" },
+        { time: "17:00頃", icon: "home", status: "tentative", title: "花園IC付近に到着目標", detail: "夕食は到着時刻と子供の様子に合わせて調整。" }
       ]
     }
   ],
@@ -377,6 +396,7 @@ window.TRIP_DATA = {
     { id: "pre-departure", label: "ETCカード・燃料・出発前の道路情報" }
   ],
   updates: [
+    { date: "2026.11.10", summary: "カラオケの7名利用・子供料金・営業時間を電話確認しました。", text: "華鳳への電話確認で、空室時は7名利用可、6歳・3歳は大人料金の半額、営業時間は20:30〜23:30と確認。電話または当日予約が可能です。今回は未予約で、12月9日の空室は未確認です。" },
     { date: "2026.11.09", text: "Yahoo!トラベル予約明細で宿泊料金を確認。大人5名・乳幼児2名（2人とも食事・寝具利用）の1室小計は148,500円、即時利用22,275円分を差し引いたオンラインカード決済額は126,225円です。入湯税などの現地精算額は引き続き確認します。" },
     { date: "2026.11.09", text: "交通費の計画基準を整理。花園ICから魚沼ICまでは片道3,850円、豊栄新潟東港ICまでは片道6,100円を普通車ETC・平日・休日割引なしの比較額として採用。推奨組合せの交通費予算は往復24,600円（燃料代概算・予備費3,000円込み）。観光の立ち寄り先と滞在時間は別途検討します。" },
     { date: "2026.11.08", text: "宿泊予約の確認事項と冬の移動案を整理しました。勤務予定が決まる前に、Yahoo!トラベルの予約詳細でキャンセル無料期限を確認します。" },

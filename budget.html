@@ -9,15 +9,15 @@
   <meta name="theme-color" content="#192a37">
   <title>費用・ルート｜家族冬旅行 2026</title>
   <!-- CSSは見た目を担当 -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mascot.css">
+  <link rel="stylesheet" href="styles.css?v=1.4">
+  <link rel="stylesheet" href="mascot.css?v=1.4">
   <!-- データ→動作の順で読み込む（ブラウザは上から順に処理） -->
-  <script defer src="trip-data.js"></script>
-  <script defer src="script.js"></script>
-  <script defer src="mascot-dialogues.js"></script>
-  <script defer src="mascot-conversation.js"></script>
-  <script defer src="mascot-scenes.js"></script>
-  <script defer src="mascot.js"></script>
+  <script defer src="trip-data.js?v=1.4"></script>
+  <script defer src="script.js?v=1.4"></script>
+  <script defer src="mascot-dialogues.js?v=1.4"></script>
+  <script defer src="mascot-conversation.js?v=1.4"></script>
+  <script defer src="mascot-scenes.js?v=1.4"></script>
+  <script defer src="mascot.js?v=1.4"></script>
 </head>
 <body data-page="budget">
   <a class="skip-link" href="#travel-budget">本文へ移動</a>
@@ -28,21 +28,21 @@
         <a href="budget.html" aria-current="page">費用</a>
         <a href="packing.html">持ち物</a>
 </nav></div></header>
-    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">12月9日〜10日・華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.04</span></div></div>
-  <div class="subpage-hero" id="top"><div class="wrap"><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>費用・ルート</h1><p>行き・帰りのルートと交通費の比較。ETC料金は平日の計画基準額、燃料代は概算として整理しています。</p></div></div>
+    <div class="update-strip"><div class="wrap update-inner"><span class="mini-status" id="trip-status">華鳳の宿泊予約完了</span><span class="update-date" id="last-update">更新：2026.11.10</span></div></div>
+  <div class="subpage-hero" id="top"><div class="wrap"><svg class="subpage-icon travel-icon" aria-hidden="true"><use href="assets/travel-icons.svg#wallet"/></svg><span class="eyebrow">FAMILY WINTER TRIP · 2026</span><h1>費用・ルート</h1><p>行き・帰りのルートと交通費の比較。ETC料金は平日の計画基準額、燃料代は概算として整理しています。</p></div></div>
   <main class="wrap subpage-main">
 <section class="section" id="travel-budget" aria-labelledby="budget-heading">
       <div class="section-head"><span class="en">TRAVEL &amp; BUDGET</span><h2 id="budget-heading">移動と予算の目安</h2><p>交通費の予算は整理済み。宿泊の実支払額とは分けて表示します。</p></div>
       <div class="booking-extra">
         <article class="info-card">
-          <span class="cap">TRANSPORT</span><h3>交通費の計画予算（行き魚沼・帰り高速の組合せ）</h3>
+          <span class="cap">TRANSPORT</span><span data-status="tentative"></span><h3>交通費の計画予算（行き魚沼・帰り高速の組合せ）</h3>
           <p class="budget-figure" id="budget-transport">算定中</p>
           <p class="field-note" id="budget-source-date"></p>
           <p id="budget-condition"></p>
           <p class="field-note" id="budget-breakdown"></p>
         </article>
         <article class="info-card">
-          <span class="cap">CONFIRMED PAYMENT</span><h3>宿泊のオンラインカード決済額（確定）</h3>
+          <span class="cap">CONFIRMED PAYMENT</span><span data-status="confirmed"></span><h3>宿泊のオンラインカード決済額（確定）</h3>
           <p class="budget-figure" id="budget-combined">確認中</p>
           <p class="field-note" id="budget-with-transport"></p>
           <p class="field-note">子供2名とも食事・寝具利用の申込が確認できています。単価・即時利用の確定内訳は旅館ページに掲載。入湯税・その他諸税は別途発生する場合があり、現地精算の有無は未確認です。</p>
@@ -86,6 +86,6 @@
     <a href="budget.html" aria-current="page"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="16" rx="2"/><path d="M2 9h20M16 15h3"/></svg><span>費用</span></a>
     <a href="packing.html"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10l1.5 1.5 2.5-3M8.5 16h7"/></svg><span>持ち物</span></a>
   </nav>
-  <footer>FAMILY WINTER TRIP 2026 · v1.3</footer>
+  <footer>FAMILY WINTER TRIP 2026 · v1.4</footer>
 </body>
 </html>

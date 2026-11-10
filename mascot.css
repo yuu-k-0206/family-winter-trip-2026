@@ -212,3 +212,37 @@
 .trip-mascot-bubble[data-speaker="girl"]::after { right: 18px; }
 .trip-mascot-line { display: block; }
 .trip-mascot-bubble[data-kind="anger"] { background: #fff2e9; border-color: #ba8263; }
+
+/* v1.4: 会話を読みながら案内リンクを選べる。外側の透明な余白は従来どおり透過。 */
+.trip-mascot-bubble {
+  width:270px;
+  padding:0 16px 14px;
+  max-height:calc(100vh - var(--trip-mascot-nav-height, 0px) - 130px);
+  max-height:calc(100dvh - var(--trip-mascot-nav-height, 0px) - 130px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  pointer-events:auto;
+  user-select:text;
+  -webkit-user-select:text;
+}
+.trip-mascot-bubble::after { display:none; }
+.trip-mascot-guide-header { position:sticky; top:0; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 2px; background:inherit; min-height:44px; }
+.trip-mascot-guide-header>span { font-size:11px; color:#786540; letter-spacing:.1em; }
+.trip-mascot-close { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; margin-right:-12px; padding:0; border:0; border-radius:6px; background:transparent; color:#526973; font-size:23px; cursor:pointer; }
+.trip-mascot-close:hover { background:#eae8df; }
+.trip-mascot-line { padding:3px 0 12px; line-height:1.7; }
+.trip-mascot-line::before { content:''; display:inline-block; width:6px; height:6px; margin-right:6px; border-radius:50%; background:#378997; vertical-align:middle; }
+.trip-mascot-bubble[data-speaker="girl"] .trip-mascot-line::before { background:#ad627d; }
+.trip-mascot-links { display:grid; gap:7px; }
+.trip-mascot-links a { display:flex; align-items:center; min-height:44px; padding:9px 12px; border:1px solid #d7ddd7; border-radius:8px; background:#f1f5ef; color:#294b57; font-size:12px; font-weight:600; text-decoration:none; line-height:1.6; }
+.trip-mascot-links a:hover { border-color:#9a834e; background:#ecefdf; }
+.trip-mascot-links a:focus-visible,.trip-mascot-close:focus-visible { outline:2px solid #8a6e36; outline-offset:1px; }
+.trip-mascot-guide-header { background:#fffdf5; }
+.trip-mascot-bubble[data-kind="anger"] .trip-mascot-guide-header { background:#fff2e9; }
+@media(max-width:355px) {
+  .trip-mascot-bubble { width:256px; max-width:calc(100vw - 24px - env(safe-area-inset-right,0px)); }
+}
+.trip-mascot-tail { display:none; position:absolute; bottom:calc(100% + 4px); right:52px; width:10px; height:10px; background:#fffdf5; border-right:1px solid #b69a65; border-bottom:1px solid #b69a65; transform:rotate(45deg); pointer-events:none; }
+.trip-mascot-bubble:not([hidden]) + .trip-mascot-tail { display:block; }
+.trip-mascot-bubble[data-speaker="girl"] + .trip-mascot-tail { right:18px; }
+.trip-mascot-bubble[data-kind="anger"] + .trip-mascot-tail { background:#fff2e9; border-color:#ba8263; }

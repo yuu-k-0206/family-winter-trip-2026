@@ -33,6 +33,69 @@
     return el;
   };
   const list = (item) => Array.isArray(item) ? item : [];
+  const statusBadge = kind => {
+    const definition = data.statusKinds?.[kind] || data.statusKinds?.pending;
+    const badge = textElement('span', 'status-badge status-badge--' + (data.statusKinds?.[kind] ? kind : 'pending'), '');
+    const mark = textElement('span', 'status-mark', definition?.mark || '?');
+    mark.setAttribute('aria-hidden', 'true');
+    badge.append(mark, document.createTextNode(definition?.label || '未確認'));
+    return badge;
+  };
+  document.querySelectorAll('[data-status]').forEach(el => el.replaceWith(statusBadge(el.dataset.status)));
+  const travelIcon = name => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'travel-icon');
+    svg.setAttribute('viewBox', '0 0 48 48');
+    svg.setAttribute('aria-hidden', 'true');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttribute('href', 'assets/travel-icons.svg#' + (['car','meal','onsen','stay','home'].includes(name) ? name : 'car'));
+    svg.append(use);
+    return svg;
+  };
+  // 折りたたまれた更新記録も、共有済みの #updates から開けます。
+  const revealHashTarget = () => {
+    const target = get(window.location.hash.slice(1));
+    if (!target) return;
+    let parent = target.parentElement;
+    while (parent) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+      parent = parent.parentElement;
+    }
+    target.querySelectorAll('details[data-expand-on-hash]').forEach(details => { details.open = true; });
+  };
+  window.addEventListener('hashchange', revealHashTarget);
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href^="#"]');
+    if (link && link.hash === window.location.hash) revealHashTarget();
+  });
+  revealHashTarget();
+
+  // 雪はイラスト内だけ。端末の「動きを減らす」と閲覧者の停止設定を尊重。
+  const snowButton = get('snow-toggle');
+  if (snowButton) {
+    const snow = document.querySelector('.winter-snow');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let enabled = true;
+    try { enabled = localStorage.getItem('family-trip-snow') !== 'off'; } catch (_) {}
+    const refreshSnow = () => {
+      const active = enabled && !reduced.matches;
+      snow?.classList.toggle('is-playing', active && !document.hidden);
+      snowButton.hidden = false;
+      snowButton.disabled = reduced.matches;
+      snowButton.setAttribute('aria-pressed', String(active));
+      snowButton.textContent = reduced.matches ? '雪の演出：端末設定で停止' : '雪の演出：' + (active ? 'オン' : 'オフ');
+    };
+    snowButton.addEventListener('click', () => {
+      enabled = !enabled;
+      try { localStorage.setItem('family-trip-snow', enabled ? 'on' : 'off'); } catch (_) {}
+      refreshSnow();
+    });
+    if (reduced.addEventListener) reduced.addEventListener('change', refreshSnow);
+    else reduced.addListener(refreshSnow);
+    document.addEventListener('visibilitychange', refreshSnow);
+    refreshSnow();
+  }
+
 
   // 日本時間（UTC+9、夏時間なし）の暦日を整数で比較。端末の現地時刻は使いません。
   const dayMs = 24 * 60 * 60 * 1000;
@@ -78,7 +141,8 @@
 
   setText('trip-status', data.status);
   setText('last-update', `更新：${data.updatedAt}`);
-  setText('hero-pill', `${data.dateSummary || '旅行日程を確認中'} · ${data.status}`);
+  setText('hero-pill', `${data.dateSummary || '旅行日程を確認中'} · ${data.duration || ''}`);
+  setText('hero-lead', data.heroLead);
   setText('summary-duration', data.duration);
   setText('overview-date', data.dateSummary);
   setText('overview-date-note', data.dateNote);
@@ -141,7 +205,7 @@
   setText('overview-members-detail', data.membersDetail);
   setText('overview-transport', data.transport);
   setText('overview-destination', `行き先：${data.destination}`);
-  setText('overview-stay', `宿泊先：${data.stayName}`);
+  setText('overview-stay', data.stayName);
 
   const dateList = get('date-options');
   if (dateList) {
@@ -242,6 +306,21 @@
     /^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(bookedDinner.startTime);
   setText('booking-dinner-start', validDinnerTime ? bookedDinner.startTime + '（予約時指定）' : '確認中');
   setText('booking-dinner-note', validDinnerTime ? bookedDinner.note : '予約時の夕食開始時刻は確認中です。');
+  const planningList = get('planning-list');
+  if (planningList) {
+    list(data.planning).forEach(item => {
+      const card = textElement('a', 'planning-card', '');
+      // 公開中のしおりのページ内だけを案内する。
+      if (!/^(hotel|schedule|budget|packing)\.html(?:#[a-z0-9-]+)?$/.test(item.href)) return;
+      card.href = item.href;
+      const title = item.bookingEvent === 'dinner' && validDinnerTime ? '夕食 ' + bookedDinner.startTime + ' 開始' : item.title;
+      card.append(statusBadge(item.bookingEvent === 'dinner' && !validDinnerTime ? 'pending' : item.status), textElement('h3', '', title), textElement('p', '', item.note), textElement('span', 'planning-link', '詳しく見る →'));
+      planningList.append(card);
+    });
+  }
+  const homePending = get('home-pending');
+  if (homePending) list(bookingData.pending).forEach(item => homePending.append(textElement('li', '', item)));
+
   const bookingPrices = get('booking-prices');
   if (bookingPrices) {
     const yen = amount => Number.isFinite(amount) ? `${amount.toLocaleString('ja-JP')}円` : '—';
@@ -351,86 +430,93 @@
       ' ＋ 燃料代 約' + money(transportBudget.fuel) + ' ＋ 予備費 ' + money(drivePlan.reserveYen));
   }
 
-  // 日別の2ルート工程。文字列はすべて textContent で表示します。
-  // 1日目・2日目のタイムライン
-  const panels = [get('panel1'), get('panel2')];
-  if (panels.every(Boolean)) {
-  list(data.itinerary).slice(0,2).forEach((day, dayIndex) => {
-    const panel = panels[dayIndex];
-    const timeline = document.createElement('div');
-    timeline.className = 'timeline';
-    list(day.steps).forEach((item, i) => {
-      const step = document.createElement('div');
-      step.className = 'step';
-      const dot = textElement('span', 'dot', String(i+1).padStart(2,'0'));
-      const detail = document.createElement('div');
-      // 1日目の夕食は booking.dinner の1か所から表示し、別ページと情報を重複管理しない。
-      const dinner = item.bookingEvent === 'dinner' && validDinnerTime ? bookedDinner : null;
-      const stepTitle = dinner ? dinner.startTime + ' 夕食（予約時指定）' : item.title;
-      const stepDetail = dinner ? dinner.note : item.detail;
-      detail.append(textElement('strong', '', stepTitle), textElement('p', '', stepDetail));
-      step.append(dot, detail);
-      timeline.append(step);
-    });
-    panel.append(textElement('h3', '', day.name), timeline);
-    const routeDay = list(drivePlan.schedules).find(plan => plan.day === dayIndex + 1);
-    if (routeDay) {
-      panel.append(textElement('h4', 'drive-subheading', '寄り道・休憩を含む2つのルート案'));
-      const cards = document.createElement('div');
-      cards.className = 'drive-option-list';
-      list(routeDay.options).forEach(option => {
-        const road = roadById(option.roadId);
-        if (!road) return;
-        const card = document.createElement('article');
-        card.className = 'drive-option';
-        card.append(textElement('h5', 'drive-option-heading', option.title));
-        card.append(textElement('p', 'drive-option-caption', option.recommendation));
-        const specs = textElement('p', 'drive-option-specs',
-          '基準距離 ' + road.distanceKm + 'km ／ 純走行 ' + driveMinutesText(road.driveMinutes) +
-          ' ／ 片道高速料金 ' + money(road.tollYen) +
-          ' ／ 燃料代 約' + money(road.fuelYen));
-        card.append(specs);
-        const stopList = document.createElement('div');
-        stopList.className = 'drive-stop-list';
-        list(option.stops).forEach(stop => {
-          const stopRow = document.createElement('div');
-          stopRow.className = 'drive-stop';
-          const info = document.createElement('div');
-          info.append(textElement('strong', '', stop.name));
-          if (stop.detail) info.append(textElement('p', '', stop.detail));
-          stopRow.append(textElement('span', 'drive-stop-time', stop.time), info);
-          stopList.append(stopRow);
-        });
-        card.append(stopList);
-        if (option.caution) card.append(textElement('p', 'drive-option-warning', option.caution));
-        cards.append(card);
-      });
-      panel.append(cards);
-      panel.append(textElement('p', 'note', '時刻は通常時のナビ所要時間を基にした仮工程です。冬の雪道・渋滞・立ち寄り先への迂回で変わります。時間が押した場合は観光を短縮します。'));
-    }
-  });
-  const tabs = [get('tab1'), get('tab2')];
-  function selectDay(index) {
-    tabs.forEach((tab, i) => {
+  // タブは矢印/Home/Endにも対応。ルート選択は比較表示のみで、旅行データは変更しない。
+  const bindTabs = (tabs, panels, initialIndex = 0) => {
+    if (!tabs.length) return;
+    const select = index => tabs.forEach((tab, i) => {
       const selected = i === index;
       tab.classList.toggle('active', selected);
       tab.setAttribute('aria-selected', String(selected));
       tab.tabIndex = selected ? 0 : -1;
       panels[i].hidden = !selected;
     });
-  }
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => selectDay(i));
-    tab.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        const next = 1-i;
-        selectDay(next);
-        tabs[next].focus();
-      }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(index));
+      tab.addEventListener('keydown', event => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault(); select(next); tabs[next].focus();
+      });
     });
-  });
-
+    select(initialIndex < 0 ? 0 : initialIndex);
+  };
+  const panels = [get('panel1'), get('panel2')];
+  if (panels.every(Boolean)) {
+    const dayTabs = [get('tab1'), get('tab2')];
+    list(data.itinerary).slice(0,2).forEach((day, dayIndex) => {
+      const panel = panels[dayIndex];
+      dayTabs[dayIndex].replaceChildren(document.createTextNode(day.tabLabel || day.name), textElement('small', '', day.subtitle));
+      const timeline = textElement('ol', 'timeline', '');
+      list(day.steps).forEach(item => {
+        const step = textElement('li', 'step', '');
+        const icon = textElement('span', 'step-icon', ''); icon.append(travelIcon(item.icon));
+        const detail = textElement('div', 'step-detail', '');
+        const dinner = item.bookingEvent === 'dinner' && validDinnerTime ? bookedDinner : null;
+        const time = dinner ? dinner.startTime : item.time || '確認中';
+        const heading = textElement('div', 'step-heading', '');
+        heading.append(textElement('strong', '', item.title), statusBadge(item.bookingEvent === 'dinner' && !validDinnerTime ? 'pending' : item.status));
+        detail.append(heading);
+        if (dinner) {
+          detail.append(textElement('p', '', '予約時に指定した開始時刻です。'));
+          const more = textElement('details', 'inline-details', '');
+          more.append(textElement('summary', '', '時刻の変更について'), textElement('p', '', dinner.note));
+          detail.append(more);
+        } else detail.append(textElement('p', '', item.detail));
+        step.append(icon, textElement('span', 'step-time', time), detail);
+        timeline.append(step);
+      });
+      panel.append(textElement('h3', '', day.name), timeline);
+      const routeDay = list(drivePlan.schedules).find(plan => plan.day === dayIndex + 1);
+      if (!routeDay) return;
+      panel.append(textElement('h4', 'drive-subheading', '移動ルートを比べる'));
+      panel.append(textElement('p', 'route-switch-note', '切り替わるのは表示だけです。ルートは未確定で、交通費の計画予算も変わりません。'));
+      const routeTabs = textElement('div', 'route-tabs', '');
+      routeTabs.setAttribute('role', 'tablist');
+      routeTabs.setAttribute('aria-label', day.tabLabel + 'の比較ルート');
+      const buttons = [], cards = [], validOptions = list(routeDay.options).filter(option => roadById(option.roadId));
+      validOptions.forEach((option, optionIndex) => {
+        const road = roadById(option.roadId);
+        const id = 'route-' + (dayIndex + 1) + '-' + road.id;
+        const button = textElement('button', '', option.title.split('｜')[0] + ' · ' + (road.id === 'uonuma' ? '魚沼IC経由' : '高速優先'));
+        button.type = 'button'; button.id = id + '-tab';
+        button.setAttribute('role', 'tab'); button.setAttribute('aria-controls', id);
+        button.append(textElement('small', '', road.id === day.defaultRoadId ? '現在の仮案' : 'もうひとつの案'));
+        routeTabs.append(button); buttons.push(button);
+        const card = textElement('article', 'drive-option', '');
+        card.id = id; card.setAttribute('role', 'tabpanel'); card.setAttribute('aria-labelledby', button.id);
+        card.append(statusBadge('tentative'), textElement('h5', 'drive-option-heading', option.title), textElement('p', 'drive-option-caption', option.recommendation));
+        card.append(textElement('p', 'drive-option-specs', '基準距離 ' + road.distanceKm + 'km ／ 純走行 ' + driveMinutesText(road.driveMinutes) + ' ／ 片道高速料金 ' + money(road.tollYen) + ' ／ 燃料代 約' + money(road.fuelYen)));
+        const stopList = textElement('ol', 'drive-stop-list', '');
+        list(option.stops).forEach(stop => {
+          const row = textElement('li', 'drive-stop', '');
+          const info = textElement('div', '', '');
+          info.append(textElement('strong', '', stop.name));
+          if (stop.detail) info.append(textElement('p', '', stop.detail));
+          row.append(textElement('span', 'drive-stop-time', stop.time), info); stopList.append(row);
+        });
+        card.append(stopList);
+        if (option.caution) card.append(textElement('p', 'drive-option-warning', option.caution));
+        cards.push(card);
+      });
+      panel.append(routeTabs, ...cards);
+      bindTabs(buttons, cards, validOptions.findIndex(option => option.roadId === day.defaultRoadId));
+      panel.append(textElement('p', 'note', '時刻は通常時のナビ所要時間を基にした仮工程です。雪道・渋滞・寄り道で変わります。時間が押した場合は観光を短縮します。'));
+    });
+    bindTabs(dayTabs, panels);
   }
 
   // チェックリスト：localStorageは閲覧している端末の中だけに保存
@@ -463,16 +549,16 @@
   const updates = list(data.updates)
     .filter(item => item && typeof item.text === 'string' && item.text.trim())
     .sort((a, b) => String(b.date ?? '').localeCompare(String(a.date ?? '')));
-  const updateArticle = (item) => {
+  const updateArticle = (item, compact = false) => {
     const article = document.createElement('article');
     article.className = 'updates';
     const time = textElement('time', '', item.date);
-    article.append(time, textElement('p', '', item.text));
+    article.append(time, textElement('p', '', compact ? item.summary || item.text : item.text));
     return article;
   };
   const latestUpdate = get('latest-update');
   if (latestUpdate && updates.length) {
-    latestUpdate.replaceChildren(updateArticle(updates[0]));
+    latestUpdate.replaceChildren(updateArticle(updates[0], true));
   }
   const updatesList = get('updates-list');
   if (updatesList) {

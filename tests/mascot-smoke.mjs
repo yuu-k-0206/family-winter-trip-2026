@@ -4,7 +4,7 @@ import { runInNewContext } from 'node:vm';
 
 const pages = ['index.html', 'hotel.html', 'schedule.html', 'budget.html', 'packing.html'];
 for (const page of pages) {
-  const html = readFileSync(new URL('../' + page, import.meta.url), 'utf8');
+  const html = readFileSync(new URL('../' + page, import.meta.url), 'utf8').replaceAll('?v=1.4', '');
   assert.equal(html.split('src="mascot.js"').length - 1, 1, page);
   assert.ok(html.indexOf('src="mascot-dialogues.js"') < html.indexOf('src="mascot-conversation.js"'));
   assert.ok(html.indexOf('src="mascot-conversation.js"') < html.indexOf('src="mascot-scenes.js"'));

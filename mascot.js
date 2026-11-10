@@ -99,7 +99,7 @@
   mascot.append(sprite);
   document.body.append(mascot);
 
-  // 15〜30秒の間隔で2人の掛け合いを再生。タップ・非表示・動きを減らす設定を優先。
+  // 5秒の待機後に2人の掛け合いを再生。タップ・非表示・動きを減らす設定を優先。
   const prefersReducedMotion = typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
@@ -142,9 +142,13 @@
   const engine = window.MASCOT_CONVERSATION;
   let hideTimer;
   let bubble;
-  const hideBubble = () => {
+  let talkButton;
+  const hideBubble = (returnFocus = false) => {
     clearTimeout(hideTimer);
+    const focusInside = bubble?.contains(document.activeElement);
     if (bubble) bubble.hidden = true;
+    talkButton?.setAttribute('aria-expanded', 'false');
+    if (returnFocus && focusInside) talkButton?.focus();
   };
   if (data && engine) {
     const page = location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
@@ -153,16 +157,64 @@
     button.type = 'button';
     button.className = 'trip-mascot-talk';
     button.setAttribute('aria-label', '男の子と女の子に話しかける');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', 'trip-mascot-guide');
+    talkButton = button;
     bubble = document.createElement('div');
     bubble.className = 'trip-mascot-bubble';
     bubble.hidden = true;
-    bubble.setAttribute('role', 'status');
-    bubble.setAttribute('aria-live', 'polite');
-    bubble.setAttribute('aria-atomic', 'true');
+    bubble.id = 'trip-mascot-guide';
+    bubble.setAttribute('role', 'region');
+    bubble.setAttribute('aria-label', 'マスコットの会話と旅の案内');
     const text = document.createElement('span');
     text.className = 'trip-mascot-line';
-    bubble.append(text);
-    mascot.append(button, bubble);
+    text.setAttribute('role', 'status');
+    text.setAttribute('aria-live', 'polite');
+    text.setAttribute('aria-atomic', 'true');
+    const header = document.createElement('div');
+    header.className = 'trip-mascot-guide-header';
+    const label = document.createElement('span'); label.textContent = '旅の案内';
+    const close = document.createElement('button');
+    close.type = 'button'; close.className = 'trip-mascot-close';
+    close.setAttribute('aria-label', '会話と案内を閉じる'); close.textContent = '×';
+    header.append(label, close);
+    const links = document.createElement('nav');
+    links.className = 'trip-mascot-links'; links.setAttribute('aria-label', 'マスコットの案内');
+    // 日付やランダムなセリフに関わらず、毎回使える案内。外部送信・共有はしません。
+    const routes = {
+      index: [['schedule.html', '旅行の予定を見る'], ['packing.html', '持ち物を確認する']],
+      hotel: [['schedule.html', '旅行の予定を見る'], ['hotel.html#kahou-karaoke', 'カラオケの案内へ']],
+      schedule: [['hotel.html', '旅館・お料理を見る'], ['budget.html#route-compare', 'ルートの費用を比べる']],
+      budget: [['schedule.html', '旅行の予定を見る'], ['hotel.html#booking-info', '宿泊の予約内容へ']],
+      packing: [['schedule.html', '旅行の予定を見る'], ['index.html#planning-status', '準備の現在地を見る']]
+    };
+    (routes[page] || routes.index).forEach(([href, title]) => {
+      const link = document.createElement('a'); link.href = href;
+      link.textContent = title + ' →'; links.append(link);
+      link.addEventListener('click', () => hideBubble(true));
+    });
+    bubble.append(header, text, links);
+    // 吹き出しがスクロールしても、話し手を示すしっぽはキャラクターの上に残す。
+    const tail = document.createElement('span');
+    tail.className = 'trip-mascot-tail';
+    tail.setAttribute('aria-hidden', 'true');
+    mascot.append(button, bubble, tail);
+    const scheduleHide = () => {
+      clearTimeout(hideTimer);
+      if (bubble.hidden || bubble.contains(document.activeElement) || bubble.matches(':hover')) return;
+      hideTimer = setTimeout(() => hideBubble(), data.settings.displayMs);
+    };
+    bubble.addEventListener('pointerenter', () => clearTimeout(hideTimer));
+    bubble.addEventListener('pointerdown', () => clearTimeout(hideTimer));
+    bubble.addEventListener('pointerleave', scheduleHide);
+    bubble.addEventListener('focusin', () => clearTimeout(hideTimer));
+    bubble.addEventListener('focusout', () => setTimeout(scheduleHide, 0));
+    close.addEventListener('click', () => hideBubble(true));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !bubble.hidden) {
+        event.preventDefault(); hideBubble(true);
+      }
+    });
     // clickだけを使うことで、タッチ後の合成clickとの二重集計を防ぐ。
     // ネイティブbuttonによりEnter/Spaceの操作も同じ経路になる。
     button.addEventListener('click', () => {
@@ -174,7 +226,8 @@
       bubble.dataset.speaker = line.speaker;
       bubble.dataset.kind = line.kind;
       bubble.hidden = false;
-      hideTimer = setTimeout(hideBubble, data.settings.displayMs);
+      button.setAttribute('aria-expanded', 'true');
+      scheduleHide();
     });
     const resetVisibleConversation = () => { hideBubble(); conversation.resetTaps(); };
     window.addEventListener('pagehide', resetVisibleConversation);

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { Script } from 'node:vm';
 
 const routes = {
@@ -9,7 +9,7 @@ const routes = {
   'budget.html': ['travel-budget','route-compare'],
   'packing.html': ['packing']
 };
-const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8')]));
+const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8').replaceAll('?v=1.4', '')]));
 for(const [name,html] of Object.entries(pages)){
   assert.match(html,/<meta name="robots" content="noindex, nofollow">/,name+' noindex');
   assert.match(html,/<nav class="bottom-nav"/,name+' bottom navigation');
@@ -25,6 +25,12 @@ for(const [name,html] of Object.entries(pages)){
   for(const [,href] of html.matchAll(/href="([^"]+)"/g)){
     if(/^(https?:|mailto:|tel:)/i.test(href)||href.endsWith('.css'))continue;
     const [target,hash]=href.split('#'),linked=target||name;
+    if (target.endsWith('.svg')) {
+      const asset = new URL('../' + target, import.meta.url);
+      assert.ok(existsSync(asset), name+' missing SVG '+target);
+      if (hash) assert.ok(readFileSync(asset,'utf8').includes('id="'+hash+'"'), name+' missing SVG symbol '+href);
+      continue;
+    }
     assert.ok(pages[linked],name+' invalid link '+href);
     if(hash)assert.ok(pages[linked].includes('id="'+hash+'"'),name+' invalid anchor '+href);
   }
