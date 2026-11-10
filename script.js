@@ -506,6 +506,10 @@
           const info = textElement('div', '', '');
           info.append(textElement('strong', '', stop.name));
           if (stop.detail) info.append(textElement('p', '', stop.detail));
+          if (stop.placeId && data.places?.[stop.placeId]) {
+            const mapSlot = textElement('span', 'map-slot', '');
+            mapSlot.dataset.mapPlace = stop.placeId; info.append(mapSlot);
+          }
           row.append(textElement('span', 'drive-stop-time', stop.time), info); stopList.append(row);
         });
         card.append(stopList);

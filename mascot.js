@@ -103,6 +103,7 @@
   const prefersReducedMotion = typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
+  let roamController;
   const sceneController = window.MASCOT_SCENES?.create({
     onScene(scene) {
       if (scene) mascot.dataset.mascotScene = scene;
@@ -110,7 +111,7 @@
     }
   });
   const updateScenes = () => {
-    if (document.hidden || prefersReducedMotion?.matches) sceneController?.stop();
+    if (document.hidden || prefersReducedMotion?.matches || roamController?.isActive()) sceneController?.stop();
     else sceneController?.start();
   };
   updateScenes();
@@ -218,6 +219,7 @@
     // clickだけを使うことで、タッチ後の合成clickとの二重集計を防ぐ。
     // ネイティブbuttonによりEnter/Spaceの操作も同じ経路になる。
     button.addEventListener('click', () => {
+      roamController?.interrupt();
       sceneController?.interrupt();
       const line = conversation.tap(performance.now(), Date.now());
       if (!line) return;
@@ -235,6 +237,8 @@
       if (document.hidden) resetVisibleConversation();
     });
   }
+
+  roamController = window.MASCOT_ROAM?.create({mascot,sprite,sceneController,updateScenes,reduced:prefersReducedMotion});
 
   // 他のタブを見ている間はコマ送りを止める。
   const updateVisibility = () => mascot.classList.toggle('is-paused', document.hidden);

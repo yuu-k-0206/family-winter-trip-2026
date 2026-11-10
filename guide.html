@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="家族冬旅行の予定と持ち物をA4一枚に。印刷・PDF保存用のしおり。">
+  <title>1枚しおり・PDF保存｜家族冬旅行 2026</title>
+  <link rel="stylesheet" href="guide.css?v=1.5">
+  <script defer src="trip-data.js?v=1.5"></script>
+  <script defer src="travel-utils.js?v=1.5"></script>
+  <script defer src="travel-extras.js?v=1.5"></script>
+</head>
+<body>
+  <div class="guide-toolbar">
+    <a href="index.html">← ホームに戻る</a>
+    <button type="button" id="print-guide" disabled>印刷・PDFに保存</button>
+    <p>A4・縦・倍率100％・ヘッダーとフッターなしが目安です。スマホでは共有メニューの「プリント」からも保存できます。</p>
+    <p>保存したPDFはオフラインでも読めます。更新は自動反映されないので、出発前に保存し直してください。</p>
+  </div>
+  <p id="sheet-loading">旅行情報を読み込んでいます。表示されない場合は再読み込みしてください。</p>
+  <noscript><p>しおりの作成にはJavaScriptを有効にしてください。</p></noscript>
+  <main class="travel-sheet" id="travel-sheet" hidden>
+    <header class="sheet-header"><span>FAMILY WINTER TRIP · 2026</span><h1>冬の、家族旅行。</h1><p id="sheet-date"></p></header>
+    <section class="sheet-stay"><h2 id="sheet-stay"></h2><p id="sheet-room"></p><p id="sheet-members"></p></section>
+    <div class="sheet-days" id="sheet-days"></div>
+    <aside class="sheet-note"><strong>移動は仮案／初日の夕食は予約指定</strong><p id="sheet-winter"></p><p id="sheet-karaoke"></p></aside>
+    <section class="sheet-bag"><h2>出発前の持ち物チェック</h2><ul id="sheet-packing"></ul></section>
+    <p class="sheet-pending" id="sheet-pending"></p>
+    <footer class="sheet-footer"><p id="sheet-generated"></p><p>最新の予定：<a href="https://yuu-k-0206.github.io/family-winter-trip-2026/">yuu-k-0206.github.io/family-winter-trip-2026/</a></p></footer>
+  </main>
+</body>
+</html>

@@ -9,7 +9,7 @@ const routes = {
   'budget.html': ['travel-budget','route-compare'],
   'packing.html': ['packing']
 };
-const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8').replaceAll('?v=1.4', '')]));
+const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8').replace(/\?v=\d+\.\d+/g, '')]));
 for(const [name,html] of Object.entries(pages)){
   assert.match(html,/<meta name="robots" content="noindex, nofollow">/,name+' noindex');
   assert.match(html,/<nav class="bottom-nav"/,name+' bottom navigation');
@@ -29,6 +29,11 @@ for(const [name,html] of Object.entries(pages)){
       const asset = new URL('../' + target, import.meta.url);
       assert.ok(existsSync(asset), name+' missing SVG '+target);
       if (hash) assert.ok(readFileSync(asset,'utf8').includes('id="'+hash+'"'), name+' missing SVG symbol '+href);
+      continue;
+    }
+    if (['guide.html','stamps.html'].includes(linked)) {
+      const targetHTML=readFileSync(new URL('../'+linked,import.meta.url),'utf8');
+      if(hash) assert.ok(targetHTML.includes('id="'+hash+'"'),name+' invalid new-page anchor '+href);
       continue;
     }
     assert.ok(pages[linked],name+' invalid link '+href);
