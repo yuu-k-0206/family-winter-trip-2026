@@ -186,7 +186,7 @@
   setText('kahou-room-request', data.roomRequestNote || '客室の眺望・階層は未確定です。');
 
 
-  // 華鳳カラオケ：公式の税別一般料金だけを基準にした、未確定の参考試算。
+  // 華鳳カラオケ：旅館への電話確認済みの大人・子供料金を基準とした、基本料金の試算。
   const karaokeDuration = get('karaoke-duration');
   if (karaokeDuration) {
     const karaoke = data.karaoke || {};
@@ -194,26 +194,31 @@
     const taxRate = karaoke.taxRate;
     const adults = karaoke.adults;
     const children = karaoke.children;
+    const childRateFactor = karaoke.childRateFactor;
+    setText('karaoke-opening-hours', '営業時間：' + (karaoke.openingHours || '要確認'));
+    setText('karaoke-reservation-method', '予約：' + (karaoke.reservationMethod || '要確認'));
     const buttons = Array.from(karaokeDuration.querySelectorAll('button[data-karaoke-hours]'));
     const valid = Number.isSafeInteger(hourlyBeforeTax) && hourlyBeforeTax >= 0 &&
       Number.isFinite(taxRate) && taxRate >= 0 && taxRate < 1 &&
       Number.isSafeInteger(adults) && adults >= 0 &&
-      Number.isSafeInteger(children) && children >= 0;
+      Number.isSafeInteger(children) && children >= 0 &&
+      Number.isFinite(childRateFactor) && childRateFactor >= 0 && childRateFactor <= 1;
     if (!valid) {
       ['karaoke-unit-price', 'karaoke-total-price', 'karaoke-adult-price', 'karaoke-child-price']
         .forEach(id => setText(id, '料金確認中'));
       buttons.forEach(button => { button.disabled = true; });
     } else {
       const hourlyWithTax = Math.round(hourlyBeforeTax * (1 + taxRate));
+      const childHourlyWithTax = Math.round(hourlyWithTax * childRateFactor);
       setText('karaoke-unit-price', formatYen(hourlyWithTax));
       setText('karaoke-adult-label', '大人' + adults + '名');
-      setText('karaoke-child-label', '子供' + children + '名（一般料金を仮適用）');
+      setText('karaoke-child-label', '子供' + children + '名（各' + formatYen(childHourlyWithTax) + '／時間）');
       const showKaraokePrice = hours => {
         if (hours !== 1 && hours !== 2) return;
-        setText('karaoke-summary-label', (adults + children) + '名全員が一般料金の場合・' + hours + '時間');
-        setText('karaoke-total-price', formatYen((adults + children) * hourlyWithTax * hours));
+        setText('karaoke-summary-label', '大人' + adults + '名＋子供' + children + '名・' + hours + '時間');
+        setText('karaoke-total-price', formatYen((adults * hourlyWithTax + children * childHourlyWithTax) * hours));
         setText('karaoke-adult-price', formatYen(adults * hourlyWithTax * hours));
-        setText('karaoke-child-price', formatYen(children * hourlyWithTax * hours));
+        setText('karaoke-child-price', formatYen(children * childHourlyWithTax * hours));
         buttons.forEach(button => {
           const selected = Number(button.dataset.karaokeHours) === hours;
           button.classList.toggle('is-active', selected);
