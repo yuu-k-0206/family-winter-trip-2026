@@ -238,7 +238,7 @@
     });
   }
 
-  roamController = window.MASCOT_ROAM?.create({mascot,sprite,sceneController,updateScenes,reduced:prefersReducedMotion});
+  roamController = window.MASCOT_ROAM?.create({mascot,sprite,sceneController,updateScenes,reduced:prefersReducedMotion,hideBubble});
 
   // 他のタブを見ている間はコマ送りを止める。
   const updateVisibility = () => mascot.classList.toggle('is-paused', document.hidden);
