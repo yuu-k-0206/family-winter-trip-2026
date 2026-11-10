@@ -247,7 +247,7 @@
 .trip-mascot-bubble[data-speaker="girl"] + .trip-mascot-tail { right:18px; }
 .trip-mascot-bubble[data-kind="anger"] + .trip-mascot-tail { background:#fff2e9; border-color:#ba8263; }
 
-/* Excursions occupy only explicitly empty playgrounds, never reading areas. */
+/* Automatic excursions use playgrounds; explicitly called visitors may cross content. */
 .mascot-playground { position:relative; height:112px; margin-block:12px; pointer-events:none; overflow:hidden; }
 .mascot-playground::after { content:''; position:absolute; left:8%; right:8%; bottom:11px; height:12px; border-bottom:1px dashed #c2c6b655; border-radius:50%; }
 .mascot-playground::before { content:'✧'; position:absolute; left:25%; bottom:17px; color:#b7976455; font-size:13px; }
