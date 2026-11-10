@@ -24,7 +24,7 @@
     return {width,height,paths:[path(false),path(true)],corridor:box};
   }
 
-  function create({mascot,sprite,sceneController,updateScenes,reduced}) {
+  function create({mascot,sprite,sceneController,updateScenes,reduced,hideBubble}) {
     if (!Element.prototype.animate) return null;
     let enabled = true, timer, active = false, animations = [], visitors = [], turn = 0, closed = false;
     let lastZone = null;
@@ -35,6 +35,14 @@
     const controls = document.createElement('div'); controls.className = 'wrap roam-controls';
     controls.append(toggle,play,status);
     const footer = document.querySelector('footer'); footer?.before(controls);
+    // Anchor to the navigation itself: its measured height and safe-area padding
+    // can change without moving this button into the Home link's tap target.
+    const nav = document.querySelector('.bottom-nav');
+    const fixedPlay = document.createElement('button'); fixedPlay.type = 'button';
+    fixedPlay.className = 'roam-fixed-call'; fixedPlay.textContent = '2人を呼ぶ';
+    const fixedStatus = document.createElement('span'); fixedStatus.className = 'roam-call-status';
+    fixedStatus.setAttribute('role','status'); fixedStatus.setAttribute('aria-atomic','true');
+    nav?.append(fixedPlay,fixedStatus);
     // Empty playgrounds at the top, between long sections, and before the footer.
     const makeZone = () => {
       const zone = document.createElement('div'); zone.className = 'mascot-playground wrap'; zone.dataset.mascotPlayground = '';
@@ -62,6 +70,7 @@
       for (const visitor of visitors) visitor.remove(); visitors=[];
       active=false; mascot.classList.remove('is-roaming');
       if (status.textContent === '追いかけっこのはじまり！') status.textContent = '右下に戻ってきたよ。';
+      if (fixedStatus.textContent === '追いかけっこのはじまり！') fixedStatus.textContent = '右下に戻ってきたよ。';
       if (closed) sceneController?.stop(); else updateScenes();
       if (reschedule) schedule();
     };
@@ -113,10 +122,28 @@
       Promise.all(animations.map(animation=>animation.finished)).then(()=>{if(animations===current) finish();}).catch(()=>{});
       return true;
     }
+    function greet() {
+      if (busy() || active) return false;
+      const actors = [...sprite.querySelectorAll('.mascot-actor')];
+      if (!actors.length) return false;
+      active = true; sceneController?.stop();
+      animations = actors.map((actor,i) => actor.animate([
+        {transform:'translateY(0)',offset:0},
+        {transform:'translateY(-6px)',offset:.3},
+        {transform:'translateY(0)',offset:.6},
+        {transform:'translateY(-3px)',offset:.8},
+        {transform:'translateY(0)',offset:1}
+      ],{duration:700,delay:i*90,easing:'ease-in-out',fill:'both'}));
+      const current = animations;
+      Promise.all(current.map(animation=>animation.finished)).then(()=>{if(animations===current) finish();}).catch(()=>{});
+      return true;
+    }
     const refresh = () => {
       toggle.textContent=reduced?.matches?'おさんぽ：端末設定で停止':enabled?'おさんぽ：オン':'おさんぽ：オフ';
       toggle.setAttribute('aria-pressed',String(enabled&&!reduced?.matches)); toggle.disabled=Boolean(reduced?.matches);
       play.disabled=!enabled||Boolean(reduced?.matches);
+      fixedPlay.disabled=play.disabled;
+      fixedPlay.setAttribute('aria-label',reduced?.matches?'2人を呼ぶ（端末の設定で停止中）':enabled?'2人を呼ぶ':'2人を呼ぶ（おさんぽがオフです）');
     };
     toggle.addEventListener('click',()=>{
       enabled=!enabled;try{localStorage.setItem('family-trip-roaming',enabled?'on':'off');}catch(_){}
@@ -125,12 +152,22 @@
     play.addEventListener('click',()=>{
       interrupt();status.textContent=start(bottomZone)?'追いかけっこのはじまり！':'上の余白が画面に入るように少しスクロールして、もう一度呼んでね。';
     });
+    fixedPlay.addEventListener('click',()=>{
+      interrupt(); hideBubble?.();
+      // Never scroll the reader to a distant playground. A short greeting stays
+      // at the existing dock when no safe visible excursion corridor is free.
+      fixedStatus.textContent=start()?'追いかけっこのはじまり！':greet()?'右下でお返事したよ。':'今は右下で待っています。';
+    });
     for(const name of ['scroll','resize']) window.addEventListener(name,interrupt,{passive:true});
     for(const name of ['pointerdown','keydown','focusin']) document.addEventListener(name,interrupt,{passive:true});
     document.addEventListener('visibilitychange',interrupt);
     window.visualViewport?.addEventListener('resize',interrupt);
     window.visualViewport?.addEventListener('scroll',interrupt);
-    if ('ResizeObserver' in window) new ResizeObserver(interrupt).observe(document.body);
+    if ('ResizeObserver' in window) {
+      const layoutObserver = new ResizeObserver(interrupt);
+      layoutObserver.observe(document.body);
+      if (nav) layoutObserver.observe(nav);
+    }
     window.addEventListener('pagehide',()=>{closed=true;clearTimeout(timer);finish(false);});
     window.addEventListener('pageshow',()=>{closed=false;schedule(10000);});
     window.addEventListener('beforeprint',()=>{closed=true;clearTimeout(timer);finish(false);});

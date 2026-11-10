@@ -263,5 +263,10 @@
 .roam-toggle,.roam-preview { min-height:44px; padding:8px 14px; background:#fffdf6; color:#566969; border:1px solid #d5dad0; border-radius:20px; font:inherit; font-size:12px; cursor:pointer; }
 .roam-toggle:disabled,.roam-preview:disabled { opacity:.6; cursor:default; }
 .roam-status { flex-basis:100%; font-size:11px; color:#6e7b7e; text-align:center; min-height:1.8em; }
+.roam-fixed-call { position:absolute; left:max(12px,env(safe-area-inset-left,0px)); bottom:calc(100% + 12px); min-width:104px; max-width:calc(100vw - 140px); min-height:44px; padding:10px 16px; margin:0; border:1px solid #b79764; border-radius:24px; background:#fffdf2; color:#52636a; box-shadow:0 2px 8px #13252e20; font-family:inherit; font-size:12px; font-weight:600; line-height:1.5; cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+.roam-fixed-call:hover { background:#f5efdf; }
+.roam-fixed-call:focus-visible { outline:3px solid #99763b; outline-offset:3px; }
+.roam-fixed-call:disabled { opacity:.65; cursor:default; }
+.roam-call-status { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
 @media(prefers-reduced-motion:reduce) { .mascot-visitor { display:none !important; } }
-@media print { .mascot-playground,.mascot-visitor,.roam-controls { display:none !important; } }
+@media print { .mascot-playground,.mascot-visitor,.roam-controls,.roam-fixed-call,.roam-call-status { display:none !important; } }

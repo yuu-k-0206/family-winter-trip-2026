@@ -9,7 +9,7 @@ const routes = {
   'budget.html': ['travel-budget','route-compare'],
   'packing.html': ['packing']
 };
-const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8').replace(/\?v=\d+\.\d+/g, '')]));
+const pages=Object.fromEntries(Object.keys(routes).map(p=>[p,readFileSync(new URL('../'+p,import.meta.url),'utf8').replace(/\?v=\d+(?:\.\d+)+/g, '')]));
 for(const [name,html] of Object.entries(pages)){
   assert.match(html,/<meta name="robots" content="noindex, nofollow">/,name+' noindex');
   assert.match(html,/<nav class="bottom-nav"/,name+' bottom navigation');
