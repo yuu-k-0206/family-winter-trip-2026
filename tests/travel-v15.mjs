@@ -37,6 +37,12 @@ assert.ok(days[1].stops.every(s=>s.status==='仮案'));
 const viewport={width:390,height:844,top:64,bottom:770};
 const zone={left:17,top:200,width:356,height:112};
 const basic=r.plan(zone,viewport);assert.ok(basic);
+for(const width of [320,375,390,720])for(const height of [390,568,812])for(const reverse of [false,true]) {
+  const v={width,height,top:64,bottom:height-70},dockTop=height-156;
+  const manual=r.manualPlan(v,dockTop,reverse);assert.ok(manual,'explicit call works without a playground');
+  assert.ok(manual.corridor.top>=v.top&&manual.corridor.bottom<dockTop,'keep header and fixed controls clear');
+}
+assert.equal(r.manualPlan({width:320,height:200,top:64,bottom:130},90),null,'unusable viewport cannot draw outside the screen');
 assert.equal(r.plan({...zone,width:120},viewport),null,'narrow zone');
 assert.equal(r.plan({...zone,height:50},viewport),null,'short zone');
 assert.equal(r.plan({...zone,top:740},viewport),null,'bottom navigation');

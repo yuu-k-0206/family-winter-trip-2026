@@ -1,4 +1,4 @@
-/* Decorative excursions are confined to measured, empty playgrounds. */
+/* Automatic excursions use empty playgrounds; explicit calls may cross content. */
 (() => {
   'use strict';
   const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
@@ -22,6 +22,13 @@
       }));
     };
     return {width,height,paths:[path(false),path(true)],corridor:box};
+  }
+  function manualPlan(viewport, dockTop = viewport.bottom, reverse = false) {
+    // Only an explicit call may overlay reading content. Keep the navigation,
+    // fixed call button and right-hand talk control below the running lane.
+    const bottom = Math.min(viewport.bottom, dockTop) - 12;
+    const height = Math.min(112, bottom - viewport.top - 16);
+    return plan({left:12,top:bottom-height,width:viewport.width-24,height},viewport,[],reverse);
   }
 
   function create({mascot,sprite,sceneController,updateScenes,reduced,hideBubble}) {
@@ -87,15 +94,25 @@
       svg.setAttribute('viewBox',who==='boy'?'12 0 54 112':'73 0 54 112');
       visitor.append(svg); document.body.append(visitor); return visitor;
     };
-    const selectPlan = (preferred) => {
+    const measureViewport = () => {
       const vv=window.visualViewport;
       const header=document.querySelector('header'), nav=document.querySelector('.bottom-nav');
       const headerRect=header?.getBoundingClientRect(), navRect=nav?.getBoundingClientRect();
       const viewport={width:document.documentElement.clientWidth,height:window.innerHeight,top:vv?.offsetTop||0,bottom:(vv?.offsetTop||0)+(vv?.height||window.innerHeight)};
-      const obstacleNodes=[...document.querySelectorAll('a,button,input,select,textarea,summary,header,.bottom-nav,.art-note')].filter(node=>!mascot.contains(node));
-      const obstacles=obstacleNodes.map(node=>node.getBoundingClientRect()).filter(rect=>rect.width>0 && rect.height>0);
       if(headerRect?.top===0) viewport.top=Math.max(viewport.top,headerRect.bottom);
       if(navRect?.height>0) viewport.bottom=Math.min(viewport.bottom,navRect.top);
+      return viewport;
+    };
+    const selectManualPlan = () => {
+      const viewport=measureViewport();
+      const dockTop=Math.min(viewport.bottom,...[mascot,fixedPlay].map(node=>node.getBoundingClientRect()).filter(rect=>rect.width>0&&rect.height>0).map(rect=>rect.top));
+      const result=manualPlan(viewport,dockTop,turn%2===1);
+      return result?{result,zone:null}:null;
+    };
+    const selectPlan = (preferred) => {
+      const viewport=measureViewport();
+      const obstacleNodes=[...document.querySelectorAll('a,button,input,select,textarea,summary,header,.bottom-nav,.art-note')].filter(node=>!mascot.contains(node));
+      const obstacles=obstacleNodes.map(node=>node.getBoundingClientRect()).filter(rect=>rect.width>0 && rect.height>0);
       const zones=preferred?[preferred]:[...document.querySelectorAll('[data-mascot-playground]'),document.getElementById('winter-scenery')].filter(Boolean);
       // Rotate among visible zones; safety wins over variety.
       if(zones.length>1 && zones[0]===lastZone) zones.push(zones.shift());
@@ -108,10 +125,10 @@
       }
       return null;
     };
-    function start(preferred) {
+    function start(preferred, allowOverlay = false) {
       clearTimeout(timer);
       if (busy() || active) { schedule(); return false; }
-      const chosen=selectPlan(preferred);
+      const chosen=selectPlan(preferred)||(allowOverlay?selectManualPlan():null);
       if(!chosen) { schedule(12000); return false; }
       lastZone=chosen.zone; const p=chosen.result;
       active=true; mascot.classList.add('is-roaming'); sceneController?.stop();
@@ -120,22 +137,6 @@
       animations=visitors.map((visitor,i)=>visitor.animate(p.paths[i].map(frame=>({offset:frame.offset,transform:`translate(${frame.x}px, ${frame.y}px)`,opacity:frame.opacity})),{duration:6200,easing:'ease-in-out',fill:'both'}));
       const current=animations;
       Promise.all(animations.map(animation=>animation.finished)).then(()=>{if(animations===current) finish();}).catch(()=>{});
-      return true;
-    }
-    function greet() {
-      if (busy() || active) return false;
-      const actors = [...sprite.querySelectorAll('.mascot-actor')];
-      if (!actors.length) return false;
-      active = true; sceneController?.stop();
-      animations = actors.map((actor,i) => actor.animate([
-        {transform:'translateY(0)',offset:0},
-        {transform:'translateY(-6px)',offset:.3},
-        {transform:'translateY(0)',offset:.6},
-        {transform:'translateY(-3px)',offset:.8},
-        {transform:'translateY(0)',offset:1}
-      ],{duration:700,delay:i*90,easing:'ease-in-out',fill:'both'}));
-      const current = animations;
-      Promise.all(current.map(animation=>animation.finished)).then(()=>{if(animations===current) finish();}).catch(()=>{});
       return true;
     }
     const refresh = () => {
@@ -154,9 +155,9 @@
     });
     fixedPlay.addEventListener('click',()=>{
       interrupt(); hideBubble?.();
-      // Never scroll the reader to a distant playground. A short greeting stays
-      // at the existing dock when no safe visible excursion corridor is free.
-      fixedStatus.textContent=start()?'追いかけっこのはじまり！':greet()?'右下でお返事したよ。':'今は右下で待っています。';
+      // Explicit permission to run over content; scrolling and other input still
+      // interrupt immediately, and visitors never intercept pointer input.
+      fixedStatus.textContent=start(undefined,true)?'追いかけっこのはじまり！':'画面を少し広げて、もう一度呼んでね。';
     });
     for(const name of ['scroll','resize']) window.addEventListener(name,interrupt,{passive:true});
     for(const name of ['pointerdown','keydown','focusin']) document.addEventListener(name,interrupt,{passive:true});
@@ -177,5 +178,5 @@
     refresh();schedule(10000);
     return {interrupt,isActive:()=>active};
   }
-  window.MASCOT_ROAM = Object.freeze({plan,intersects,create});
+  window.MASCOT_ROAM = Object.freeze({plan,manualPlan,intersects,create});
 })();
